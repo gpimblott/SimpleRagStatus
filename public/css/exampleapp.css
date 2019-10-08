@@ -1,0 +1,18 @@
+.normal-page {
+    padding-top: 70px;
+}
+
+.index-page {
+    padding-top: 0px;
+}
+
+
+
+footer {
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+p.copyright {
+    margin: 15px 0 0;
+}
