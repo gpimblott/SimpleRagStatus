@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 require('dotenv').config({ path: '../process.env' });
-const logger=require('../winstonLogger')(module);
+const logger = require('../winstonLogger')(module);
 
 const app = require('../app');
 const http = require('http');
@@ -34,7 +34,7 @@ server.on('listening', onListening);
  * Normalize a port into a number, string, or false.
  */
 
-function normalizePort(val) {
+function normalizePort (val) {
     let port = parseInt(val, 10);
 
     if (isNaN(port)) {
@@ -54,7 +54,7 @@ function normalizePort(val) {
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+function onError (error) {
     if (error.syscall !== 'listen') {
         throw error;
     }
@@ -82,7 +82,7 @@ function onError(error) {
  * Event listener for HTTP server "listening" event.
  */
 
-function onListening() {
+function onListening () {
     let addr = server.address();
     let bind = typeof addr === 'string'
         ? 'pipe ' + addr

@@ -19,7 +19,7 @@ module.exports = function (callingModule) {
         level: 'info',
         format: format.combine(
             format.colorize(),
-            format.label({ label : getLabel(callingModule)}),
+            format.label({ label: getLabel(callingModule) }),
             format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
             format.splat(),
             myFormat

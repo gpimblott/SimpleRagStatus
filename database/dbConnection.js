@@ -55,7 +55,7 @@ class DBConnection {
 
                 let parameters = parameterArray[ index ];
                 if (typeof parameters === "function") {
-                    parameters = parameters( result.rows );
+                    parameters = parameters(result.rows);
                 }
 
                 result = await client.query(sqlArray[ index ], parameters);
@@ -164,7 +164,7 @@ class DBConnection {
 
             return config;
         } else {
-            logger.info(  "DATABASE_URL found")
+            logger.info("DATABASE_URL found")
             let params = Url.parse(connectionStr);
             let auth = params.auth.split(':');
             let config = {

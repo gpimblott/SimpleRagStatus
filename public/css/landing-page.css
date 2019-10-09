@@ -14,7 +14,7 @@
     background-size: cover;
     text-align: center;
     color: gray();
-    height:600px;
+    height: 600px;
 }
 
 
@@ -23,13 +23,13 @@
     width: 420px;
     padding: 20px 20px 20px;
     background-color: lightgrey;
-    background-color: rgba(211,211,211,0.5);
-    border: 3px solid rgba(0,0,0,0.1);
+    background-color: rgba(211, 211, 211, 0.5);
+    border: 3px solid rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
 
 .form-signin-heading {
-    text-align:center;
+    text-align: center;
     margin-bottom: 20px;
 }
 
@@ -50,8 +50,8 @@
     padding: 30px 30px 30px;
     margin: 0 auto;
     background-color: #eee;
-    background-color: rgba(211,211,211,0.5);
-    border: 1px dotted rgba(0,0,0,0.1);
+    background-color: rgba(211, 211, 211, 0.5);
+    border: 1px dotted rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
 
@@ -97,7 +97,7 @@ input[type="password"] {
 
 .intro-message > h1 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
     font-size: 5em;
 }
 
@@ -110,7 +110,7 @@ input[type="password"] {
 
 .banner h2 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
     font-size: 3em;
 }
 
@@ -123,17 +123,17 @@ input[type="password"] {
     margin-top: 0;
 }
 
-@media(max-width:1199px) {
+@media (max-width: 1199px) {
     ul.banner-social-buttons {
         float: left;
         margin-top: 15px;
     }
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .banner h2 {
         margin: 0;
-        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+        text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
         font-size: 3em;
     }
 

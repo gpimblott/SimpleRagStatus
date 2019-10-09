@@ -7,7 +7,7 @@ router.get('/login', (req, res) => {
     if (req.isAuthenticated()) {
         res.redirect('/');
     } else {
-        res.render('login', {layout: 'landing-page'});
+        res.render('login', { layout: 'landing-page' });
     }
 });
 

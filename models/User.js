@@ -1,12 +1,12 @@
 'use strict';
 
 module.exports = class User{
-    constructor(id, username, displayName, password, role, enabled) {
-        this.id = id;
+    constructor(username, firstname, surname, role_id, email, enabled) {
         this.username = username;
-        this.displayName = displayName;
-        this.password = password;
-        this.role = role;
+        this.firstname = firstname;
+        this.surname = surname;
+        this.role_id = role_id;
+        this.email = email;
         this.enabled = enabled;
     }
 }

@@ -1,0 +1,15 @@
+{
+  "prod": {
+    "driver": "pg",
+    "ENV": "DATABASE_URL"
+  },
+  "local": {
+    "driver": "pg",
+    "user": "docker",
+    "password": "docker",
+    "host": "localhost",
+    "database": "rag",
+    "port": "5434",
+    "schema": "public"
+  }
+}

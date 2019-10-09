@@ -7,7 +7,6 @@ const debug = require('debug')('example:security');
 const Security = function () {
 };
 
-
 /**
  * Check if the users is authenticated
  *
@@ -36,7 +35,5 @@ Security.isAuthenticatedAdmin = function (req, res, next) {
     req.session.redirect_to = req.url;
     res.redirect('/auth/login');
 }
-
-
 
 module.exports = Security;

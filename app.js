@@ -64,7 +64,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
 // Set a variable that will be available to all templates
 app.locals.someVariable = true;
 
