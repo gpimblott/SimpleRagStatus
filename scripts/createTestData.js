@@ -3,7 +3,7 @@ require('dotenv').config({ path: 'process.env', silent: false });
 const database = require('../database/dbConnection.js');
 const User = require('../models/User');
 
-const defaultPassword = 'password';
+const defaultPassword = process.env.DEFAULT_PASSWORD || 'password';
 
 /**
  * First setup the required roles
