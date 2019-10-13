@@ -121,7 +121,7 @@ class DBConnection {
 
     };
 
-    getAllFromTable (tableName, done, order) {
+    getAllFromTable (tableName, order) {
         let sql = "SELECT * FROM " + tableName;
         let params = [];
 
@@ -130,15 +130,7 @@ class DBConnection {
             params.push(order);
         }
 
-        this.query(sql, params)
-            .then(
-                (results) => {
-                    done(results);
-                },
-                (error) => {
-                    logger.error(error);
-                    done(null);
-                });
+        return this.query(sql, params);
     };
 
     /**

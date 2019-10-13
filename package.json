@@ -25,6 +25,7 @@
     "express-session": "^1.16.2",
     "helmet": "^3.21.0",
     "morgan": "latest",
+    "node-cache": "latest",
     "passport": "latest",
     "passport-local": "latest",
     "pg": "^7.12.1",

@@ -1,0 +1,44 @@
+
+#rag_table  {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#rag_table td, #rag_table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#rag_table tr:nth-child(even) {
+    background-color:  #f2f2f2;
+}
+
+#rag_table tr:hover {
+    background-color: #ddd;
+}
+
+#rag_table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: lightgray;
+    color: black;
+}
+
+.rag_status {
+    text-align: center;
+    width: 100px;
+}
+
+td.Amber {
+    background: lemonchiffon;
+}
+
+td.Green {
+    background: lightgreen;
+}
+
+td.Red {
+    background: lightpink;
+}

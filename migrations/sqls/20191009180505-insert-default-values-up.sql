@@ -6,4 +6,8 @@ VALUES ('Red'),
 
 INSERT INTO project_group (name)
 VALUES ('Internal Service'),
-       ('External Service')
+       ('External Service');
+
+INSERT INTO role(name, is_admin)
+VALUES ('Admin', true),
+       ('User', false);

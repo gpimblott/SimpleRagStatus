@@ -1,5 +1,5 @@
 /* Replace with your SQL commands */
-DELETE
-FROM rag_status;
-DELETE
-FROM project_group;
+DELETE FROM project_status;
+DELETE FROM rag_status;
+DELETE FROM project;
+DELETE FROM project_group;

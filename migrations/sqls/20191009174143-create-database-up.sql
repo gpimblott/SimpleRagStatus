@@ -7,24 +7,53 @@ CREATE TABLE IF NOT EXISTS rag_status
 CREATE TABLE IF NOT EXISTS project_group
 (
     id   SERIAL PRIMARY KEY,
-    name VARCHAR(50) UNIQUE
+    name VARCHAR(100) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS project
 (
     id            SERIAL PRIMARY KEY,
-    name          VARCHAR(50) UNIQUE,
-    code          VARCHAR(10) UNIQUE,
-    project_group INTEGER REFERENCES project_group (id),
+    name          VARCHAR(100) UNIQUE,
+    code          VARCHAR(20),
+    project_group_id INTEGER REFERENCES project_group (id),
     description   TEXT
+);
+
+CREATE TABLE IF NOT EXISTS report
+(
+    id          SERIAL PRIMARY KEY,
+    title       VARCHAR(100),
+    report_date date UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS project_status
 (
-    id                  SERIAL PRIMARY KEY,
-    project_id          integer REFERENCES project (id),
-    schedule_rag_status integer REFERENCES rag_status (id),
-    scope_rag_status    integer REFERENCES rag_status (id),
-    risk_rag_status     integer REFERENCES rag_status (id),
-    description         TEXT
+    id                 SERIAL PRIMARY KEY,
+    project_id         integer REFERENCES project (id),
+    schedule_status_id integer REFERENCES rag_status (id),
+    scope_status_id    integer REFERENCES rag_status (id),
+    risk_status_id     integer REFERENCES rag_status (id),
+    report_id          integer REFERENCES report (id),
+    description        TEXT,
+    unique (report_id, project_id)
 );
+
+CREATE TABLE IF NOT EXISTS role
+(
+    id       SERIAL PRIMARY KEY,
+    name     VARCHAR(50) UNIQUE,
+    is_admin boolean default false
+);
+
+CREATE TABLE IF NOT EXISTS account
+(
+    id        SERIAL PRIMARY KEY,
+    firstName VARCHAR(50),
+    surname   VARCHAR(50),
+    username  VARCHAR(100) UNIQUE,
+    email     VARCHAR(100),
+    role_id   integer REFERENCES role (id),
+    password  VARCHAR(100),
+    enabled   boolean default true
+);
+

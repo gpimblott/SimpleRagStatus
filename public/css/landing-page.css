@@ -6,31 +6,31 @@
     padding-top: 0px;
 }
 
+/*Photo by Harshal Desai on Unsplash*/
 .main-cover {
-    background: url('/images/background.jpg') no-repeat center center fixed;
+    background: url('/images/trafficlight.png') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     text-align: center;
-    color: gray();
-    height: 600px;
+    color: black;
+    height: 800px;
 }
 
 
 .login {
     margin: auto;
-    width: 420px;
-    padding: 20px 20px 20px;
-    background-color: lightgrey;
-    background-color: rgba(211, 211, 211, 0.5);
-    border: 3px solid rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 5px 5px 5px;
+    background-color: black;
+    background-color: black;
     border-radius: 10px;
 }
 
 .form-signin-heading {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .form-control {
@@ -49,10 +49,8 @@
     max-width: 420px;
     padding: 30px 30px 30px;
     margin: 0 auto;
-    background-color: #eee;
-    background-color: rgba(211, 211, 211, 0.5);
-    border: 1px dotted rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    background-color: black;
+    color: white;
 }
 
 input[type="text"] {
@@ -62,32 +60,11 @@ input[type="text"] {
 }
 
 input[type="password"] {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
 
-
-.content-section-a {
-    padding: 50px 0;
-    background-color: #f8f8f8;
-}
-
-.content-section-b {
-    padding: 50px 0;
-    border-top: 1px solid #e7e7e7;
-    border-bottom: 1px solid #e7e7e7;
-}
-
-.section-heading {
-    margin-bottom: 30px;
-}
-
-.section-heading-spacer {
-    float: left;
-    width: 200px;
-    border-top: 3px solid #e7e7e7;
-}
 
 .intro-message {
     position: relative;
@@ -102,7 +79,7 @@ input[type="password"] {
 }
 
 .banner {
-    padding: 100px 0;
+    padding: 50px 0;
     color: #f8f8f8;
     background: url('/images/bar_banner.jpg') no-repeat center center;
     background-size: cover;
@@ -151,7 +128,7 @@ input[type="password"] {
 
 footer {
     padding: 50px 0;
-    background-color: #f8f8f8;
+    background-color: #000000;
 }
 
 p.copyright {

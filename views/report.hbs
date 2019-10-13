@@ -1,0 +1,35 @@
+<div class="container-fluid">
+
+    <div class="reportTitle">Report for {{formatDate report_date}}</div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="rag_table">
+                <thead>
+                <tr>
+                    <th>Project Code</th>
+                    <th>Service / Team</th>
+                    <th>Schedule</th>
+                    <th>Scope</th>
+                    <th>Risk</th>
+                    <th>Highlights/Lowlights (describe anything that has gone better than expected or a reason for any
+                        amber/red status)
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each project_rag}}
+                    <tr>
+                        <td>{{this.code}}</td>
+                        <td>{{this.project_name}}</td>
+                        <td class="rag_status {{this.schedule}}">{{this.schedule}}</td>
+                        <td class="rag_status {{this.scope}}">{{this.scope}}</td>
+                        <td class="rag_status {{this.risk}}">{{this.risk}}</td>
+                        <td>{{this.description}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
