@@ -2,8 +2,9 @@ const logger = require('../winstonLogger')(module);
 const express = require('express');
 const security = require('../authentication/security');
 
-const report = require("../dao/report");
-const projectStatus = require("../dao/projectStatus");
+const reportDao = require("../dao/report");
+const projectStatusDao = require("../dao/projectStatus");
+const projectDao = require("../dao/project");
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.get('/', security.isAuthenticated, (req, res) => {
         delete req.session.redirect_to;
         res.redirect(url);
     } else {
-        report.getMostRecent()
+        reportDao.getMostRecent()
             .then(result => {
                 res.redirect('/report/' + result[ 0 ].id)
             })
@@ -31,12 +32,13 @@ router.get('/report/:id(\\d+)/', security.isAuthenticated, (req, res) => {
 
     let allDefinedReports = [];
 
-    report.getAll()
+    reportDao.getAll()
         .then(result => {
             allDefinedReports = result;
-            return projectStatus.getStatusReportByReportId(reportId);
+            return projectStatusDao.getStatusReportByReportId(reportId);
         })
         .then(projectStatusReport => {
+
 
             let theReport = allDefinedReports.find( item =>{ return item.id===reportId });
 
@@ -55,6 +57,35 @@ router.get('/report/:id(\\d+)/', security.isAuthenticated, (req, res) => {
         .catch(error => {
             logger.error("Failed to generate report : %s", error);
             res.sendStatus(500);
+        });
+});
+
+
+router.get('/report', security.isAuthenticated, (req, res) => {
+
+    reportDao.getAll()
+        .then(reports => {
+            res.render('manageReports',
+                {
+                    layout: "management",
+                    project_reports: reports,
+                });
+        });
+});
+
+router.get('/project/:id(\\\\d+)/\'', security.isAuthenticated, (req, res) => {
+    let projectId = parseInt(req.params.id);
+
+    projectDao.getById(projectId)
+        .then(project => {
+
+            logger.info(project);
+
+            res.render('project',
+                {
+                    layout: "management",
+                    project: project,
+                });
         });
 });
 

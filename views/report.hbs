@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-    <div class="reportTitle">Report for {{formatDate report_date}}</div>
+    <div class="reportTitle"><h2>Report for {{formatDate report_date}}</h2></div>
 
     <div class="row">
         <div class="col-md-12">
@@ -9,11 +9,10 @@
                 <tr>
                     <th>Project Code</th>
                     <th>Service / Team</th>
-                    <th>Schedule</th>
-                    <th>Scope</th>
-                    <th>Risk</th>
-                    <th>Highlights/Lowlights (describe anything that has gone better than expected or a reason for any
-                        amber/red status)
+                    <th class="rag_status">Schedule</th>
+                    <th class="rag_status">Scope</th>
+                    <th class="rag_status">Risk</th>
+                    <th>Highlights/Lowlights<br>(anything that has gone well or reason for amber/red status)
                     </th>
                 </tr>
                 </thead>
@@ -21,10 +20,13 @@
                 {{#each project_rag}}
                     <tr>
                         <td>{{this.code}}</td>
-                        <td>{{this.project_name}}</td>
-                        <td class="rag_status {{this.schedule}}">{{this.schedule}}</td>
-                        <td class="rag_status {{this.scope}}">{{this.scope}}</td>
-                        <td class="rag_status {{this.risk}}">{{this.risk}}</td>
+                        <td><a href="/project/{{this.project_id}}">{{this.project_name}}</a></td>
+                        <td class="rag_status {{this.schedule}}">{{this.schedule}}
+                            <i class="fa {{directionArrow schedule_direction}}" aria-hidden="true"></i></td>
+                        <td class="rag_status {{this.scope}}">{{this.scope}}
+                            <i class="fa {{directionArrow scope_direction}}" aria-hidden="true"></i></td>
+                        <td class="rag_status {{this.risk}}">{{this.risk}}
+                            <i class="fa {{directionArrow risk_direction}}" aria-hidden="true"></i></td>
                         <td>{{this.description}}</td>
                     </tr>
                 {{/each}}

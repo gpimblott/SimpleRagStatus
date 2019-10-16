@@ -12,7 +12,7 @@ const Users = function () {
 
 /**
  * Get a user by ID
- * @param id ID of the user to get
+ * @param id ID of the user to getById
  * @param done Function to call with the result
  */
 Users.findById = function (id, done) {

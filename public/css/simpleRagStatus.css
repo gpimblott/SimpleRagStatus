@@ -16,10 +16,14 @@ p.copyright {
 }
 
 .navbar-color {
-    background-color: ghostwhite;
+    background-color: black;
 }
 
 .navbar  a {
+    color: white;
+}
+
+.dropdown-menu a {
     color: black;
 }
 
