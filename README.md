@@ -1,10 +1,7 @@
-# Example NodeJS application
+# RAGe (RAG engine)
 
-This is an example application written using NodeJS, Express, Handlebars and Passport.
-It includes a login page and a main application index page, any unauthenticated requests
-are redirected to the login page.  Only a single user is created by default (or possible).
-
-The following environment variables can be used to configure the application:
+Simple application that provides RAG dashboards for a number of projects on a programme. Individual projects can
+update their RAG status against a report date which will update the dashboard.
 
 
 
