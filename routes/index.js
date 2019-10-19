@@ -19,74 +19,39 @@ router.get('/', security.isAuthenticated, (req, res) => {
     } else {
         reportDao.getMostRecent()
             .then(result => {
+                if(result.length!==1) {
+                    throw("No Reports found");
+                }
                 res.redirect('/report/' + result[ 0 ].id)
+            })
+            .catch( error => {
+                res.sendStatus( 500);
             })
     }
 });
 
-/**
- * Display the main report page selected by the report ID
- */
-router.get('/report/:id(\\d+)/', security.isAuthenticated, (req, res) => {
-    let reportId = parseInt(req.params.id);
-
-    let allDefinedReports = [];
-
-    reportDao.getAll()
-        .then(result => {
-            allDefinedReports = result;
-            return projectStatusDao.getStatusReportByReportId(reportId);
-        })
-        .then(projectStatusReport => {
-
-
-            let theReport = allDefinedReports.find( item =>{ return item.id===reportId });
-
-            if (theReport !== undefined) {
-                res.render('report',
-                    {
-                        layout: "report",
-                        project_reports: allDefinedReports,
-                        project_rag: projectStatusReport,
-                        report_date: theReport.report_date
-                    });
-            } else {
-                throw ("Can't find report for id " + reportId);
-            }
-        })
-        .catch(error => {
-            logger.error("Failed to generate report : %s", error);
-            res.sendStatus(500);
-        });
-});
-
-
-router.get('/report', security.isAuthenticated, (req, res) => {
-
-    reportDao.getAll()
-        .then(reports => {
-            res.render('manageReports',
-                {
-                    layout: "management",
-                    project_reports: reports,
-                });
-        });
-});
-
-router.get('/project/:id(\\\\d+)/\'', security.isAuthenticated, (req, res) => {
+router.get('/project/:id(\\d+)/', security.isAuthenticated, (req, res) => {
     let projectId = parseInt(req.params.id);
 
-    projectDao.getById(projectId)
-        .then(project => {
+    let promises = [];
+    promises.push( projectDao.getById(projectId) );
+    promises.push( reportDao.getProjectReports(projectId));
+    promises.push( reportDao.getAll());
 
-            logger.info(project);
+    Promise.all( promises )
+        .then(result => {
 
             res.render('project',
                 {
                     layout: "management",
-                    project: project,
+                    project: result[0][0],
+                    reports: result[1],
+                    project_reports: result[2]
                 });
         });
 });
+
+
+
 
 module.exports = router;

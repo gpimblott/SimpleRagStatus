@@ -100,25 +100,23 @@ class DBConnection {
      * @param ids array of IDS to delete
      * @param done function to call on completion
      */
-    deleteByIds (tableName, ids, done) {
+    deleteByIds (tableName, ids ) {
 
         let params = [];
-        for (let i = 1; i <= ids.length; i++) {
-            params.push('$' + i);
+        let sql=undefined;
+
+        if( ids.length>1) {
+            for (let i = 1; i <= ids.length; i++) {
+                params.push('$' + i);
+            }
+
+            sql = "DELETE FROM " + tableName + " WHERE id IN (" + params.join(',') + "  )";
+
+        } else {
+            sql = "DELETE FROM " + tableName + " WHERE id=$1";
         }
 
-        let sql = "DELETE FROM " + tableName + " WHERE id IN (" + params.join(',') + "  )";
-
-        this.query(sql, ids)
-            .then(
-                (result) => {
-                    done(true);
-                },
-                (error) => {
-                    logger.error(error);
-                    done(false, error);
-                });
-
+        return this.query(sql, ids);
     };
 
     getAllFromTable (tableName, order) {

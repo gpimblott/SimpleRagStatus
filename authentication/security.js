@@ -17,7 +17,7 @@ Security.isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
-        req.session.redirect_to = req.url;
+        req.session.redirect_to = req.originalUrl;
         res.redirect('/auth/login');
     }
 }

@@ -1,11 +1,17 @@
 <div class="container-fluid">
 
-    <div class="reportTitle"><h2>Report for {{formatDate report_date}}</h2></div>
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-11">
+            <div class="reportTitle">Report for {{formatDate report.report_date}}</div>
+            <div class="reportDescription">{{report.title}}</div>
+        </div>
+    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <table id="rag_table">
-                <thead>
+
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col-md-11 ">
+            <table id="report_table" class="table table-striped table-hover table-bordered">
+                <thead class="thead-light">
                 <tr>
                     <th>Project Code</th>
                     <th>Service / Team</th>
@@ -21,12 +27,15 @@
                     <tr>
                         <td>{{this.code}}</td>
                         <td><a href="/project/{{this.project_id}}">{{this.project_name}}</a></td>
-                        <td class="rag_status {{this.schedule}}">{{this.schedule}}
-                            <i class="fa {{directionArrow schedule_direction}}" aria-hidden="true"></i></td>
-                        <td class="rag_status {{this.scope}}">{{this.scope}}
-                            <i class="fa {{directionArrow scope_direction}}" aria-hidden="true"></i></td>
-                        <td class="rag_status {{this.risk}}">{{this.risk}}
-                            <i class="fa {{directionArrow risk_direction}}" aria-hidden="true"></i></td>
+                        <td class="rag_status {{this.schedule}}">
+                            <div style="float:left;width:80%;">{{this.schedule}}</div>
+                            <div style="float:right;width:20%;"><i class="{{directionArrow schedule_direction}}" aria-hidden="true"></i></div>
+                        <td class="rag_status {{this.scope}}">
+                            <div style="float:left;width:80%;">{{this.scope}}</div>
+                            <div style="float:right;width:20%;"><i class="{{directionArrow scope_direction}}" aria-hidden="true"></i></div>
+                        <td class="rag_status {{this.risk}}">
+                            <div style="float:left;width:80%;">{{this.risk}}</div>
+                            <div style="float:right;width:20%;"><i class="{{directionArrow risk_direction}}" aria-hidden="true"></i></div>
                         <td>{{this.description}}</td>
                     </tr>
                 {{/each}}

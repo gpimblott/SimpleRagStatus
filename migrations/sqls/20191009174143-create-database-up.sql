@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS project
     id            SERIAL PRIMARY KEY,
     name          VARCHAR(100) UNIQUE,
     code          VARCHAR(20),
-    project_group_id INTEGER REFERENCES project_group (id),
+    project_group_id INTEGER REFERENCES project_group (id) ON DELETE CASCADE,
     description   TEXT
 );
 
@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS project_status
 (
     id                 SERIAL PRIMARY KEY,
     project_id         integer REFERENCES project (id),
-    schedule_status_id integer REFERENCES rag_status (id),
-    scope_status_id    integer REFERENCES rag_status (id),
-    risk_status_id     integer REFERENCES rag_status (id),
-    report_id          integer REFERENCES report (id),
+    schedule_status_id integer REFERENCES rag_status (id) ON DELETE CASCADE,
+    scope_status_id    integer REFERENCES rag_status (id) ON DELETE CASCADE,
+    risk_status_id     integer REFERENCES rag_status (id) ON DELETE CASCADE,
+    report_id          integer REFERENCES report (id) ON DELETE CASCADE,
     description        TEXT,
     unique (report_id, project_id)
 );
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS account
     surname   VARCHAR(50),
     username  VARCHAR(100) UNIQUE,
     email     VARCHAR(100),
-    role_id   integer REFERENCES role (id),
+    role_id   integer REFERENCES role (id) ON DELETE CASCADE,
     password  VARCHAR(100),
     enabled   boolean default true
 );

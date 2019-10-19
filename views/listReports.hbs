@@ -1,0 +1,38 @@
+<script src="/js/addMethods.js"></script>
+<div class="container-fluid">
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-5">
+            <div class="reportTitle"><h2>Current Reports</h2></div>
+            <a href="/report/add">Add new report</a>
+            <table id="report_table" class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th>Actions</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each project_reports}}
+                    <tr>
+                        <td>
+                            <a href="/report/edit/{{this.id}}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/report/{{this.id}}"
+                               data-method="delete"
+                               data-target-url="/report/"
+                               data-confirm="Are you sure?">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                        <td>{{formatDate this.report_date}}</td>
+                        <td>{{this.title}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

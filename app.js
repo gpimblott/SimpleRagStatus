@@ -20,6 +20,7 @@ const helpers = require('./lib/handlebarsHelpers')
 
 // Routes
 const index = require('./routes/index');
+const report = require('./routes/report');
 const authentication = require('./routes/authentication');
 
 const app = express();
@@ -68,6 +69,7 @@ app.locals.someVariable = true;
 
 // Define the routes
 app.use('/', index);
+app.use('/report', report);
 app.use('/auth', authentication);
 
 // catch 404 and forward to error handler
