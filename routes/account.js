@@ -32,4 +32,42 @@ router.get('/', security.isAuthenticatedAdmin, (req, res) => {
     ;
 });
 
+router.get("/add", security.isAuthenticatedAdmin, (req, res) => {
+    accountDao.getAllRoles().then(roles => {
+        res.render('admin/addAccount',
+            {
+                roles: roles,
+                layout: "main"
+            });
+    });
+});
+
+router.post('/', security.isAuthenticatedAdmin, (req, res) => {
+
+    logger.info("Adding new account %s", req.body.username);
+    accountDao.addAccount(req.body)
+        .then(result => {
+           res.redirect('/account/');
+        })
+        .catch(error => {
+            logger.error("Error creating acount: %s", error);
+            res.render('error',
+                {
+                    message: "Error creating account",
+                    error: error
+                });
+        })
+});
+
+router.delete( '/:id(\\d+)/', security.isAuthenticatedAdmin, (req, res) => {
+    let accountId = parseInt(req.params.id);
+    logger.info("DELETE user %s", accountId);
+
+    accountDao.deleteAccountById( accountId)
+        .then( result => {
+            res.sendStatus(200);
+        });
+
+});
+
 module.exports = router;
