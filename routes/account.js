@@ -42,12 +42,23 @@ router.get("/add", security.isAuthenticatedAdmin, (req, res) => {
     });
 });
 
+router.get("/:id(\\d+)/password", security.isAuthenticatedAdmin, (req, res) => {
+    let accountId = parseInt(req.params.id);
+    accountDao.getAccountById(accountId)
+        .then( account=>{
+            res.render('admin/changePassword', {
+                account: account[0]
+            });
+        } )
+
+});
+
 router.post('/', security.isAuthenticatedAdmin, (req, res) => {
 
     logger.info("Adding new account %s", req.body.username);
     accountDao.addAccount(req.body)
         .then(result => {
-           res.redirect('/account/');
+            res.redirect('/account/');
         })
         .catch(error => {
             logger.error("Error creating acount: %s", error);
@@ -59,12 +70,46 @@ router.post('/', security.isAuthenticatedAdmin, (req, res) => {
         })
 });
 
-router.delete( '/:id(\\d+)/', security.isAuthenticatedAdmin, (req, res) => {
+/**
+ * Update a users password
+ */
+router.post('/:id(\\d+)/password', security.isAuthenticatedAdmin, (req, res) => {
+    let accountId = parseInt(req.params.id);
+    logger.info("Updating password %s", accountId);
+
+    console.log(req.body);
+
+    if( req.body.password1 != req.body.password2) {
+        logger.info("New passwords are different");
+        res.redirect('/account');
+        return;
+    }
+
+    accountDao.updatePassword( accountId , req.body.currentPassword, req.body.password2)
+        .then( result => {
+            logger.info("Password for account $s updated" , accountId);
+            res.redirect('/account');
+        })
+        .catch( error => {
+            logger.error("Error creating acount: %s", error);
+            res.render('error',
+                {
+                    message: "Failed to change password",
+                    error: error
+                });
+        });
+
+});
+
+/**
+ * Delete a user account
+ */
+router.delete('/:id(\\d+)/', security.isAuthenticatedAdmin, (req, res) => {
     let accountId = parseInt(req.params.id);
     logger.info("DELETE user %s", accountId);
 
-    accountDao.deleteAccountById( accountId)
-        .then( result => {
+    accountDao.deleteAccountById(accountId)
+        .then(result => {
             res.sendStatus(200);
         });
 

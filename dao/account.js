@@ -19,6 +19,12 @@ Account.getAllRoles = function () {
     )
 }
 
+Account.getAccountById = function (accountId) {
+    return database.query(
+        `SELECT * FROM account where id=$1`, [accountId]
+    );
+}
+
 Account.addAccount = function (account) {
     let passwordHash = require('crypto').createHash('sha256').update(account.password).digest('base64');
 
@@ -27,6 +33,17 @@ Account.addAccount = function (account) {
              VALUES ($1, $2, $3, $4, $5, $6, true)`,
         [account.username, account.firstname, account.surname, account.role, account.email, passwordHash]);
 }
+
+Account.updatePassword = function (accountId, currentPassword, newPassword) {
+    let oldHash = require('crypto').createHash('sha256').update(currentPassword).digest('base64');
+    let newHash = require('crypto').createHash('sha256').update(newPassword).digest('base64');
+
+    return database.insertOrUpdate(
+        `UPDATE account set password=$1 WHERE password = $2 and id=$3` ,
+        [newHash, oldHash, accountId]
+    );
+
+};
 
 Account.deleteAccountById = function( accountId) {
     return database.deleteByIds( 'account', [accountId]);
