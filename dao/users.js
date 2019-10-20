@@ -12,12 +12,14 @@ const Users = function () {
 
 /**
  * Get a user by ID
- * @param id ID of the user to getById
+ * @param id ID of the user to getProjectById
  * @param done Function to call with the result
  */
 Users.findById = function (id, done) {
     logger.info("Find by ID : %s", id);
-    const sql = "SELECT *  FROM account where id=$1 ";
+    const sql =`SELECT acc.*,r.is_admin, r.is_editor FROM account acc
+                 JOIN role r on acc.role_id = r.id
+                 WHERE acc.id=$1;`
 
     database.query(sql, [id])
         .then(
@@ -42,8 +44,8 @@ Users.findById = function (id, done) {
  */
 Users.addUser = function (user, password, done) {
     database.insertOrUpdate(
-        "INSERT INTO account( firstname, surname, username, email, role_id, password, enabled ) " +
-        "VALUES ($1, $2, $3, $4, $5, $6, $7) on CONFLICT DO NOTHING",
+        `INSERT INTO account( firstname, surname, username, email, role_id, password, enabled ) 
+                    VALUES ($1, $2, $3, $4, $5, $6, $7) on CONFLICT DO NOTHING`,
         [user.firstname, user.surname, user.username, user.email, user.role_id, password, user.enabled])
         .then(
             (result) => {
@@ -63,7 +65,9 @@ Users.addUser = function (user, password, done) {
  */
 Users.findByUsername = function (username, done) {
     logger.info("Find by username : %s", username);
-    const sql = "SELECT * FROM account where username=$1 ";
+    const sql = `SELECT acc.*,r.is_admin, r.is_editor FROM account acc
+                 JOIN role r on acc.role_id = r.id
+                 WHERE username=$1 `;
 
     database.query(sql, [username])
         .then(
@@ -98,6 +102,8 @@ User.recordToUser = function (record) {
     user.password = record.password;
     user.role_id = record.role_id;
     user.enabled = record.enabled;
+    user.admin = record.is_admin;
+    user.editor = record.is_editor;
 
     return user;
 }

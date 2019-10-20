@@ -21,7 +21,12 @@ const helpers = require('./lib/handlebarsHelpers')
 // Routes
 const index = require('./routes/index');
 const report = require('./routes/report');
+const project = require('./routes/project');
+const account = require('./routes/account');
 const authentication = require('./routes/authentication');
+
+// DAO database access
+const reportDao = require("./dao/report");
 
 const app = express();
 
@@ -64,12 +69,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Set a variable that will be available to all templates
-app.locals.someVariable = true;
+app.use(function(req,res,next){
+    res.locals.user = req.user;
+
+    reportDao.getAll().then( reports=> {
+        res.locals.project_reports = reports;
+        next();
+    })
+    .catch(error=>{
+        next();
+    });
+})
 
 // Define the routes
 app.use('/', index);
 app.use('/report', report);
+app.use('/project', project);
+app.use('/account', account);
 app.use('/auth', authentication);
 
 // catch 404 and forward to error handler

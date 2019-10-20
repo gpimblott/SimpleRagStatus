@@ -2,32 +2,34 @@
 <div class="container-fluid">
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-8">
-            <div class="reportTitle">Current Reports</div>
-            <a href="/report/add">Add new report</a>
-            <table id="report_table" class="table">
+            <div class="reportTitle">Accounts</div>
+            <a href="/report/add">Add new account</a>
+            <table id="account_table" class="table">
                 <thead class="thead-light">
                 <tr>
                     <th>Actions</th>
-                    <th>Date</th>
-                    <th>Description</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Role</th>
                 </tr>
                 </thead>
                 <tbody>
-                {{#each project_reports}}
+                {{#each accounts}}
                     <tr>
                         <td style="width: 80px">
-                            <a href="/report/edit/{{this.id}}">
+                            <a href="/account/edit/{{this.id}}">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="/report/{{this.id}}"
+                            <a href="/account/{{this.id}}"
                                data-method="delete"
-                               data-target-url="/report/"
+                               data-target-url="/account/"
                                data-confirm="Are you sure?">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
-                        <td style="width: 120px">{{formatDate this.report_date}}</td>
-                        <td>{{this.title}}</td>
+                        <td style="width: 120px">{{this.username}}</td>
+                        <td>{{this.firstname}} {{this.surname}}</td>
+                        <td>{{this.role_name}}</td>
                     </tr>
                 {{/each}}
                 </tbody>

@@ -43,11 +43,15 @@ td.Red {
 
 .projectName {
     font-family: 'Raleway', sans-serif;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 600;
-    margin: 20px 0 20px;
+    margin: 20px 0 0px;
     text-align: center;
     text-transform: uppercase;
+}
+
+.bigChange {
+    color: red;
 }
 
 .projectDescription {
@@ -56,7 +60,7 @@ td.Red {
 
 .reportTitle {
     font-family: 'Raleway', sans-serif;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 600;
     margin: 20px 0 20px;
     text-align: center;
@@ -65,6 +69,16 @@ td.Red {
 
 .reportDescription {
     margin-bottom: 20px;
+}
+
+.textOnLeft {
+    float:left;
+    width:90%;
+}
+
+.iconOnRight {
+    float:right;
+    width:10%;
 }
 
 

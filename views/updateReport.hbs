@@ -1,0 +1,62 @@
+<div class="container-fluid">
+
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-11">
+            <div class="projectName">{{project.name}}</div>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-8">
+            <div class="reportTitle">Report : {{formatDate report.report_date}}</div>
+            <div class="reportDescription">{{report.title}}</div>
+            <hr>
+            <div>
+                <form method="post" action="/project/{{project.id}}/report/{{report.id}}">
+                    <div class="form-group row">
+                        <label for="scopeSelect" class="col-sm-2 col-form-label">Scope</label>
+                        <select name="scope" id="scopeSelect">
+                            {{#each ragValues }}
+                                <option value="{{this.id}}"
+                                        {{#ifCond this.id "==" ../latestReport.scope_status_id}}selected="selected"{{/ifCond}}>
+                                    {{this.name}}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label for="riskSelect" class="col-sm-2 col-form-label">Risk</label>
+                        <select name="risk" id="riskSelect">
+                            {{#each ragValues }}
+                                <option value="{{this.id}}"
+                                        {{#ifCond this.id "==" ../latestReport.risk_status_id}}selected="selected"{{/ifCond}}>
+                                    {{this.name}}
+                                </option>
+                            {{/each}}
+                        </select>
+
+                    </div>
+                    <div class="form-group row">
+                        <label for="scheduleSelect" class="col-sm-2 col-form-label">Schedule</label>
+                        <select name="schedule" id="scheduleSelect">
+                            {{#each ragValues }}
+                                <option value="{{this.id}}"
+                                        {{#ifCond this.id "==" ../latestReport.schedule_status_id}}selected="selected"{{/ifCond}}>
+                                    {{this.name}}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reportUpdate" class="col-form-label">Report update</label>
+                        <textarea class="form-control" id="reportUpdate" name="reportUpdate" rows="3">{{latestReport.description}}</textarea>
+                    </div>
+
+                    <button type="submit" id="submitButton" class="btn btn-primary">Update report</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

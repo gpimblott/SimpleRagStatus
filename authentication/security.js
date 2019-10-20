@@ -1,6 +1,7 @@
 'use strict';
 
-const debug = require('debug')('example:security');
+const logger = require('../winstonLogger')(module);
+
 /**
  * Security helper functions
  */
@@ -32,7 +33,23 @@ Security.isAuthenticatedAdmin = function (req, res, next) {
         return next();
     }
 
-    req.session.redirect_to = req.url;
+    req.session.redirect_to = req.originalUrl;
+    res.redirect('/auth/login');
+}
+
+/**
+ * Check if the user is an editor
+ * @param req
+ * @param res
+ * @param next
+ * @returns {*}
+ */
+Security.isAuthenticatedEditor = function (req, res, next) {
+    if (req.isAuthenticated() && req.user.editor) {
+        return next();
+    }
+
+    req.session.redirect_to = req.originalUrl;
     res.redirect('/auth/login');
 }
 

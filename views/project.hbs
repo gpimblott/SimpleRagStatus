@@ -6,25 +6,33 @@
             <div class="projectDescription">{{project.description}}</div>
         </div>
     </div>
+
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-11">
             <table id="report_table" class="table table-striped table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
                     <th>Date</th>
+                    <th>Schedule</th>
                     <th>Scope</th>
                     <th>Risk</th>
-                    <th>Schedule</th>
                     <th>Description</th>
                 </tr>
                 </thead>
                 <tbody>
                 {{#each reports}}
                     <tr>
-                        <td style="width: 150px"><a href="/report/{{this.report_id}}">{{formatDate this.report_date}}</a></td>
+                        <td style="width: 150px">
+                            <a href="/report/{{this.report_id}}">{{formatDate this.report_date}}</a>
+                            {{#if ../user.editor}}
+                                <a href="/project/{{../project.id}}/report/{{this.report_id}}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            {{/if}}
+                        </td>
+                        <td class="rag_status {{schedule}}">{{schedule}}</td>
                         <td class="rag_status {{scope}}">{{scope}}</td>
                         <td class="rag_status {{risk}}">{{risk}}</td>
-                        <td class="rag_status {{schedule}}">{{schedule}}</td>
                         <td>{{this.description}}</td>
                     </tr>
                 {{/each}}

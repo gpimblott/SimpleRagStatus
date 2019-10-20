@@ -4,6 +4,7 @@ VALUES ('Red'),
        ('Amber'),
        ('Green');
 
-INSERT INTO role(name, is_admin)
-VALUES ('Admin', true),
-       ('User', false);
+INSERT INTO role(name, is_admin, is_editor )
+VALUES ('Admin', true, true),
+       ('User', false, false),
+       ('Editor', false, true);

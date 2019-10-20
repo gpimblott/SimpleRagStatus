@@ -1,10 +1,8 @@
 const logger = require('../winstonLogger')(module);
 const express = require('express');
-const security = require('../authentication/security');
 
+const security = require('../authentication/security');
 const reportDao = require("../dao/report");
-const projectStatusDao = require("../dao/projectStatus");
-const projectDao = require("../dao/project");
 
 const router = express.Router();
 
@@ -25,33 +23,15 @@ router.get('/', security.isAuthenticated, (req, res) => {
                 res.redirect('/report/' + result[ 0 ].id)
             })
             .catch( error => {
-                res.sendStatus( 500);
+                logger.error("Failed to get main index page: %s", error);
+                res.render('error',
+                    {
+                        message: error.message,
+                        error: error
+                    });
             })
     }
 });
-
-router.get('/project/:id(\\d+)/', security.isAuthenticated, (req, res) => {
-    let projectId = parseInt(req.params.id);
-
-    let promises = [];
-    promises.push( projectDao.getById(projectId) );
-    promises.push( reportDao.getProjectReports(projectId));
-    promises.push( reportDao.getAll());
-
-    Promise.all( promises )
-        .then(result => {
-
-            res.render('project',
-                {
-                    layout: "management",
-                    project: result[0][0],
-                    reports: result[1],
-                    project_reports: result[2]
-                });
-        });
-});
-
-
 
 
 module.exports = router;

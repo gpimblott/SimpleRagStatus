@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS project
 CREATE TABLE IF NOT EXISTS report
 (
     id          SERIAL PRIMARY KEY,
-    title       VARCHAR(100),
+    title       TEXT,
     report_date date UNIQUE
 );
 
@@ -41,8 +41,9 @@ CREATE TABLE IF NOT EXISTS project_status
 CREATE TABLE IF NOT EXISTS role
 (
     id       SERIAL PRIMARY KEY,
-    name     VARCHAR(50) UNIQUE,
-    is_admin boolean default false
+    name     VARCHAR(100) UNIQUE,
+    is_admin boolean default false,
+    is_editor boolean default false
 );
 
 CREATE TABLE IF NOT EXISTS account

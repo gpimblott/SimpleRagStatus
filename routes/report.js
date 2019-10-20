@@ -1,3 +1,5 @@
+'use strict';
+
 const logger = require('../winstonLogger')(module);
 const express = require('express');
 const security = require('../authentication/security');
@@ -8,27 +10,21 @@ const projectStatusDao = require("../dao/projectStatus");
 const router = express.Router();
 
 /**
- * Display the main report page selected by the report ID
+ * Display report by Id
  */
 router.get('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
     let reportId = parseInt(req.params.id);
 
-    let allDefinedReports = [];
+    logger.info("Display current report");
 
-    reportDao.getAll()
-        .then(result => {
-            allDefinedReports = result;
-            return projectStatusDao.getStatusReportByReportId(reportId);
-        })
+    projectStatusDao.getStatusReportByReportId(reportId)
         .then(projectStatusReport => {
 
-            let theReport = allDefinedReports.find(item => { return item.id === reportId });
+            let theReport = res.locals.project_reports.find(item => { return item.id === reportId });
 
             if (theReport !== undefined) {
                 res.render('report',
                     {
-                        layout: "report",
-                        project_reports: allDefinedReports,
                         project_rag: projectStatusReport,
                         report: theReport
                     });
@@ -37,8 +33,12 @@ router.get('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
             }
         })
         .catch(error => {
-            logger.error("Failed to generate report : %s", error);
-            res.sendStatus(500);
+            logger.error("Failed to display main report page: %s", error);
+            res.render('error',
+                {
+                    message: "Failed to display main report page",
+                    error: error
+                });
         });
 });
 
@@ -47,63 +47,34 @@ router.get('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
  */
 router.get('/', security.isAuthenticated, (req, res) => {
 
-    reportDao.getAll()
-        .then(reports => {
-            res.render('listReports',
-                {
-                    layout: "management",
-                    project_reports: reports,
-                });
-        })
-        .catch(error => {
-            res.render('error',
-                {
-                    message: "Error getting all reports",
-                    error: error
-                });
-        });
-    ;
+    res.render('listReports', {});
 });
 
-router.get('/add', security.isAuthenticated, (req, res) => {
-
-    reportDao.getAll()
-        .then(reports => {
-            res.render('addReport',
-                {
-                    layout: "management",
-                    project_reports: reports,
-                });
-        })
-        .catch(error => {
-            res.render('error',
-                {
-                    message: "Error displaying report add page",
-                    error: error
-                });
-        });
+/**
+ * Display the add page
+ */
+router.get('/add', security.isAuthenticatedAdmin, (req, res) => {
+    res.render('addReport', {});
 });
 
-router.get('/edit/:id(\\d+)/', security.isAuthenticated, (req, res) => {
+/**
+ * Display the edit page
+ */
+router.get('/edit/:id(\\d+)/', security.isAuthenticatedAdmin, (req, res) => {
     let reportId = parseInt(req.params.id);
 
-    let promises = [];
-    promises.push( reportDao.getAll());
-    promises.push( reportDao.getReportById( reportId ))
-
-    Promise.all(promises)
+    reportDao.getReportById(reportId)
         .then(results => {
             res.render('editReport',
                 {
-                    layout: "management",
-                    project_reports: results[0],
-                    report: results[1][0]
+                    report: results[ 0 ]
                 });
         })
         .catch(error => {
+            logger.error("Failed to display edit page: %s", error);
             res.render('error',
                 {
-                    message: "Error displaying report editor page",
+                    message: "Error displaying edit page",
                     error: error
                 });
         });
@@ -112,12 +83,13 @@ router.get('/edit/:id(\\d+)/', security.isAuthenticated, (req, res) => {
 /**
  * Add a new report
  */
-router.post('/', security.isAuthenticated, (req, res) => {
+router.post('/', security.isAuthenticatedAdmin, (req, res) => {
     reportDao.addReport(req.body.reportDate, req.body.reportDescription)
         .then(result => {
             res.redirect('/report');
         })
         .catch(error => {
+            logger.error("Failed to add new report : %s", error);
             res.render('error',
                 {
                     message: "Error adding new report",
@@ -127,7 +99,10 @@ router.post('/', security.isAuthenticated, (req, res) => {
 
 });
 
-router.post('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
+/**
+ * Update a report (POST to an existing ID)
+ */
+router.post('/:id(\\d+)/', security.isAuthenticatedAdmin, (req, res) => {
     let reportId = parseInt(req.params.id);
 
     reportDao.updateReport(reportId, req.body.reportDescription)
@@ -135,27 +110,30 @@ router.post('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
             res.redirect('/report');
         })
         .catch(error => {
+            logger.error("Failed to update an existing report: %s", error);
             res.render('error',
                 {
-                    message: "Error adding new report",
+                    message: "Error updating existing report",
                     error: error
                 });
         });
 
 });
 
-router.delete('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
+/**
+ * Delete a report by ID
+ */
+router.delete('/:id(\\d+)/', security.isAuthenticatedAdmin, (req, res) => {
     let reportId = parseInt(req.params.id);
 
-    console.log("Delete report %s", reportId);
+    logger.info("Delete report %s", reportId);
 
     reportDao.deleteReportById(reportId)
         .then(result => {
-            console.log("Delete OK");
             res.sendStatus(200);
         })
         .catch(error => {
-            logger.error("Error deleting report : %s", error);
+            logger.error("Failed to delete report : %s", error);
             res.sendStatus(500);
         });
 });

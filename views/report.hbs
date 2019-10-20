@@ -7,7 +7,6 @@
         </div>
     </div>
 
-
     <div class="row justify-content-md-center align-items-center">
         <div class="col-md-11 ">
             <table id="report_table" class="table table-striped table-hover table-bordered">
@@ -18,7 +17,7 @@
                     <th class="rag_status">Schedule</th>
                     <th class="rag_status">Scope</th>
                     <th class="rag_status">Risk</th>
-                    <th>Highlights/Lowlights<br>(anything that has gone well or reason for amber/red status)
+                    <th>Highlights/Lowlights
                     </th>
                 </tr>
                 </thead>
@@ -26,16 +25,32 @@
                 {{#each project_rag}}
                     <tr>
                         <td>{{this.code}}</td>
-                        <td><a href="/project/{{this.project_id}}">{{this.project_name}}</a></td>
+                        <td>
+                            <div class="textOnLeft">
+                                <a href="/project/{{this.project_id}}">{{this.project_name}}</a>
+                            </div>
+
+
+                            {{#if ../user.editor}}
+                                <div class="iconOnRight">
+                                    <a href="/project/{{this.project_id}}/report/{{../report.id}}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </div>
+                            {{/if}}
+                        </td>
                         <td class="rag_status {{this.schedule}}">
                             <div style="float:left;width:80%;">{{this.schedule}}</div>
-                            <div style="float:right;width:20%;"><i class="{{directionArrow schedule_direction}}" aria-hidden="true"></i></div>
+                            <div style="float:right;width:20%;"><i class="{{directionArrow schedule_direction}}"
+                                                                   aria-hidden="true"></i></div>
                         <td class="rag_status {{this.scope}}">
                             <div style="float:left;width:80%;">{{this.scope}}</div>
-                            <div style="float:right;width:20%;"><i class="{{directionArrow scope_direction}}" aria-hidden="true"></i></div>
+                            <div style="float:right;width:20%;"><i class="{{directionArrow scope_direction}}"
+                                                                   aria-hidden="true"></i></div>
                         <td class="rag_status {{this.risk}}">
                             <div style="float:left;width:80%;">{{this.risk}}</div>
-                            <div style="float:right;width:20%;"><i class="{{directionArrow risk_direction}}" aria-hidden="true"></i></div>
+                            <div style="float:right;width:20%;"><i class="{{directionArrow risk_direction}}"
+                                                                   aria-hidden="true"></i></div>
                         <td>{{this.description}}</td>
                     </tr>
                 {{/each}}

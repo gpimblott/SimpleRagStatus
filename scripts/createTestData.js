@@ -11,9 +11,10 @@ const defaultPassword = process.env.DEFAULT_PASSWORD || 'password';
 
 
 const accounts = [
-    { username: 'admin', role: 'Admin', firstName: 'admin', surname: 'admin', email: 'dummy@dummy.com' },
+    { username: 'admin', role: 'Admin', firstName: 'admin', surname: 'admin', email: 'admin@dummy.com' },
     { username: 'gordon', role: 'Admin', firstName: 'Gordon', surname: 'Pimblott', email: 'gordon@dummy.com' },
-    { username: 'guest', role: 'User', firstName: 'Test', surname: 'Test', email: 'paul@dummy.com' }
+    { username: 'guest', role: 'User', firstName: 'Test', surname: 'Test', email: 'guest@dummy.com' },
+    { username: 'editor', role: 'Editor', firstName: 'An', surname: 'Editor', email: 'editor@dummy.com' }
 ];
 
 accounts.forEach(item => {
@@ -48,8 +49,9 @@ function findRoleId (roleName) {
 
 function insertAccount (user, password) {
     database.insertOrUpdate(
-        "INSERT INTO account( firstname, surname, username, email, role_id, password, enabled ) " +
-        "VALUES ($1, $2, $3, $4, $5, $6, $7) on CONFLICT DO NOTHING",
+            `INSERT INTO account(firstname, surname, username, email, role_id, password, enabled)
+             VALUES ($1, $2, $3, $4, $5, $6, $7)
+             on CONFLICT DO NOTHING`,
         [user.firstname, user.surname, user.username, user.email, user.role_id, password, user.enabled])
         .then(
             (result) => {
