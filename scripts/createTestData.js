@@ -3,6 +3,8 @@ require('dotenv').config({ path: 'process.env', silent: false });
 const database = require('../database/dbConnection.js');
 const User = require('../models/User');
 
+const bcrypt = require('bcrypt');
+
 const defaultPassword = process.env.DEFAULT_PASSWORD || 'password';
 
 /**
@@ -13,8 +15,8 @@ const defaultPassword = process.env.DEFAULT_PASSWORD || 'password';
 const accounts = [
     { username: 'admin', role: 'Admin', firstName: 'admin', surname: 'admin', email: 'admin@dummy.com' },
     { username: 'gordon', role: 'Admin', firstName: 'Gordon', surname: 'Pimblott', email: 'gordon@dummy.com' },
-    { username: 'guest', role: 'User', firstName: 'Test', surname: 'Test', email: 'guest@dummy.com' },
-    { username: 'editor', role: 'Editor', firstName: 'An', surname: 'Editor', email: 'editor@dummy.com' }
+    { username: 'guest', role: 'User', firstName: 'Test', surname: 'Guest', email: 'guest@dummy.com' },
+    { username: 'editor', role: 'Editor', firstName: 'Test', surname: 'Editor', email: 'editor@dummy.com' }
 ];
 
 accounts.forEach(item => {
@@ -22,16 +24,18 @@ accounts.forEach(item => {
     findRoleId(item.role).then(
         result => {
             if (result !== undefined && result.length > 0) {
-                let passwordHash = require('crypto').createHash('sha256').update(defaultPassword).digest('base64');
-                let user = new User(
-                    item.username,
-                    item.firstName,
-                    item.surname,
-                    result[ 0 ].id,
-                    item.email,
-                    'true');
 
-                insertAccount(user, passwordHash);
+                bcrypt.hash( defaultPassword , 10 , (err, hash)=> {
+                    let user = new User(
+                        item.username,
+                        item.firstName,
+                        item.surname,
+                        result[ 0 ].id,
+                        item.email,
+                        'true');
+
+                    insertAccount(user, hash);
+                })
             }
         },
         error => {

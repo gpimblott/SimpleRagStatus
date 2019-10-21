@@ -77,8 +77,6 @@ router.post('/:id(\\d+)/password', security.isAuthenticatedAdmin, (req, res) => 
     let accountId = parseInt(req.params.id);
     logger.info("Updating password %s", accountId);
 
-    console.log(req.body);
-
     if( req.body.password1 != req.body.password2) {
         logger.info("New passwords are different");
         res.redirect('/account');
@@ -87,14 +85,14 @@ router.post('/:id(\\d+)/password', security.isAuthenticatedAdmin, (req, res) => 
 
     accountDao.updatePassword( accountId , req.body.currentPassword, req.body.password2)
         .then( result => {
-            logger.info("Password for account $s updated" , accountId);
+            logger.info("Password for account %s updated" , accountId);
             res.redirect('/account');
         })
         .catch( error => {
-            logger.error("Error creating acount: %s", error);
+            logger.error("Error updating password: %s", error);
             res.render('error',
                 {
-                    message: "Failed to change password",
+                    message: "Failed to update password",
                     error: error
                 });
         });

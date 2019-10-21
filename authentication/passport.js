@@ -4,6 +4,8 @@ const logger = require('../winstonLogger')(module);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
+const bcrypt = require('bcrypt');
+
 const User = require('../models/User.js');
 const users = require('../dao/users.js');
 
@@ -39,12 +41,14 @@ passport.use(new LocalStrategy(
                 });
             }
 
-            let userHash = require('crypto').createHash('sha256').update(password).digest('base64');
+            bcrypt.compare(password, user.password, (err, res) => {
+                if (res) {
+                    return cb(null, user);
+                } else {
+                    logger.warn("Login failure due to password");
+                    return cb(null, false, { message: 'Incorrect login' });
+                }
+            });
 
-            if (user.password !== userHash) {
-                logger.warn("Login failure due to password");
-                return cb(null, false, { message: 'Incorrect login' });
-            }
-            return cb(null, user);
         });
     }));
