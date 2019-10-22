@@ -4,9 +4,9 @@ const logger = require('../winstonLogger')(module);
 const express = require('express');
 const security = require('../authentication/security');
 
-const projectDao = require("../dao/project");
-const reportDao = require("../dao/report");
-const projectStatusDao = require("../dao/projectStatus");
+const projectDao = require("../dao/projectDAO");
+const reportDao = require("../dao/reportDAO");
+const projectStatusDao = require("../dao/projectStatusDAO");
 
 const router = express.Router();
 

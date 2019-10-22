@@ -5,13 +5,13 @@ const Cache = require('../lib/dataCache');
 const ttl = 60 * 60 * 1; // cache for 1 Hour
 const cache = new Cache(ttl);
 
-const Report = function () {
+const ReportDAO = function () {
 };
 
 /**
  * Get all of the Reports - Ths cache is checked first, if it's not there then the DB is queried
  */
-Report.getAll = function () {
+ReportDAO.getAll = function () {
     return cache.get("all", () => {
         return database.query(`SELECT *
                                FROM report
@@ -25,7 +25,7 @@ Report.getAll = function () {
  * @param reportTitle Title of the report
  * @returns {Promise | Promise<unknown>}
  */
-Report.addReport = function (reportDate, reportTitle) {
+ReportDAO.addReport = function (reportDate, reportTitle) {
     cache.flush();
     return database.insertOrUpdate(
             `INSERT INTO report (report_date, title)
@@ -34,13 +34,13 @@ Report.addReport = function (reportDate, reportTitle) {
         [reportDate, reportTitle]);
 };
 
-Report.getMostRecent = function () {
+ReportDAO.getMostRecent = function () {
     return cache.get("most-recent", () => {
         return database.query("SELECT * FROM report ORDER BY report_date DESC LIMIT 1;");
     });
 };
 
-Report.getProjectReports = function (projectId) {
+ReportDAO.getProjectReports = function (projectId) {
     return database.query(
         `with rag as (
     select ps.*,
@@ -60,18 +60,18 @@ Report.getProjectReports = function (projectId) {
 };
 
 
-Report.getReportById = function (id) {
+ReportDAO.getReportById = function (id) {
     return database.query("select * from report where id=$1", [id]);
 }
 
-Report.updateReport = function( id, title) {
+ReportDAO.updateReport = function(id, title) {
     cache.flush();
     return database.insertOrUpdate(" UPDATE report set title=$1 where id=$2",[title,id]);
 }
 
-Report.deleteReportById = function ( id ){
+ReportDAO.deleteReportById = function (id ){
     cache.flush();
     return database.deleteByIds( "report", [id]);
 }
 
-module.exports = Report;
+module.exports = ReportDAO;

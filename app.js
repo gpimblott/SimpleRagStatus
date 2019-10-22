@@ -26,7 +26,7 @@ const account = require('./routes/account');
 const authentication = require('./routes/authentication');
 
 // DAO database access
-const reportDao = require("./dao/report");
+const reportDao = require("./dao/reportDAO");
 
 const app = express();
 

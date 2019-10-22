@@ -7,7 +7,7 @@ const pg = require('pg');
 const database = require('../database/dbConnection.js');
 
 // This is an example implementation - you would normally store users in the DB
-const Users = function () {
+const UsersDAO = function () {
 };
 
 /**
@@ -15,7 +15,7 @@ const Users = function () {
  * @param id ID of the user to getProjectById
  * @param done Function to call with the result
  */
-Users.findById = function (id, done) {
+UsersDAO.findById = function (id, done) {
     logger.info("Find by ID : %s", id);
     const sql =`SELECT acc.*,r.is_admin, r.is_editor FROM account acc
                  JOIN role r on acc.role_id = r.id
@@ -42,7 +42,7 @@ Users.findById = function (id, done) {
  * @param username Username of the user to search for
  * @param done Function to call with the result
  */
-Users.addUser = function (user, password, done) {
+UsersDAO.addUser = function (user, password, done) {
     database.insertOrUpdate(
         `INSERT INTO account( firstname, surname, username, email, role_id, password, enabled ) 
                     VALUES ($1, $2, $3, $4, $5, $6, $7) on CONFLICT DO NOTHING`,
@@ -63,7 +63,7 @@ Users.addUser = function (user, password, done) {
  * @param username
  * @param done
  */
-Users.findByUsername = function (username, done) {
+UsersDAO.findByUsername = function (username, done) {
     logger.info("Find by username : %s", username);
     const sql = `SELECT acc.*,r.is_admin, r.is_editor FROM account acc
                  JOIN role r on acc.role_id = r.id
@@ -108,4 +108,4 @@ User.recordToUser = function (record) {
     return user;
 }
 
-module.exports = Users;
+module.exports = UsersDAO;

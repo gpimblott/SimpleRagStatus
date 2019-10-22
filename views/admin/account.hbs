@@ -17,16 +17,16 @@
                 {{#each accounts}}
                     <tr>
                         <td style="width: 80px">
-                            <a href="/account/edit/{{this.id}}">
+                            <a data-toggle="tooltip" title="Edit account" href="/account/edit/{{this.id}}">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="/account/{{this.id}}"
+                            <a data-toggle="tooltip" title="Delete account" href="/account/{{this.id}}"
                                data-method="delete"
                                data-target-url="/account/"
                                data-confirm="Are you sure?">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
-                            <a href="/account/{{this.id}}/password">
+                            <a data-toggle="tooltip" title="Change password" href="/account/{{this.id}}/password">
                                 <i class="fas fa-key"></i>
                             </a>
                         </td>

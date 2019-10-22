@@ -27,29 +27,29 @@
                         <td>{{this.code}}</td>
                         <td>
                             <div class="textOnLeft">
-                                <a href="/project/{{this.project_id}}">{{this.project_name}}</a>
+                                <a data-toggle="tooltip" title="View all reports for this project" href="/project/{{this.project_id}}">{{this.project_name}}</a>
                             </div>
 
 
                             {{#if ../user.editor}}
                                 <div class="iconOnRight">
-                                    <a href="/project/{{this.project_id}}/report/{{../report.id}}">
+                                    <a data-toggle="tooltip" title="Edit project status" href="/project/{{this.project_id}}/report/{{../report.id}}">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                 </div>
                             {{/if}}
                         </td>
                         <td class="rag_status {{this.schedule}}">
-                            <div style="float:left;width:80%;">{{this.schedule}}</div>
-                            <div style="float:right;width:20%;"><i class="{{directionArrow schedule_direction}}"
+                            <div class="textOnLeft">{{this.schedule}}</div>
+                            <div class="iconOnRight"><i class="{{directionArrow schedule_direction}}"
                                                                    aria-hidden="true"></i></div>
                         <td class="rag_status {{this.scope}}">
-                            <div style="float:left;width:80%;">{{this.scope}}</div>
-                            <div style="float:right;width:20%;"><i class="{{directionArrow scope_direction}}"
+                            <div class="textOnLeft">{{this.scope}}</div>
+                            <div class="iconOnRight"><i class="{{directionArrow scope_direction}}"
                                                                    aria-hidden="true"></i></div>
                         <td class="rag_status {{this.risk}}">
-                            <div style="float:left;width:80%;">{{this.risk}}</div>
-                            <div style="float:right;width:20%;"><i class="{{directionArrow risk_direction}}"
+                            <div class="textOnLeft">{{this.risk}}</div>
+                            <div class="iconOnRight"><i class="{{directionArrow risk_direction}}"
                                                                    aria-hidden="true"></i></div>
                         <td>{{this.description}}</td>
                     </tr>

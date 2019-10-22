@@ -81,5 +81,13 @@ td.Red {
     width:10%;
 }
 
+.dateFixedWidth {
+    width:120px;
+}
+
+.actionsFixedWidth {
+    width:80px;
+}
+
 
 

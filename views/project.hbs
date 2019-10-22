@@ -23,9 +23,9 @@
                 {{#each reports}}
                     <tr>
                         <td style="width: 150px">
-                            <a href="/report/{{this.report_id}}">{{formatDate this.report_date}}</a>
+                            <a data-toggle="tooltip" title="View report" href="/report/{{this.report_id}}">{{formatDate this.report_date}}</a>
                             {{#if ../user.editor}}
-                                <a href="/project/{{../project.id}}/report/{{this.report_id}}">
+                                <a data-toggle="tooltip" title="Edit this report" href="/project/{{../project.id}}/report/{{this.report_id}}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             {{/if}}

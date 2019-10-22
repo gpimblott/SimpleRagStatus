@@ -6,7 +6,11 @@
     <link rel="stylesheet" href="/css/simpleRagStatus.css">
 </head>
 <body>
-
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 <header>
     {{>reportMenubar this}}
 </header>

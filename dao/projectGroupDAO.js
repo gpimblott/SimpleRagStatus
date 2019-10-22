@@ -2,10 +2,10 @@ const logger = require('../winstonLogger')(module);
 const database = require('../database/dbConnection.js');
 
 
-const ProjectGroup = function () {
+const ProjectGroupDAO = function () {
 };
 
-ProjectGroup.addProjectGroup = function (name) {
+ProjectGroupDAO.addProjectGroup = function (name) {
 
     return database.insertOrUpdate(
             `INSERT INTO project_group (name) 
@@ -15,4 +15,4 @@ ProjectGroup.addProjectGroup = function (name) {
 };
 
 
-module.exports = ProjectGroup;
+module.exports = ProjectGroupDAO;

@@ -2,7 +2,7 @@ const logger = require('../winstonLogger')(module);
 const express = require('express');
 
 const security = require('../authentication/security');
-const reportDao = require("../dao/report");
+const reportDao = require("../dao/reportDAO");
 
 const router = express.Router();
 

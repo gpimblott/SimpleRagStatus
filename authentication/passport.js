@@ -7,7 +7,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 const User = require('../models/User.js');
-const users = require('../dao/users.js');
+const users = require('../dao/usersDAO.js');
 
 passport.serializeUser(function (user, cb) {
     cb(null, user.id);

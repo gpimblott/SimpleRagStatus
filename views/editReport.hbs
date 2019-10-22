@@ -1,11 +1,11 @@
 <div class="container-fluid">
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-5">
-            <div class="reportTitle">Edit Report</div>
+            <div class="reportTitle">Edit ReportDAO</div>
             <form action="/report/{{report.id}}" method="post">
                 <input type="hidden" id="reportId" name="reportId" value="{{report.id}}">
                 <div class="form-group">
-                    <label for="dateInput">Report date</label>
+                    <label for="dateInput">ReportDAO date</label>
                     <input type="date"
                            class="form-control"
                            name="reportDate"
@@ -22,7 +22,7 @@
                               id="descriptionInput"
                               placeholder="Description">{{report.title}}</textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Update Report</button>
+                <button type="submit" class="btn btn-primary">Update report</button>
             </form>
         </div>
     </div>

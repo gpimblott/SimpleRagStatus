@@ -1,10 +1,10 @@
 const logger = require('../winstonLogger')(module);
 const database = require('../database/dbConnection.js');
 
-const ProjectStatus = function () {
+const ProjectStatusDAO = function () {
 };
 
-ProjectStatus.updateProjectStatus = function ( projectId, reportId , update ) {
+ProjectStatusDAO.updateProjectStatus = function (projectId, reportId , update ) {
     return database.insertOrUpdate(
         `INSERT INTO project_status (project_id, report_id, 
                             risk_status_id, scope_status_id, schedule_status_id,
@@ -19,7 +19,7 @@ ProjectStatus.updateProjectStatus = function ( projectId, reportId , update ) {
  * Get all of the RAG status values
  * @returns {Promise | Promise<unknown>}
  */
-ProjectStatus.getRAGStatusValues = function () {
+ProjectStatusDAO.getRAGStatusValues = function () {
     return database.query( "select * from rag_status order by id",[]);
 }
 
@@ -29,7 +29,7 @@ ProjectStatus.getRAGStatusValues = function () {
  * @param reportId
  * @returns {Promise | Promise<unknown>}
  */
-ProjectStatus.getClosestReportForApplication = function ( applicationId , reportId ) {
+ProjectStatusDAO.getClosestReportForApplication = function (applicationId , reportId ) {
     return database.query (
         `select r.*,ps.* from report r
             join project_status ps on r.id=ps.report_id
@@ -44,7 +44,7 @@ ProjectStatus.getClosestReportForApplication = function ( applicationId , report
  * @param reportId
  * @returns {Promise<unknown>}
  */
-ProjectStatus.getStatusReportByReportId = function (reportId) {
+ProjectStatusDAO.getStatusReportByReportId = function (reportId) {
     return database.query(`with rag as (SELECT ps.*,
                     r.report_date,
                     rs1.name as risk,
@@ -91,4 +91,4 @@ from project p
         [reportId])
 };
 
-module.exports = ProjectStatus;
+module.exports = ProjectStatusDAO;
