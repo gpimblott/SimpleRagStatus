@@ -4,7 +4,22 @@ const database = require('../database/dbConnection.js');
 const ProjectStatusDAO = function () {
 };
 
-ProjectStatusDAO.updateProjectStatus = function (projectId, reportId , update ) {
+/**
+ * Update the status of a project for the specified project
+ * The update is in a simple object
+ * {
+ *     risk:        //  ID of the RAG status
+ *     scope:       // ID of the RAG status
+ *     schedule:    // ID of the RAG status
+ *     reportUpdate:// Text update of the report
+ * }
+ *
+ * @param projectId ID of the project to update
+ * @param reportId ID of the report to update
+ * @param update object containing the update
+ * @returns {Promise | Promise<unknown>}
+ */
+ProjectStatusDAO.updateProjectStatusForReportById = function (projectId, reportId , update ) {
     return database.insertOrUpdate(
         `INSERT INTO project_status (project_id, report_id, 
                             risk_status_id, scope_status_id, schedule_status_id,
@@ -40,7 +55,9 @@ ProjectStatusDAO.getClosestReportForApplication = function (applicationId , repo
 }
 
 /**
- * This query is pretty horrible - need to check how performant it is
+ * Monster query to get all the details for a report
+ * It is so complicated as it gets the previous status values and determines the 'direction'
+ *
  * @param reportId
  * @returns {Promise<unknown>}
  */

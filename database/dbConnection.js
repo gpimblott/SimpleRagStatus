@@ -42,6 +42,12 @@ class DBConnection {
         });
     };
 
+    /**
+     * Perform a number of SQL queries in a single DB transaction
+     * @param sqlArray
+     * @param parameterArray
+     * @returns {Promise<[]>}
+     */
     async queryInTransaction (sqlArray, parameterArray) {
         const client = await this._pool.connect();
 
@@ -119,6 +125,12 @@ class DBConnection {
         return this.query(sql, ids);
     };
 
+    /**
+     * Shortcut to perform a SELECT * FROM {table}
+     * @param tableName Name of the table
+     * @param order column to order the results on
+     * @returns {Promise<unknown>}
+     */
     getAllFromTable (tableName, order) {
         let sql = "SELECT * FROM " + tableName;
         let params = [];

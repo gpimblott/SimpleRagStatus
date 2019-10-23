@@ -34,13 +34,22 @@ ReportDAO.addReport = function (reportDate, reportTitle) {
         [reportDate, reportTitle]);
 };
 
+/**
+ * Get the most recent report entry
+ * @returns {Promise<unknown>}
+ */
 ReportDAO.getMostRecent = function () {
     return cache.get("most-recent", () => {
         return database.query("SELECT * FROM report ORDER BY report_date DESC LIMIT 1;");
     });
 };
 
-ReportDAO.getProjectReports = function (projectId) {
+/**
+ * Get all the reports for the specified project
+ * @param projectId
+ * @returns {Promise | Promise<unknown>}
+ */
+ReportDAO.getReportsForProjectById = function (projectId) {
     return database.query(
         `with rag as (
     select ps.*,
@@ -59,16 +68,32 @@ ReportDAO.getProjectReports = function (projectId) {
     ORDER BY report_date desc;`, [projectId]);
 };
 
-
+/**
+ * Get a single report by it's ID
+ * @param id
+ * @returns {Promise | Promise<unknown>}
+ */
 ReportDAO.getReportById = function (id) {
     return database.query("select * from report where id=$1", [id]);
 }
 
+/**
+ * Update the title of a report
+ * @param id ID of the report
+ * @param title The new title for the report
+ * @returns {Promise | Promise<unknown>}
+ */
 ReportDAO.updateReport = function(id, title) {
     cache.flush();
     return database.insertOrUpdate(" UPDATE report set title=$1 where id=$2",[title,id]);
 }
 
+/**
+ * Delete report by it's ID
+ * This has cascade delete so all project status entries for this report will also be depleted
+ * @param id
+ * @returns {Promise | Promise<unknown>}
+ */
 ReportDAO.deleteReportById = function (id ){
     cache.flush();
     return database.deleteByIds( "report", [id]);

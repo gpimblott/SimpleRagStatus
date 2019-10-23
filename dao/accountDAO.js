@@ -13,8 +13,9 @@ const AccountDAO = function () {
 AccountDAO.getAllAccounts = function () {
     return database.query(
             `SELECT acc.*, r.name as role_name
-             from account acc
-                      JOIN role r on acc.role_id = r.id`,
+             FROM account acc
+             JOIN role r on acc.role_id = r.id
+             ORDER BY acc.username`,
         [])
 };
 

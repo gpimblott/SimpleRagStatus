@@ -18,7 +18,7 @@ router.get('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
 
     let promises = [];
     promises.push(projectDao.getProjectById(projectId));
-    promises.push(reportDao.getProjectReports(projectId));
+    promises.push(reportDao.getReportsForProjectById(projectId));
 
     logger.info("Get project %s", projectId);
 
@@ -94,7 +94,7 @@ router.post('/:projectId(\\d+)/report/:reportId(\\d+)', security.isAuthenticated
 
     logger.info("Update project (%s) report (%s)", projectId, reportId);
 
-    projectStatusDao.updateProjectStatus(projectId, reportId, req.body)
+    projectStatusDao.updateProjectStatusForReportById(projectId, reportId, req.body)
         .then(result => {
             res.redirect("/project/" + projectId);
         })

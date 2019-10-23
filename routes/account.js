@@ -10,6 +10,9 @@ const router = express.Router();
 
 /**
  * Display the page of add accounts
+ *
+ * GET /
+ *
  * Admin only
  */
 router.get('/', security.isAuthenticatedAdmin, (req, res) => {
@@ -34,6 +37,9 @@ router.get('/', security.isAuthenticatedAdmin, (req, res) => {
 
 /**
  * Display the add account page
+ *
+ * GET /account/add
+ *
  * Admin only
  */
 router.get("/add", security.isAuthenticatedAdmin, (req, res) => {
@@ -48,6 +54,9 @@ router.get("/add", security.isAuthenticatedAdmin, (req, res) => {
 
 /**
  * Display the change password page for a specified account ID
+ *
+ * GET /account/{account_id}/password
+ *
  * Admin only
  */
 router.get("/:id(\\d+)/password", security.isAuthenticatedAdmin, (req, res) => {
@@ -63,6 +72,8 @@ router.get("/:id(\\d+)/password", security.isAuthenticatedAdmin, (req, res) => {
 
 /**
  * Posing to /account adds a new account then redirects to the account list page
+ *
+ * POST /account/
  */
 router.post('/', security.isAuthenticatedAdmin, (req, res) => {
 
@@ -83,7 +94,10 @@ router.post('/', security.isAuthenticatedAdmin, (req, res) => {
 
 /**
  * Update the specified users password - if successful redirect to the account list
- * This only requires the new passsord to be specified
+ * This only requires the new password to be specified
+ *
+ * POST /account/{account_id}/password
+ *
  * Admin only
  */
 router.post('/:id(\\d+)/password', security.isAuthenticatedAdmin, (req, res) => {
@@ -118,6 +132,8 @@ router.post('/:id(\\d+)/password', security.isAuthenticatedAdmin, (req, res) => 
 
 /**
  * Delete a user account
+ *
+ * DEL /account/{account_id}/
  */
 router.delete('/:id(\\d+)/', security.isAuthenticatedAdmin, (req, res) => {
     let accountId = parseInt(req.params.id);
