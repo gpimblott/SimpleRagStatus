@@ -3,7 +3,9 @@
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-8">
             <div class="reportTitle">Current Reports</div>
+            {{#if user.editor}}
             <a href="/report/add">Add new report</a>
+            {{/if}}
             <table id="report_table" class="table">
                 <thead class="thead-light">
                 <tr>

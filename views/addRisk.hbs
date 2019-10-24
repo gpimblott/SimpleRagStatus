@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-8">
+            <div class="reportTitle">Add risk for {{project.name}}</div>
+            <form action="/project/{{projectId}}/risk" method="post">
+                <div class="form-group">
+                    <label for="dateInput">Risk date</label>
+                    <input type="date" class="form-control" name="riskDate" id="dateInput" aria-describedby="dateHelp"
+                           placeholder="Enter risk date">
+                    <small id="dateHelp" class="form-text text-muted">The date that the risk was added</small>
+                </div>
+                <div class="form-group row">
+                    <label for="likelihoodSelect" class="col-sm-2 col-form-label">Likelihood</label>
+                    <select name="likelihood" id="likelihoodSelect">
+                        {{#each ragValues }}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="impactSelect" class="col-sm-2 col-form-label">Impact</label>
+                    <select name="impact" id="impactSelect">
+                        {{#each ragValues }}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="severitySelect" class="col-sm-2 col-form-label">Severity</label>
+                    <select name="severity" id="severitySelect">
+                        {{#each ragValues }}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="descriptionInput">Risk</label>
+                    <textarea rows="3"
+                              class="form-control"
+                              name="description"
+                              id="descriptionInput"
+                              placeholder="Description of the risk"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="mitigationInput">Mitigation action</label>
+                    <textarea rows="3"
+                              class="form-control"
+                              name="mitigation"
+                              id="mitigationInput"
+                              placeholder="Mitigation action being taken for the risk"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add risk</button>
+            </form>
+        </div>
+    </div>
+</div>

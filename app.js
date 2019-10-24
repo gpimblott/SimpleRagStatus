@@ -23,6 +23,7 @@ const index = require('./routes/index');
 const report = require('./routes/report');
 const project = require('./routes/project');
 const account = require('./routes/account');
+const risk = require('./routes/risk');
 const authentication = require('./routes/authentication');
 
 // DAO database access
@@ -87,6 +88,7 @@ app.use('/report', report);
 app.use('/project', project);
 app.use('/account', account);
 app.use('/auth', authentication);
+app.use( '/risk', risk );
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

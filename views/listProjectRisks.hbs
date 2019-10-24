@@ -1,0 +1,38 @@
+<script src="/js/addMethods.js"></script>
+<div class="container-fluid">
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-11">
+            <div class="reportTitle">Project Risks</div>
+            {{#if user.editor}}
+                <a href="/project/{{projectId}}/risk/add">Add new risk</a>
+            {{/if}}
+            <table id="report_table" class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th>Date Added</th>
+                    <th>Likelihood</th>
+                    <th>Impact</th>
+                    <th>Severity</th>
+                    <th>Risk</th>
+                    <th>Mitigation</th>
+                    <th>State</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each risks}}
+                    <tr>
+                        <td class="dateFixedWidth">{{formatDate this.date_added}}</td>
+                        <td class="rag_status {{this.likelihood}}">{{this.likelihood}}</td>
+                        <td class="rag_status {{this.impact}}">{{this.impact}}</td>
+                        <td class="rag_status {{this.severity}}">{{this.severity}}</td>
+                        <td>{{this.risk}}</td>
+                        <td>{{this.mitigating_action}}</td>
+                        <td>{{#if this.is_closed}}Closed{{else}}Open{{/if}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

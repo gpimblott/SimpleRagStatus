@@ -6,6 +6,7 @@ const security = require('../authentication/security');
 
 const projectDao = require("../dao/projectDAO");
 const reportDao = require("../dao/reportDAO");
+const riskDao = require("../dao/riskDAO");
 const projectStatusDao = require("../dao/projectStatusDAO");
 
 const router = express.Router();
@@ -34,7 +35,79 @@ router.get('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
             logger.error("Failed to get project page: %s", error);
             res.render('error',
                 {
-                    message: "Error adding new report",
+                    message: "Error getting project report",
+                    error: error
+                });
+        });
+});
+
+/**
+ * Get a the risks for a project
+ */
+router.get('/:id(\\d+)/risk', security.isAuthenticated, (req, res) => {
+    let projectId = parseInt(req.params.id);
+
+    riskDao.getRiskByProjectId(projectId)
+        .then(risks => {
+            res.render('listProjectRisks',
+                {
+                    risks: risks,
+                    projectId: projectId
+                });
+        })
+        .catch(error => {
+            logger.error("Failed to get project risks: %s", error);
+            res.render('error',
+                {
+                    message: "Error getting project risks",
+                    error: error
+                });
+        });
+});
+
+/**
+ * Add a new risk for a project
+ */
+router.post('/:id(\\d+)/risk', security.isAuthenticated, (req, res) => {
+    let projectId = parseInt(req.params.id);
+
+    console.log(req.body);
+    riskDao.addRisk(projectId, req.body)
+        .then(result => {
+            res.redirect('/project/' + projectId + '/risk');
+        });
+});
+
+/**
+ * Display page to add a new risk
+ */
+router.get('/:id(\\d+)/risk/add', security.isAuthenticated, (req, res) => {
+    let projectId = parseInt(req.params.id);
+
+    let promises = [];
+    promises.push(projectStatusDao.getRAGStatusValues());
+    promises.push(riskDao.getRiskByProjectId(projectId));
+    promises.push(projectDao.getProjectById(projectId));
+
+    Promise.all(promises)
+        .then(results => {
+            let risks = results[ 1 ];
+            let ragStatus = results[ 0 ];
+            let project = results[ 2 ][ 0 ];
+
+            res.render('addRisk',
+                {
+                    ragValues: ragStatus,
+                    risks: risks,
+                    projectId: projectId,
+                    project: project
+                });
+        })
+        .catch(error => {
+            logger.error("Failed to add project risk: %s", error);
+            res.render('error',
+                {
+                    message: "Error adding project risk",
                     error: error
                 });
         });
