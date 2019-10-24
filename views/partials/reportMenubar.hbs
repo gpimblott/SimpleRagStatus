@@ -11,18 +11,22 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    Reports
+                    Status Reports
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    {{#if user.admin}}
-                        <a class="dropdown-item" href="/report/">Manage reports</a>
-                        <div class="dropdown-divider"></div>
-                    {{/if}}
 
                     {{#each project_reports}}
                         <a class="dropdown-item" href="/report/{{this.id}}">{{formatDate this.report_date}}</a>
                     {{/each}}
+
+                    {{#if user.admin}}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/report/">Manage reports</a>
+                    {{/if}}
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/risk/">Risk Register</a>
             </li>
             {{#if user.admin}}
             <li class="nav-item">
