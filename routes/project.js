@@ -47,12 +47,20 @@ router.get('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
 router.get('/:id(\\d+)/risk', security.isAuthenticated, (req, res) => {
     let projectId = parseInt(req.params.id);
 
-    riskDao.getRiskByProjectId(projectId)
-        .then(risks => {
+    let promises = [];
+
+    promises.push( riskDao.getRiskByProjectId(projectId));
+    promises.push( projectDao.getProjectById(projectId));
+
+    Promise.all( promises)
+        .then(results => {
+            let risks = results[0];
+            let project = results[1][0];
+
             res.render('listProjectRisks',
                 {
                     risks: risks,
-                    projectId: projectId
+                    project: project
                 });
         })
         .catch(error => {
@@ -104,10 +112,10 @@ router.get('/:id(\\d+)/risk/add', security.isAuthenticated, (req, res) => {
                 });
         })
         .catch(error => {
-            logger.error("Failed to add project risk: %s", error);
+            logger.error("Failed to display add risk page: %s", error);
             res.render('error',
                 {
-                    message: "Error adding project risk",
+                    message: "Error displaying add risk page",
                     error: error
                 });
         });
@@ -172,10 +180,10 @@ router.post('/:projectId(\\d+)/report/:reportId(\\d+)', security.isAuthenticated
             res.redirect("/project/" + projectId);
         })
         .catch(error => {
-            logger.error("Failed to update project : %s", error);
+            logger.error("Failed to update project report : %s", error);
             res.render('error',
                 {
-                    message: "Error adding new report",
+                    message: "Error updating report report",
                     error: error
                 });
         });

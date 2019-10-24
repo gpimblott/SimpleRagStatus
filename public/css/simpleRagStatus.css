@@ -24,15 +24,15 @@ p.copyright {
     color: black;
 }
 
-td.Amber {
+.Amber {
     background: lemonchiffon;
 }
 
-td.Green {
+.Green {
     background: lightgreen;
 }
 
-td.Red {
+.Red {
     background: lightpink;
 }
 

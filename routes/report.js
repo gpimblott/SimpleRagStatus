@@ -3,7 +3,6 @@
 const logger = require('../winstonLogger')(module);
 const express = require('express');
 const security = require('../authentication/security');
-
 const reportDao = require("../dao/reportDAO");
 const projectStatusDao = require("../dao/projectStatusDAO");
 
@@ -18,15 +17,28 @@ router.get('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
     logger.info("Display current report");
 
     projectStatusDao.getStatusReportByReportId(reportId)
-        .then(projectStatusReport => {
+        .then((ragReports)=>{
+
+            let scopeTotals = { red: 0, amber: 0, green: 0 };
+            let scheduleTotals = { red: 0, amber: 0, green: 0 };
+            let riskTotals = { red: 0, amber: 0, green: 0 };
+
+            ragReports.forEach(item => {
+                countColours(scopeTotals, item.scope);
+                countColours(scheduleTotals, item.schedule);
+                countColours(riskTotals, item.risk);
+            });
 
             let theReport = res.locals.project_reports.find(item => { return item.id === reportId });
 
             if (theReport !== undefined) {
                 res.render('report',
                     {
-                        project_rag: projectStatusReport,
-                        report: theReport
+                        project_rag: ragReports,
+                        report: theReport,
+                        scopeTotals: scopeTotals,
+                        scheduleTotals: scheduleTotals,
+                        riskTotals: riskTotals
                     });
             } else {
                 throw ("Can't find report for id " + reportId);
@@ -137,5 +149,18 @@ router.delete('/:id(\\d+)/', security.isAuthenticatedAdmin, (req, res) => {
             res.sendStatus(500);
         });
 });
+
+function countColours (totals, item) {
+    switch (item) {
+        case 'Red' :
+            totals.red += 1;
+            break;
+        case 'Amber' :
+            totals.amber += 1;
+            break;
+        case 'Green' :
+            totals.green += 1;
+    }
+}
 
 module.exports = router;

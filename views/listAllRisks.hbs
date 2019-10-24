@@ -1,9 +1,48 @@
 <script src="/js/addMethods.js"></script>
 <div class="container-fluid">
+    <div class="reportTitle">Risk Register</div>
+    <div class="row justify-content-md-center align-items-center">
+
+        <div class="col col-md-2">
+            <div class="card">
+                <h5 class="card-header text-center">Likelihood</h5>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-danger display-4 font-weight-bold text-center">{{likelihoodTotals.red}}</li>
+                        <li class="list-group-item bg-warning display-4 font-weight-bold text-center">{{likelihoodTotals.amber}}</li>
+                        <li class="list-group-item bg-success display-4 font-weight-bold text-center">{{likelihoodTotals.green}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-2">
+            <div class="card">
+                <h5 class="card-header text-center">Impact</h5>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-danger text-center font-weight-bold display-4">{{impactTotals.red}}</li>
+                        <li class="list-group-item bg-warning text-center font-weight-bold display-4">{{impactTotals.amber}}</li>
+                        <li class="list-group-item bg-success text-center font-weight-bold display-4">{{impactTotals.green}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-2">
+            <div class="card">
+                <h5 class="card-header text-center">Severity</h5>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-danger text-center font-weight-bold display-4">{{severityTotals.red}}</li>
+                        <li class="list-group-item bg-warning text-center font-weight-bold display-4">{{severityTotals.amber}}</li>
+                        <li class="list-group-item bg-success text-center font-weight-bold display-4">{{severityTotals.green}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-11">
-            <div class="reportTitle">Risk Register</div>
-
             <table id="report_table" class="table">
                 <thead class="thead-light">
                 <tr>

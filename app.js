@@ -17,6 +17,7 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const security = require('./authentication/security');
 const helpers = require('./lib/handlebarsHelpers')
+const helmet = require('helmet');
 
 // Routes
 const index = require('./routes/index');
@@ -64,6 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session(sess));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(helmet());
 
 
 app.use(bodyParser.json());

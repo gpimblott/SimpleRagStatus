@@ -2,9 +2,10 @@
 <div class="container-fluid">
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-11">
-            <div class="reportTitle">Project Risks</div>
+            <div class="reportTitle">{{project.name}} risks</div>
+            <a href="/project/{{project.id}}">Back to {{project.name}}</a>
             {{#if user.editor}}
-                <a href="/project/{{projectId}}/risk/add">Add new risk</a>
+                | <a href="/project/{{project.id}}/risk/add">Add new risk</a>
             {{/if}}
             <table id="report_table" class="table">
                 <thead class="thead-light">
