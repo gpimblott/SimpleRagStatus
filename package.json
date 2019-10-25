@@ -2,7 +2,7 @@
   "name": "RAGe",
   "version": "0.1.0",
   "scripts": {
-    "start": "node ./bin/www.js",
+    "start": "node -r esm ./bin/www.js",
     "test": "mocha --require esm tests/*.js --exit",
     "dev": "nodemon -r esm ./bin/www.js"
   },
