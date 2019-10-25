@@ -58,7 +58,7 @@ p.copyright {
     margin-bottom: 20px;
 }
 
-.reportTitle {
+.pageTitle {
     font-family: 'Raleway', sans-serif;
     font-size: 24px;
     font-weight: 600;
@@ -106,7 +106,7 @@ p.copyright {
         color: black;
     }
 
-    .iconOnRight {
+    .dontPrint {
         display: none;
     }
 }

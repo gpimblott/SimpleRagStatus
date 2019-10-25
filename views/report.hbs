@@ -2,19 +2,27 @@
 
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-9">
-            <div class="reportTitle">RAG report for {{formatDate report.report_date}}</div>
+            <div class="pageTitle">RAG report for {{formatDate report.report_date}}</div>
             <div id="headerButtons">
                 <p>
+                    <a class="btn btn-outline-secondary btn-sm" href="/" role="button">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#reportDashboard"
+                       role="button"
+                       aria-expanded="true" aria-controls="projectDescription">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
                     <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#projectDescription"
                        role="button"
                        aria-expanded="false" aria-controls="projectDescription">
-                        Report Description
+                        <i class="fas fa-info-circle"></i> Report Description
                     </a>
-                    <button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse"
-                            data-target="#downloadLinks"
-                            aria-expanded="false" aria-controls="downloadLinks">
-                        Download report
-                    </button>
+                    <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#downloadLinks"
+                       role="button"
+                       aria-expanded="false" aria-controls="downloadLinks">
+                        <i class="fas fa-download"></i> Download Report
+                    </a>
                 </p>
                 <div class="collapse" id="projectDescription">
                     <div class="card card-body">
@@ -23,14 +31,15 @@
                 </div>
                 <div class="collapse" id="downloadLinks">
                     <div class="card card-body">
-                        <a href="/report/{{report.id}}/spreadsheet"><i class="fas fa-file-excel"></i> Download report as Excel file</a>
+                        <a href="/report/{{report.id}}/spreadsheet"><i class="fas fa-file-excel"></i> Download report as
+                            Excel file</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row justify-content-md-center align-items-center">
+    <div class="row justify-content-md-center align-items-center collapse show" id="reportDashboard">
 
         <div class="col col-lg-3">
             <div class="card">
@@ -75,6 +84,9 @@
             <table id="report_table" class="table table-striped table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
+                    {{#if user.editor}}
+                        <th class="dontPrint"></th>
+                    {{/if}}
                     <th>Project Code</th>
                     <th>Service / Team</th>
                     <th class="rag_status">Schedule</th>
@@ -87,22 +99,22 @@
                 <tbody>
                 {{#each project_rag}}
                     <tr>
-                        <td>{{this.code}}</td>
-                        <td>
-                            <div class="textOnLeft">
-                                <a data-toggle="tooltip" title="View all reports for this project"
-                                   href="/project/{{this.project_id}}">{{this.project_name}}</a>
-                            </div>
-
-
-                            {{#if ../user.editor}}
-                                <div class="iconOnRight">
+                        {{#if ../user.editor}}
+                            <td class="dontPrint">
+                                <div>
                                     <a data-toggle="tooltip" title="Edit project status"
                                        href="/project/{{this.project_id}}/report/{{../report.id}}">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                 </div>
-                            {{/if}}
+                            </td>
+                        {{/if}}
+                        <td>{{this.code}}</td>
+                        <td>
+                            <div class="">
+                                <a data-toggle="tooltip" title="View all reports for this project"
+                                   href="/project/{{this.project_id}}">{{this.project_name}}</a>
+                            </div>
                         </td>
                         <td class="rag_status {{this.schedule}}">
                             <div class="textOnLeft {{this.schedule}}">{{this.schedule}}</div>

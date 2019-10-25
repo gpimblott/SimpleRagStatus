@@ -1,8 +1,9 @@
 <script src="/js/addMethods.js"></script>
 <div class="container-fluid">
-    <div class="reportTitle">Risk Register</div>
-    <div class="row justify-content-md-center align-items-center">
+    <div class="pageTitle">Risk Register</div>
 
+
+    <div class="row justify-content-md-center align-items-center">
         <div class="col col-lg-3">
             <div class="card">
                 <h5 class="card-header text-center">Likelihood</h5>
@@ -58,7 +59,7 @@
                 <tbody>
                 {{#each risks}}
                     <tr>
-                        <td>{{this.project_name}}</td>
+                        <td><a href="/project/{{this.project_id}}/risk">{{this.project_name}}</a></td>
                         <td class="dateFixedWidth">{{formatDate this.date_added}}</td>
                         <td class="rag_status {{this.likelihood}}">{{this.likelihood}}</td>
                         <td class="rag_status {{this.impact}}">{{this.impact}}</td>

@@ -2,18 +2,42 @@
 
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-11">
-            <div class="projectName">{{project.name}}</div>
-            <div class="projectDescription">{{project.description}}</div>
+            <div class="pageTitle">{{project.name}}</div>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col-md-11">
+            <p>
+                <a class="btn btn-outline-secondary btn-sm" href="/" role="button">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#projectDescription"
+                   role="button"
+                   aria-expanded="false" aria-controls="projectDescription">
+                    <i class="fas fa-info-circle"></i> Project Description
+                </a>
+                <a class="btn btn-outline-secondary btn-sm"  href="/project/{{project.id}}/risk"
+                   role="button">
+                    <i class="fas fa-exclamation-triangle"></i> Project Risks
+                </a>
+            </p>
+            <div class="collapse" id="projectDescription">
+                <div class="card card-body">
+                    <div class="reportDescription">{{project.description}}</div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-11">
-            <a href="/project/{{project.id}}/risk">Show project risks</a> |
-            <a href="/risk">Show all risks</a>
             <table id="report_table" class="table table-striped table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
+                    {{#if user.editor}}
+                        <th class="dontPrint"></th>
+                    {{/if}}
                     <th>Date</th>
                     <th>Schedule</th>
                     <th>Scope</th>
@@ -24,13 +48,17 @@
                 <tbody>
                 {{#each reports}}
                     <tr>
-                        <td style="width: 150px">
-                            <a data-toggle="tooltip" title="View report" href="/report/{{this.report_id}}">{{formatDate this.report_date}}</a>
+                        <td class="dontPrint">
                             {{#if ../user.editor}}
-                                <a data-toggle="tooltip" title="Edit this report" href="/project/{{../project.id}}/report/{{this.report_id}}">
+                                <a data-toggle="tooltip" title="Edit this report"
+                                   href="/project/{{../project.id}}/report/{{this.report_id}}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             {{/if}}
+                        </td>
+                        <td style="width: 150px">
+                            <a data-toggle="tooltip" title="View report" href="/report/{{this.report_id}}">{{formatDate
+                                    this.report_date}}</a>
                         </td>
                         <td class="rag_status {{schedule}}">{{schedule}}</td>
                         <td class="rag_status {{scope}}">{{scope}}</td>

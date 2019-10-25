@@ -1,12 +1,33 @@
 <script src="/js/addMethods.js"></script>
 <div class="container-fluid">
+
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-11">
-            <div class="reportTitle">{{project.name}} risks</div>
-            <a href="/project/{{project.id}}">Back to {{project.name}}</a>
-            {{#if user.editor}}
-                | <a href="/project/{{project.id}}/risk/add">Add new risk</a>
-            {{/if}}
+            <div class="pageTitle">{{project.name}} risks</div>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-11">
+            <p>
+                <a class="btn btn-outline-secondary btn-sm" href="/" role="button">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}" role="button">
+                    <i class="fas fa-external-link-square-alt"></i> {{project.name}}
+                </a>
+                {{#if user.editor}}
+                    <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}/risk/add" role="button">
+                        <i class="fas fa-plus-square"></i> Add Risk
+                    </a>
+                {{/if}}
+            </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-11">
+
             <table id="report_table" class="table">
                 <thead class="thead-light">
                 <tr>
