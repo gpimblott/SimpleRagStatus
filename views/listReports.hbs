@@ -4,7 +4,7 @@
         <div class="col col-md-8">
             <div class="pageTitle">Current Reports</div>
             {{#if user.editor}}
-            <a href="/report/add">Add new report</a>
+            <a href="/report?action=add">Add new report</a>
             {{/if}}
             <table id="report_table" class="table">
                 <thead class="thead-light">
@@ -21,7 +21,7 @@
                             <a data-toggle="tooltip" title="View report" href="/report/{{this.id}}">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a data-toggle="tooltip" title="Edit report"  href="/report/edit/{{this.id}}">
+                            <a data-toggle="tooltip" title="Edit report"  href="/report/{{this.id}}?action=edit">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <a data-toggle="tooltip" title="Delete report" href="/report/{{this.id}}"
