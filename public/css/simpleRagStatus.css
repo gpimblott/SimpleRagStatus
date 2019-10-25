@@ -16,7 +16,7 @@ p.copyright {
     background-color: darkslategrey;
 }
 
-.navbar  a {
+.navbar a {
     color: white;
 }
 
@@ -25,15 +25,15 @@ p.copyright {
 }
 
 .Amber {
-    background: lemonchiffon;
+    background-color: lemonchiffon;
 }
 
 .Green {
-    background: lightgreen;
+    background-color: lightgreen;
 }
 
 .Red {
-    background: lightpink;
+    background-color: lightpink;
 }
 
 .rag_status {
@@ -72,21 +72,43 @@ p.copyright {
 }
 
 .textOnLeft {
-    float:left;
-    width:90%;
+    float: left;
+    width: 90%;
 }
 
 .iconOnRight {
-    float:right;
-    width:10%;
+    float: right;
+    width: 10%;
 }
 
 .dateFixedWidth {
-    width:120px;
+    width: 120px;
 }
 
 .actionsFixedWidth {
-    width:80px;
+    width: 80px;
+}
+
+@media print {
+    * {
+        color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    #headerButtons {
+        visibility: hidden;
+        display: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .iconOnRight {
+        display: none;
+    }
 }
 
 

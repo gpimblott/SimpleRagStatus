@@ -1,9 +1,32 @@
 <div class="container-fluid">
 
     <div class="row justify-content-md-center align-items-center">
-        <div class="col col-md-11">
+        <div class="col col-md-9">
             <div class="reportTitle">RAG report for {{formatDate report.report_date}}</div>
-            <div class="reportDescription">{{report.title}}</div>
+            <div id="headerButtons">
+                <p>
+                    <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#projectDescription"
+                       role="button"
+                       aria-expanded="false" aria-controls="projectDescription">
+                        Report Description
+                    </a>
+                    <button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse"
+                            data-target="#downloadLinks"
+                            aria-expanded="false" aria-controls="downloadLinks">
+                        Download report
+                    </button>
+                </p>
+                <div class="collapse" id="projectDescription">
+                    <div class="card card-body">
+                        <div class="reportDescription">{{report.title}}</div>
+                    </div>
+                </div>
+                <div class="collapse" id="downloadLinks">
+                    <div class="card card-body">
+                        <a href="/report/{{report.id}}/spreadsheet"><i class="fas fa-file-excel"></i> Download report as Excel file</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -24,7 +47,7 @@
         <div class="col col-lg-3">
             <div class="card">
                 <h5 class="card-header text-center">Schedule</h5>
-                <div class="card-body"  style="margin: 0 auto">
+                <div class="card-body" style="margin: 0 auto">
                     <ul class="list-group list-group-horizontal list-group-flush">
                         <li class="list-group-item bg-danger text-center font-weight-bold display-4">{{scheduleTotals.red}}</li>
                         <li class="list-group-item bg-warning text-center font-weight-bold display-4">{{scheduleTotals.amber}}</li>
@@ -36,7 +59,7 @@
         <div class="col col-lg-3">
             <div class="card">
                 <h5 class="card-header text-center">Risk</h5>
-                <div class="card-body"  style="margin: 0 auto">
+                <div class="card-body" style="margin: 0 auto">
                     <ul class="list-group list-group-horizontal list-group-flush">
                         <li class="list-group-item bg-danger text-center font-weight-bold display-4">{{riskTotals.red}}</li>
                         <li class="list-group-item bg-warning text-center font-weight-bold display-4">{{riskTotals.amber}}</li>
@@ -48,7 +71,7 @@
     </div>
     <hr>
     <div class="row justify-content-md-center align-items-center">
-        <div class="col-md-11 ">
+        <div class="col-md-11">
             <table id="report_table" class="table table-striped table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
@@ -67,30 +90,33 @@
                         <td>{{this.code}}</td>
                         <td>
                             <div class="textOnLeft">
-                                <a data-toggle="tooltip" title="View all reports for this project" href="/project/{{this.project_id}}">{{this.project_name}}</a>
+                                <a data-toggle="tooltip" title="View all reports for this project"
+                                   href="/project/{{this.project_id}}">{{this.project_name}}</a>
                             </div>
 
 
                             {{#if ../user.editor}}
                                 <div class="iconOnRight">
-                                    <a data-toggle="tooltip" title="Edit project status" href="/project/{{this.project_id}}/report/{{../report.id}}">
+                                    <a data-toggle="tooltip" title="Edit project status"
+                                       href="/project/{{this.project_id}}/report/{{../report.id}}">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                 </div>
                             {{/if}}
                         </td>
                         <td class="rag_status {{this.schedule}}">
-                            <div class="textOnLeft">{{this.schedule}}</div>
-                            <div class="iconOnRight"><i class="{{directionArrow schedule_direction}}"
-                                                                   aria-hidden="true"></i></div>
+                            <div class="textOnLeft {{this.schedule}}">{{this.schedule}}</div>
+                            <div class="iconOnRight {{this.schedule}}"><i class="{{directionArrow schedule_direction}}"
+                                                                          aria-hidden="true"></i></div>
+
                         <td class="rag_status {{this.scope}}">
-                            <div class="textOnLeft">{{this.scope}}</div>
-                            <div class="iconOnRight"><i class="{{directionArrow scope_direction}}"
-                                                                   aria-hidden="true"></i></div>
+                            <div class="textOnLeft {{this.scope}}">{{this.scope}}</div>
+                            <div class="iconOnRight {{this.scope}}"><i class="{{directionArrow scope_direction}}"
+                                                                       aria-hidden="true"></i></div>
                         <td class="rag_status {{this.risk}}">
-                            <div class="textOnLeft">{{this.risk}}</div>
-                            <div class="iconOnRight"><i class="{{directionArrow risk_direction}}"
-                                                                   aria-hidden="true"></i></div>
+                            <div class="textOnLeft {{this.risk}}">{{this.risk}}</div>
+                            <div class="iconOnRight {{this.risk}}"><i class="{{directionArrow risk_direction}}"
+                                                                      aria-hidden="true"></i></div>
                         <td>{{this.description}}</td>
                     </tr>
                 {{/each}}

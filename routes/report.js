@@ -8,6 +8,8 @@ const projectStatusDao = require("../dao/projectStatusDAO");
 
 const router = express.Router();
 
+import ExcelReport from '../lib/generateExcel';
+
 /**
  * Display report by Id
  */
@@ -17,7 +19,7 @@ router.get('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
     logger.info("Display current report");
 
     projectStatusDao.getStatusReportByReportId(reportId)
-        .then((ragReports)=>{
+        .then((ragReports) => {
 
             let scopeTotals = { red: 0, amber: 0, green: 0 };
             let scheduleTotals = { red: 0, amber: 0, green: 0 };
@@ -51,6 +53,30 @@ router.get('/:id(\\d+)/', security.isAuthenticated, (req, res) => {
                     message: "Failed to display main report page",
                     error: error
                 });
+        });
+});
+
+/**
+ * Download an Excel spreadsheet for this report
+ */
+router.get('/:id(\\d+)/spreadsheet', security.isAuthenticated, (req, res) => {
+    let reportId = parseInt(req.params.id);
+
+    let report = new ExcelReport();
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
+
+    report.createExcelReport(reportId)
+        .then(workbook => {
+            return report.saveWorkbookToStream(res);
+        })
+        .then(result => {
+            res.end();
+        })
+        .catch(error => {
+            logger.error("Error returning excel file : %s", error);
+            res.sendStatus(500);
+            res.end();
         });
 });
 
