@@ -2,7 +2,6 @@
   "name": "RAGe",
   "version": "0.1.0",
   "scripts": {
-    "build": "babel lib -d dist",
     "start": "node ./bin/www.js",
     "test": "mocha --require esm tests/*.js --exit",
     "dev": "nodemon -r esm ./bin/www.js"
