@@ -25,7 +25,7 @@ module.exports = function (callingModule) {
             myFormat
         ),
         transports: [
-            new transports.File({ filename: 'prototyper-error.log', level: 'error' }),
+            new transports.File({ filename: 'rage-error.log', level: 'error' }),
             new transports.Console()
         ]
     });
