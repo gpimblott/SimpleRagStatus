@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-md-center align-items-center">
+    <div class="row justify-content-md-center align-items-center dontPrint">
         <div class="col col-md-11">
             <p>
                 <a class="btn btn-outline-secondary btn-sm" href="/" role="button">
@@ -17,7 +17,7 @@
                     <i class="fas fa-external-link-square-alt"></i> {{project.name}}
                 </a>
                 {{#if user.editor}}
-                    <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}/risk/add" role="button">
+                    <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}/risk?action=add" role="button">
                         <i class="fas fa-plus-square"></i> Add Risk
                     </a>
                 {{/if}}
@@ -48,7 +48,7 @@
                         <td class="dontPrint">
                             {{#if ../user.editor}}
                                 <a data-toggle="tooltip" title="Edit this risk"
-                                   href="/project/{{../project.id}}/risk/{{this.report_id}}/edit">
+                                   href="/project/{{../project.id}}/risk/{{id}}?action=edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             {{/if}}

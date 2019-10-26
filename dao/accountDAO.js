@@ -14,7 +14,7 @@ AccountDAO.getAllAccounts = function () {
     return database.query(
             `SELECT acc.*, r.name as role_name
              FROM account acc
-             JOIN role r on acc.role_id = r.id
+                      JOIN role r on acc.role_id = r.id
              ORDER BY acc.username`,
         [])
 };
@@ -44,7 +44,7 @@ AccountDAO.getAccountById = function (accountId) {
 }
 
 /**
- * Add a new account - details are specified in a simple object
+ * Add a new/update account - details are specified in a simple object
  * {
  *     username:
  *     firstname:
@@ -68,6 +68,13 @@ AccountDAO.addAccount = function (account) {
         });
 }
 
+AccountDAO.updateAccount = function (accountId, account) {
+    return database.insertOrUpdate(
+            `UPDATE account SET username=$2, firstname=$3, surname=$4, role_id=$5, email=$6
+                    WHERE id=$1`,
+        [accountId, account.username, account.firstname, account.surname, account.role, account.email]);
+}
+
 /**
  * Update the password for the specified account.
  * This method requires that the previous password is passed (and correct), along with the new password
@@ -88,7 +95,7 @@ AccountDAO.updatePasswordWithOldPasswordCheck = function (accountId, currentPass
         })
         .then(match => {
             if (match) {
-                return this.updatePassword( newPassword );
+                return this.updatePassword(newPassword);
             } else {
                 throw ("Old password doesn't match ");
             }
@@ -114,7 +121,6 @@ AccountDAO.updatePassword = function (accountId, newPassword) {
                 [hash, accountId])
         });
 };
-
 
 /**
  * Delete the account with the specified ID

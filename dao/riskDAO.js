@@ -34,7 +34,7 @@ RiskDAO.getRiskByProjectId = function (id) {
                 JOIN rag_status rs2 on pr.likelihood_id = rs2.id
                 JOIN rag_status rs3 on pr.severity_id = rs3.id
                 where project_id = $1 
-                order by date_added`,
+                order by date_added desc`,
         [id])
 };
 

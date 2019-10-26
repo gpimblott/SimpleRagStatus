@@ -84,6 +84,7 @@ app.use(function(req,res,next){
     });
 })
 
+
 // Define the routes
 app.use('/', index);
 app.use('/report', report);
@@ -101,13 +102,18 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
+    logger.error("Error: %s", err.message);
+
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+    res.render('error',
+        {
+            message: "Error encountered",
+            error: err
+        });
 });
 
 module.exports = app;

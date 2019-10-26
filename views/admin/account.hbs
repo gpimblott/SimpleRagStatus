@@ -1,9 +1,28 @@
 <script src="/js/addMethods.js"></script>
 <div class="container-fluid">
+
+    <div class="row justify-content-md-center align-items-center dontPrint">
+        <div class="col col-md-10">
+            <div class="pageTitle">Accounts</div>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center align-items-center dontPrint">
+        <div class="col col-md-8">
+            <p>
+                <a class="btn btn-outline-secondary btn-sm" href="/" role="button">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a class="btn btn-outline-secondary btn-sm" href="/account?action=add" role="button">
+                    <i class="fas fa-plus-square"></i> Add Account
+                </a>
+            </p>
+        </div>
+    </div>
+
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-8">
-            <div class="pageTitle">Accounts</div>
-            <a href="/account/add">Add new account</a>
+
             <table id="account_table" class="table">
                 <thead class="thead-light">
                 <tr>
@@ -17,7 +36,7 @@
                 {{#each accounts}}
                     <tr>
                         <td style="width: 80px">
-                            <a data-toggle="tooltip" title="Edit account" href="/account/edit/{{this.id}}">
+                            <a data-toggle="tooltip" title="Edit account" href="/account/{{this.id}}?action=edit">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <a data-toggle="tooltip" title="Delete account" href="/account/{{this.id}}"

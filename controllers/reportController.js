@@ -1,5 +1,7 @@
 'use strict';
 
+const logger = require('../winstonLogger')(module);
+
 import ExcelReport from '../lib/generateExcel'
 
 const reportDao = require("../dao/reportDAO");
@@ -10,7 +12,9 @@ const projectStatusDao = require("../dao/projectStatusDAO");
  * @param req
  * @param res
  */
-exports.displayReport = function (req, res) {
+exports.displayReport = function (req, res , next) {
+    let reportId = req.reportId;
+
     projectStatusDao.getStatusReportByReportId(reportId)
         .then((ragReports) => {
 
@@ -40,12 +44,8 @@ exports.displayReport = function (req, res) {
             }
         })
         .catch(error => {
-            logger.error("Failed to display main report page: %s", error);
-            res.render('error',
-                {
-                    message: "Failed to display main report page",
-                    error: error
-                });
+            let err = new Error(`Filed to display main report page`); // Sets error message, includes the requester's ip address!
+            next(err);
         });
 }
 
@@ -54,8 +54,8 @@ exports.displayReport = function (req, res) {
  * @param req
  * @param res
  */
-exports.editReport = function (req, res) {
-    let reportId = parseInt(req.params.id);
+exports.updateReportPage = function (req, res, next) {
+    let reportId = req.reportId;
 
     logger.info("Editing report : %s", reportId);
 
@@ -67,21 +67,81 @@ exports.editReport = function (req, res) {
                 });
         })
         .catch(error => {
-            logger.error("Failed to display edit page: %s", error);
-            res.render('error',
-                {
-                    message: "Error displaying edit page",
-                    error: error
-                });
+            let err = new Error(`Failed to display Report update page`);
+            err.statusCode = 500;
+            next(err);
         });
 };
+
+/**
+ * Update an existing report
+ * @param req
+ * @param res
+ */
+exports.updateReport = function (req, res, next ) {
+    let reportId = req.reportId;
+
+    logger.info('Updating report : %d', reportId);
+
+    reportDao.updateReport(reportId, req.body.reportDescription)
+        .then(result => {
+            res.redirect('/report');
+        })
+        .catch(error => {
+            let err = new Error(`Failed to update report`);
+            err.statusCode = 500;
+            next(err);
+        });
+};
+
+/**
+ * Add a new report
+ * @param req
+ * @param res
+ */
+exports.addReport = function (req, res, next ) {
+
+    logger.info("Adding new report");
+
+    reportDao.addReport(req.body.reportDate, req.body.reportDescription)
+        .then(result => {
+            res.redirect('/report');
+        })
+        .catch(error => {
+            let err = new Error(`Failed to add report`);
+            err.statusCode = 500;
+            next(err);
+        });
+}
+
+/**
+ * Delete an existing report
+ * @param req
+ * @param res
+ */
+exports.deleteReport = function (req, res, next) {
+    let reportId = req.reportId;
+
+    logger.info("Deleting report : %s", reportId);
+
+    reportDao.deleteReportById(reportId)
+        .then(result => {
+            res.sendStatus(200);
+        })
+        .catch(error => {
+            let err = new Error(`Failed to add report`);
+            err.statusCode = 500;
+            next(err);
+        });
+};
+
 
 /**
  * Download a spreadsheet version of the report
  * @param req
  * @param res
  */
-exports.downloadSpreadsheet = function (req, res) {
+exports.downloadSpreadsheet = function (req, res, next) {
 
     logger.info("Downloading spreadsheet");
 
@@ -97,76 +157,9 @@ exports.downloadSpreadsheet = function (req, res) {
             res.end();
         })
         .catch(error => {
-            logger.error("Error returning excel file : %s", error);
-            res.sendStatus(500);
-            res.end();
-        });
-};
-
-/**
- * Add a new report
- * @param req
- * @param res
- */
-exports.addReport = function (req, res) {
-
-    logger.info("Adding new report");
-
-    reportDao.addReport(req.body.reportDate, req.body.reportDescription)
-        .then(result => {
-            res.redirect('/report');
-        })
-        .catch(error => {
-            logger.error("Failed to add new report : %s", error);
-            res.render('error',
-                {
-                    message: "Error adding new report",
-                    error: error
-                });
-        });
-}
-
-/**
- * Update an existing report
- * @param req
- * @param res
- */
-exports.updateReport = function (req, res) {
-    let reportId = parseInt(req.params.id);
-
-    logger.info('Updating report : %d', reportId);
-
-    reportDao.updateReport(reportId, req.body.reportDescription)
-        .then(result => {
-            res.redirect('/report');
-        })
-        .catch(error => {
-            logger.error("Failed to update an existing report: %s", error);
-            res.render('error',
-                {
-                    message: "Error updating existing report",
-                    error: error
-                });
-        });
-};
-
-/**
- * Delete an existing report
- * @param req
- * @param res
- */
-exports.deleteReport = function (req, res) {
-    let reportId = parseInt(req.params.id);
-
-    logger.info("Deleting report : %s", reportId);
-
-    reportDao.deleteReportById(reportId)
-        .then(result => {
-            res.sendStatus(200);
-        })
-        .catch(error => {
-            logger.error("Failed to delete report : %s", error);
-            res.sendStatus(500);
+            let err = new Error(`Error generating spreadsheet`);
+            err.statusCode = 500;
+            next(err);
         });
 };
 

@@ -1,149 +1,66 @@
 'use strict';
 
-const logger = require('../winstonLogger')(module);
 const express = require('express');
 const security = require('../authentication/security');
 
-const accountDao = require("../dao/accountDAO");
+const accountController = require('../controllers/accountController');
 
 const router = express.Router();
+
+router.param('accountId', function (req, res, next, id) {
+    req.accountId = parseInt(id);
+    next();
+});
 
 /**
  * Display the page of add accounts
  *
  * GET /
- *
- * Admin only
  */
 router.get('/', security.isAuthenticatedAdmin, (req, res) => {
+    let action = (req.query.action || "view").toLowerCase();
 
-    accountDao.getAllAccounts()
-        .then(accounts => {
-            res.render('admin/account',
-                {
-                    layout: "main",
-                    accounts: accounts
-                });
-        })
-        .catch(error => {
-            logger.error("Failed to get all accounts: %s", error);
-            res.render('error',
-                {
-                    message: "Failed to get all accounts",
-                    error: error
-                });
-        });
+    if (action === 'add') {
+        accountController.addAccountPage(req, res);
+    } else {
+        accountController.listAllAccounts(req, res);
+    }
 });
 
 /**
- * Display the add account page
- *
- * GET /account/add
- *
- * Admin only
+ * Edit an account
  */
-router.get("/add", security.isAuthenticatedAdmin, (req, res) => {
-    accountDao.getAllRoles().then(roles => {
-        res.render('admin/addAccount',
-            {
-                roles: roles,
-                layout: "main"
-            });
-    });
-});
+router.get("/:accountId(\\d+)", security.isAuthenticatedAdmin, accountController.editAccountPage );
 
 /**
  * Display the change password page for a specified account ID
  *
  * GET /account/{account_id}/password
- *
- * Admin only
  */
-router.get("/:id(\\d+)/password", security.isAuthenticatedAdmin, (req, res) => {
-    let accountId = parseInt(req.params.id);
-    accountDao.getAccountById(accountId)
-        .then(account => {
-            res.render('admin/changePassword', {
-                account: account[ 0 ]
-            });
-        })
-
-});
+router.get("/:accountId(\\d+)/password", security.isAuthenticatedAdmin, accountController.changePasswordPage);
 
 /**
  * Posing to /account adds a new account then redirects to the account list page
  *
  * POST /account/
  */
-router.post('/', security.isAuthenticatedAdmin, (req, res) => {
-
-    logger.info("Adding new account %s", req.body.username);
-    accountDao.addAccount(req.body)
-        .then(result => {
-            res.redirect('/account/');
-        })
-        .catch(error => {
-            logger.error("Error creating account: %s", error);
-            res.render('error',
-                {
-                    message: "Error creating account",
-                    error: error
-                });
-        })
-});
+router.post('/', security.isAuthenticatedAdmin, accountController.addAccount);
+router.post('/:accountId(\\d+)', security.isAuthenticatedAdmin, accountController.updateAccount);
 
 /**
  * Update the specified users password - if successful redirect to the account list
  * This only requires the new password to be specified
  *
  * POST /account/{account_id}/password
- *
- * Admin only
  */
-router.post('/:id(\\d+)/password', security.isAuthenticatedAdmin, (req, res) => {
-    let accountId = parseInt(req.params.id);
-    logger.info("Updating password %s", accountId);
-
-    if (req.body.password1 != req.body.password2) {
-        logger.info("New passwords are different");
-        res.redirect('/account');
-        return;
-    }
-
-    accountDao.updatePassword(accountId, req.body.password2)
-        .then(result => {
-            if(result.rowCount!==1) {
-                throw("Password not updated");
-            }
-
-            logger.info("Password for account %s updated", accountId);
-            res.redirect('/account');
-        })
-        .catch(error => {
-            logger.error("Error updating password: %s", error);
-            res.render('error',
-                {
-                    message: "Failed to update password",
-                    error: error
-                });
-        });
-
-});
+router.post('/:accountId(\\d+)/password', security.isAuthenticatedAdmin, accountController.updatePassword);
 
 /**
  * Delete a user account
  *
  * DEL /account/{account_id}/
  */
-router.delete('/:id(\\d+)/', security.isAuthenticatedAdmin, (req, res) => {
-    let accountId = parseInt(req.params.id);
-    logger.info("DELETE user %s", accountId);
+router.delete('/:accountId(\\d+)/', security.isAuthenticatedAdmin, accountController.deleteAccount);
 
-    accountDao.deleteAccountById(accountId)
-        .then(result => {
-            res.sendStatus(200);
-        });
-
-});
 
 module.exports = router;

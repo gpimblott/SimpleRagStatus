@@ -8,32 +8,35 @@ const router = express.Router();
 
 const reportController = require('../controllers/reportController');
 
-/**
- * Return all of the defined reports
- */
-router.get('/', security.isAuthenticated, (req, res) => {
-    let action = req.query.action || "";
+router.param('reportId', function(req, res, next, id){
+    req.reportId = parseInt(id);
+    next();
+});
 
-    if (action.toLowerCase() === 'add') {
+// Return all of the defined reports
+router.get('/', security.isAuthenticated, (req, res) => {
+    let action = (req.query.action || "view").toLowerCase();
+
+    if (action === 'add') {
         res.render('addReport', {});
     } else {
         res.render('listReports', {});
     }
 });
 
-/**
- * Display the edit page
- */
-router.get('/:id(\\d+)/', security.isAuthenticatedAdmin, (req, res) => {
-    let action = req.query.action || "";
-    action = action.toLowerCase();
+// Display the edit page
+//
+// report/{reportId}?action={edit|xlsx|view (default) }
+router.get('/:reportId(\\d+)/', security.isAuthenticatedAdmin, (req, res, next) => {
+    let action = (req.query.action || "view").toLowerCase();
 
     if (action === 'edit') {
-        reportController.editReport(req, res);
+        reportController.updateReportPage(req, res, next);
     } else if (action === 'xlsx') {
-        reportController.downloadSpreadsheet(req, res);
+        reportController.downloadSpreadsheet(req, res, next );
     } else {
-        reportController.displayReport(req, res);
+        // Default action = view
+        reportController.displayReport(req, res, next);
     }
 });
 
@@ -45,12 +48,12 @@ router.post('/', security.isAuthenticatedAdmin, reportController.addReport);
 /**
  * Update a report (POST to an existing ID).  Should be a PUT but the frameworks don't support this
  */
-router.post('/:id(\\d+)/', security.isAuthenticatedAdmin, reportController.updateReport);
+router.post('/:reportId(\\d+)/', security.isAuthenticatedAdmin, reportController.updateReport);
 
 /**
  * Delete a report by ID
  */
-router.delete('/:id(\\d+)/', security.isAuthenticatedAdmin, reportController.deleteReport);
+router.delete('/:reportId(\\d+)/', security.isAuthenticatedAdmin, reportController.deleteReport);
 
 
 module.exports = router;

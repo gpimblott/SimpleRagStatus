@@ -1,11 +1,29 @@
 <script src="/js/addMethods.js"></script>
 <div class="container-fluid">
+    <div class="row justify-content-md-center align-items-center dontPrint">
+        <div class="col col-md-10">
+            <div class="pageTitle">Reports</div>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center align-items-center dontPrint">
+        <div class="col col-md-10">
+            <p>
+                <a class="btn btn-outline-secondary btn-sm" href="/" role="button">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                {{#if user.editor}}
+                    <a class="btn btn-outline-secondary btn-sm" href="/report?action=add" role="button">
+                        <i class="fas fa-plus-square"></i> Add Report
+                    </a>
+                {{/if}}
+            </p>
+        </div>
+    </div>
+
     <div class="row justify-content-md-center align-items-center">
-        <div class="col col-md-8">
-            <div class="pageTitle">Current Reports</div>
-            {{#if user.editor}}
-            <a href="/report?action=add">Add new report</a>
-            {{/if}}
+        <div class="col col-md-10">
+
             <table id="report_table" class="table">
                 <thead class="thead-light">
                 <tr>
@@ -21,7 +39,7 @@
                             <a data-toggle="tooltip" title="View report" href="/report/{{this.id}}">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a data-toggle="tooltip" title="Edit report"  href="/report/{{this.id}}?action=edit">
+                            <a data-toggle="tooltip" title="Edit report" href="/report/{{this.id}}?action=edit">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <a data-toggle="tooltip" title="Delete report" href="/report/{{this.id}}"
@@ -31,7 +49,9 @@
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
-                        <td class="dateFixedWidth"><a data-toggle="tooltip" title="View report" href="/report/{{this.id}}">{{formatDate this.report_date}}</a></td>
+                        <td class="dateFixedWidth"><a data-toggle="tooltip" title="View report"
+                                                      href="/report/{{this.id}}">{{formatDate this.report_date}}</a>
+                        </td>
                         <td>{{this.title}}</td>
                     </tr>
                 {{/each}}
