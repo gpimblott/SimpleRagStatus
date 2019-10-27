@@ -135,7 +135,7 @@ class DBConnection {
         let sql = "SELECT * FROM " + tableName;
         let params = [];
 
-        if (order != null) {
+        if (order !== null) {
             sql = sql + " ORDER BY $1";
             params.push(order);
         }

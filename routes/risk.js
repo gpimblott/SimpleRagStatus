@@ -5,7 +5,26 @@ const express = require('express');
 const security = require('../authentication/security');
 const riskDao = require("../dao/riskDAO");
 
+const riskController = require("../controllers/riskController");
+
 const router = express.Router();
+
+/**
+ * For routes that use projectId retrieve the project details
+ */
+router.param('riskId', function (req, res, next, id) {
+    req.riskId = parseInt(id);
+
+    riskDao.getRiskById(id)
+        .then(result => {
+            req.risk = result[ 0 ];
+            next();
+        })
+        .catch(error => {
+            next( error );
+        });
+
+});
 
 /**
  * The default page - currently just redirects to the latest report
@@ -25,7 +44,7 @@ router.get('/', security.isAuthenticated, (req, res) => {
                 countColours(likelihoodTotals, item.likelihood);
             });
 
-            res.render('listAllRisks',
+            res.render('risks/listAllRisks',
                 {
                     risks: risks,
                     impactTotals: impactTotals,
@@ -43,7 +62,17 @@ router.get('/', security.isAuthenticated, (req, res) => {
         });
 });
 
-function countColours(totals, item) {
+/**
+ * View or edit a specific risk
+ */
+router.get('/:riskId(\\d+)', security.isAuthenticated, (req, res, next) => {
+    riskController.editRiskPage( req, res, next );
+});
+
+router.post('/:riskId(\\d+)', security.isAuthenticated,
+    riskController.updateRisk);
+
+function countColours (totals, item) {
     switch (item) {
         case 'Red' :
             totals.red += 1;

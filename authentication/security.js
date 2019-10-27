@@ -31,10 +31,10 @@ Security.isAuthenticated = function (req, res, next) {
 Security.isAuthenticatedAdmin = function (req, res, next) {
     if (req.isAuthenticated() && req.user.admin) {
         return next();
+    } else {
+        req.session.redirect_to = req.originalUrl;
+        res.redirect('/auth/login');
     }
-
-    req.session.redirect_to = req.originalUrl;
-    res.redirect('/auth/login');
 }
 
 /**
@@ -47,10 +47,10 @@ Security.isAuthenticatedAdmin = function (req, res, next) {
 Security.isAuthenticatedEditor = function (req, res, next) {
     if (req.isAuthenticated() && req.user.editor) {
         return next();
+    } else {
+        req.session.redirect_to = req.originalUrl;
+        res.redirect('/auth/login');
     }
-
-    req.session.redirect_to = req.originalUrl;
-    res.redirect('/auth/login');
 }
 
 module.exports = Security;

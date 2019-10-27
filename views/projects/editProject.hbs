@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-8">
+            <div class="pageTitle">Edit {{project.name}}</div>
+            <form action="/project/{{project.id}}" method="post">
+                <div class="form-group">
+                    <label for="text">Name</label>
+                    <input type="text" class="form-control" name="name" id="projectName" aria-describedby="nameHelp"
+                           placeholder="Project name" value="{{project.name}}">
+                    <small id="nameHelp" class="form-text text-muted">Name of the project</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectCode">Code</label>
+                    <input type="text" class="form-control" name="code" id="projectCode" aria-describedby="codeHelp"
+                           placeholder="Project code" value="{{project.code}}">
+                    <small id="codeHelp" class="form-text text-muted">Code assigned to the project</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="descriptionInput">Description</label>
+                    <textarea rows="3"
+                              class="form-control"
+                              name="description"
+                              id="descriptionInput"
+                              placeholder="Description of the project">{{project.description}}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update project</button>
+            </form>
+        </div>
+    </div>
+</div>

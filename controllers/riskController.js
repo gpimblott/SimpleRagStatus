@@ -4,7 +4,7 @@ const logger = require('../winstonLogger')(module);
 
 const riskDao = require("../dao/riskDAO");
 const projectStatusDao = require("../dao/projectStatusDAO");
-
+const projectDao = require("../dao/projectDAO");
 
 /**
  * Display the add risk page
@@ -24,7 +24,7 @@ exports.displayAddRiskPage = function (req, res) {
             let ragStatus = results[ 0 ];
             let project = req.project;
 
-            res.render('addRisk',
+            res.render('risks/addRisk',
                 {
                     ragValues: ragStatus,
                     risks: risks,
@@ -55,7 +55,7 @@ exports.displayRisksForProjectPage = function (req, res) {
             let risks = results;
             let project = req.project;
 
-            res.render('listProjectRisks',
+            res.render('risks/listProjectRisks',
                 {
                     risks: risks,
                     project: project
@@ -93,3 +93,41 @@ exports.addProjectRisk = function (req, res) {
         });
 };
 
+exports.editRiskPage = function (req, res, next) {
+    let riskId = req.riskId;
+    let risk = req.risk;
+
+    let promises = [];
+    promises.push(projectStatusDao.getRAGStatusValues());
+    promises.push(projectDao.getProjectById(risk.project_id));
+
+    Promise.all( promises )
+        .then(results => {
+            let ragValues = results[0];
+            let project = results[1][0];
+
+            res.render('risks/editRisk', {
+                risk: risk,
+                ragValues: ragValues,
+                project: project
+            });
+        })
+        .catch(error => {
+            logger.error("Error retrieving risk : %s", error);
+            next(error);
+        });
+};
+
+exports.updateRisk = function (req, res, next) {
+    let riskId = req.riskId;
+    let risk = req.risk;
+
+    riskDao.updateRisk(riskId, req.body)
+        .then(result => {
+            res.redirect('/project/' + risk.project_id + '/risk');
+        })
+        .catch(error=>{
+            logger.error("Error updating risk %s", riskId);
+            next(error);
+        });
+}

@@ -18,16 +18,16 @@ router.get('/', security.isAuthenticated, (req, res) => {
     let action = (req.query.action || "view").toLowerCase();
 
     if (action === 'add') {
-        res.render('addReport', {});
+        res.render('statusReports/addReport', {});
     } else {
-        res.render('listReports', {});
+        res.render('statusReports/listReports', {});
     }
 });
 
 // Display the edit page
 //
 // report/{reportId}?action={edit|xlsx|view (default) }
-router.get('/:reportId(\\d+)/', security.isAuthenticatedAdmin, (req, res, next) => {
+router.get('/:reportId(\\d+)/', security.isAuthenticated, (req, res, next) => {
     let action = (req.query.action || "view").toLowerCase();
 
     if (action === 'edit') {
@@ -35,7 +35,6 @@ router.get('/:reportId(\\d+)/', security.isAuthenticatedAdmin, (req, res, next) 
     } else if (action === 'xlsx') {
         reportController.downloadSpreadsheet(req, res, next );
     } else {
-        // Default action = view
         reportController.displayReport(req, res, next);
     }
 });

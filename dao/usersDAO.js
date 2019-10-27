@@ -16,7 +16,6 @@ const UsersDAO = function () {
  * @param done Function to call with the result
  */
 UsersDAO.findById = function (id, done) {
-    logger.info("Find by ID : %s", id);
     const sql =`SELECT acc.*,r.is_admin, r.is_editor FROM account acc
                  JOIN role r on acc.role_id = r.id
                  WHERE acc.id=$1;`

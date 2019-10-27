@@ -31,7 +31,7 @@ exports.displayReport = function (req, res , next) {
             let theReport = res.locals.project_reports.find(item => { return item.id === reportId });
 
             if (theReport !== undefined) {
-                res.render('report',
+                res.render('statusReports/ragReport',
                     {
                         project_rag: ragReports,
                         report: theReport,
@@ -61,7 +61,7 @@ exports.updateReportPage = function (req, res, next) {
 
     reportDao.getReportById(reportId)
         .then(results => {
-            res.render('editReport',
+            res.render('statusReports/editReport',
                 {
                     report: results[ 0 ]
                 });
@@ -142,6 +142,7 @@ exports.deleteReport = function (req, res, next) {
  * @param res
  */
 exports.downloadSpreadsheet = function (req, res, next) {
+    let reportId = req.reportId;
 
     logger.info("Downloading spreadsheet");
 
