@@ -1,8 +1,4 @@
-CREATE TABLE IF NOT EXISTS rag_status
-(
-    id   SERIAL PRIMARY KEY,
-    name VARCHAR(10) UNIQUE
-);
+CREATE TYPE rag_status AS ENUM ('Red','Amber','Green');
 
 CREATE TABLE IF NOT EXISTS project_group
 (
@@ -30,9 +26,11 @@ CREATE TABLE IF NOT EXISTS project_status
 (
     id                 SERIAL PRIMARY KEY,
     project_id         integer REFERENCES project (id),
-    schedule_status_id integer REFERENCES rag_status (id) ON DELETE CASCADE,
-    scope_status_id    integer REFERENCES rag_status (id) ON DELETE CASCADE,
-    risk_status_id     integer REFERENCES rag_status (id) ON DELETE CASCADE,
+
+    schedule            rag_status,
+    scope               rag_status,
+    risk                rag_status,
+    benefits            rag_status,
     report_id          integer REFERENCES report (id) ON DELETE CASCADE,
     description        TEXT,
     unique (report_id, project_id)
@@ -45,6 +43,9 @@ CREATE TABLE IF NOT EXISTS role
     is_admin boolean default false,
     is_editor boolean default false
 );
+
+
+INSERT INTO role (name,is_admin,is_editor) VALUES ( 'Admin', true, true ),('User', false, false), ('Editor',false, true);
 
 CREATE TABLE IF NOT EXISTS account
 (

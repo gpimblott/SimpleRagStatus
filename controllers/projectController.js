@@ -6,6 +6,8 @@ const reportDao = require("../dao/reportDAO");
 const projectStatusDao = require("../dao/projectStatusDAO");
 const projectDao = require("../dao/projectDAO");
 
+const ragValues = ['Red','Amber','Green'];
+
 /**
  * Display all project page - admins can edit
  * @param req
@@ -81,7 +83,6 @@ exports.displayUpdateProjectReportPage = function (req, res, next) {
 
     let promises = [];
     promises.push(reportDao.getReportById(reportId));
-    promises.push(projectStatusDao.getRAGStatusValues());
     promises.push(projectStatusDao.getClosestReportForApplication(projectId, reportId));
 
     Promise.all(promises)
@@ -89,10 +90,9 @@ exports.displayUpdateProjectReportPage = function (req, res, next) {
 
             let currentProject = req.project;
             let currentReport = result[ 0 ][ 0 ];
-            let ragValues = result[ 1 ];
-            let latestReport = result[ 2 ][ 0 ];
+            let latestReport = result[ 1 ][ 0 ];
 
-            if (currentProject === undefined || currentReport === undefined || ragValues === undefined) {
+            if (currentProject === undefined || currentReport === undefined) {
                 throw("Unable to find record");
             }
 

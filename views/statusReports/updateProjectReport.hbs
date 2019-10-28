@@ -17,9 +17,9 @@
                         <label for="scopeSelect" class="col-sm-2 col-form-label">Scope</label>
                         <select name="scope" id="scopeSelect">
                             {{#each ragValues }}
-                                <option value="{{this.id}}"
-                                        {{#ifCond this.id "==" ../latestReport.scope_status_id}}selected="selected"{{/ifCond}}>
-                                    {{this.name}}
+                                <option value="{{this}}"
+                                        {{#ifCond this "==" ../latestReport.scope}}selected="selected"{{/ifCond}}>
+                                    {{this}}
                                 </option>
                             {{/each}}
                         </select>
@@ -28,9 +28,9 @@
                         <label for="riskSelect" class="col-sm-2 col-form-label">Risk</label>
                         <select name="risk" id="riskSelect">
                             {{#each ragValues }}
-                                <option value="{{this.id}}"
-                                        {{#ifCond this.id "==" ../latestReport.risk_status_id}}selected="selected"{{/ifCond}}>
-                                    {{this.name}}
+                                <option value="{{this}}"
+                                        {{#ifCond this "==" ../latestReport.risk}}selected="selected"{{/ifCond}}>
+                                    {{this}}
                                 </option>
                             {{/each}}
                         </select>
@@ -40,9 +40,9 @@
                         <label for="scheduleSelect" class="col-sm-2 col-form-label">Schedule</label>
                         <select name="schedule" id="scheduleSelect">
                             {{#each ragValues }}
-                                <option value="{{this.id}}"
-                                        {{#ifCond this.id "==" ../latestReport.schedule_status_id}}selected="selected"{{/ifCond}}>
-                                    {{this.name}}
+                                <option value="{{this}}"
+                                        {{#ifCond this "==" ../latestReport.schedule}}selected="selected"{{/ifCond}}>
+                                    {{this}}
                                 </option>
                             {{/each}}
                         </select>

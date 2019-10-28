@@ -52,20 +52,14 @@ ReportDAO.getMostRecent = function () {
 ReportDAO.getReportsForProjectById = function (projectId) {
     return database.query(
         `with rag as (
-    select ps.*,
-            rs1.name as risk,
-            rs2.name as schedule,
-            rs3.name as scope
-    from project_status ps
-        JOIN rag_status rs1 on risk_status_id = rs1.id
-        JOIN rag_status rs2 on schedule_status_id = rs2.id
-        JOIN rag_status rs3 on scope_status_id = rs3.id
-        WHERE project_id=$1
-    )
-    SELECT r.report_date,r.id as report_id,rag.risk, rag.schedule, rag.scope, rag.description
-    FROM report r
-    LEFT JOIN rag on rag.report_id=r.id
-    ORDER BY report_date desc;`, [projectId]);
+                SELECT ps.*
+                FROM project_status ps
+                WHERE project_id=$1
+                )
+                SELECT r.report_date,r.id as report_id,rag.risk, rag.schedule, rag.scope, rag.description
+                FROM report r
+                LEFT JOIN rag on rag.report_id=r.id
+                ORDER BY report_date desc;`, [projectId]);
 };
 
 /**

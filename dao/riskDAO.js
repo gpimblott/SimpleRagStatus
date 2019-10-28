@@ -10,14 +10,11 @@ const RiskDAO = function () {
  */
 RiskDAO.getAllOpenRisks = function () {
     return database.query(
-            `SELECT pr.*, rs1.name as impact, rs2.name as likelihood, rs3.name as severity, p.name as project_name
-             from project_risk pr
-                      JOIN rag_status rs1 on pr.impact_id = rs1.id
-                      JOIN rag_status rs2 on pr.likelihood_id = rs2.id
-                      JOIN rag_status rs3 on pr.severity_id = rs3.id
-                      JOIN project p on pr.project_id = p.id
-             where pr.is_closed = false
-             order by date_added`,
+            `SELECT pr.*, p.name as project_name
+             FROM project_risk pr
+             JOIN project p ON pr.project_id = p.id
+             WHERE pr.is_closed = false
+             ORDER BY date_added`,
         [])
 };
 /**
@@ -27,13 +24,10 @@ RiskDAO.getAllOpenRisks = function () {
  */
 RiskDAO.getRiskByProjectId = function (id) {
     return database.query(
-            `SELECT pr.*, rs1.name as impact, rs2.name as likelihood, rs3.name as severity
-             from project_risk pr
-                      JOIN rag_status rs1 on pr.impact_id = rs1.id
-                      JOIN rag_status rs2 on pr.likelihood_id = rs2.id
-                      JOIN rag_status rs3 on pr.severity_id = rs3.id
-             where project_id = $1
-             order by is_closed asc, date_added desc`,
+            `SELECT pr.*
+             FROM project_risk pr
+             WHERE project_id = $1
+             ORDER BY is_closed asc, date_added desc`,
         [id])
 };
 
@@ -57,7 +51,7 @@ RiskDAO.getRiskById = function (riskId) {
 RiskDAO.addRisk = function (projectId, risk) {
     return database.insertOrUpdate(
             `INSERT INTO project_risk (date_added, project_id,
-                                       likelihood_id, impact_id, severity_id,
+                                       likelihood, impact, severity,
                                        risk, mitigating_action, is_closed)
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
         [risk.riskDate, projectId, risk.likelihood, risk.impact, risk.severity,
@@ -78,9 +72,9 @@ RiskDAO.updateRisk = function (riskId, risk) {
 
     return database.insertOrUpdate(
             `UPDATE project_risk
-             SET likelihood_id=$2,
-                 impact_id=$3,
-                 severity_id=$4,
+             SET likelihood=$2,
+                 impact=$3,
+                 severity=$4,
                  risk=$5,
                  mitigating_action=$6,
                  is_closed=$7

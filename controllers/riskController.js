@@ -6,6 +6,7 @@ const riskDao = require("../dao/riskDAO");
 const projectStatusDao = require("../dao/projectStatusDAO");
 const projectDao = require("../dao/projectDAO");
 
+const ragValues = ['Red','Amber','Green'];
 /**
  * Display the add risk page
  * @param req
@@ -14,19 +15,14 @@ const projectDao = require("../dao/projectDAO");
 exports.displayAddRiskPage = function (req, res) {
     let projectId = req.projectId;
 
-    let promises = [];
-    promises.push(projectStatusDao.getRAGStatusValues());
-    promises.push(riskDao.getRiskByProjectId(projectId));
-
-    Promise.all(promises)
+    riskDao.getRiskByProjectId(projectId)
         .then(results => {
             let risks = results[ 1 ];
-            let ragStatus = results[ 0 ];
             let project = req.project;
 
             res.render('risks/addRisk',
                 {
-                    ragValues: ragStatus,
+                    ragValues: ragValues,
                     risks: risks,
                     projectId: projectId,
                     project: project
@@ -94,17 +90,11 @@ exports.addProjectRisk = function (req, res) {
 };
 
 exports.editRiskPage = function (req, res, next) {
-    let riskId = req.riskId;
     let risk = req.risk;
 
-    let promises = [];
-    promises.push(projectStatusDao.getRAGStatusValues());
-    promises.push(projectDao.getProjectById(risk.project_id));
-
-    Promise.all( promises )
+    projectDao.getProjectById(risk.project_id)
         .then(results => {
-            let ragValues = results[0];
-            let project = results[1][0];
+            let project = results[0][0];
 
             res.render('risks/editRisk', {
                 risk: risk,

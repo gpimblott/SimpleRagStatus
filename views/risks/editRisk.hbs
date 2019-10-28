@@ -13,9 +13,9 @@
                     <label for="likelihoodSelect" class="col-sm-2 col-form-label">Likelihood</label>
                     <select name="likelihood" id="likelihoodSelect">
                         {{#each ragValues }}
-                            <option value="{{this.id}}" style=""
-                                    {{#ifCond this.id "=="
-                                              ../risk.likelihood_id}}selected="selected"{{/ifCond}}>{{this.name}}</option>
+                            <option value="{{this}}" style=""
+                                    {{#ifCond this "=="
+                                              ../risk.likelihood}}selected="selected"{{/ifCond}}>{{this}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -23,9 +23,9 @@
                     <label for="impactSelect" class="col-sm-2 col-form-label">Impact</label>
                     <select name="impact" id="impactSelect">
                         {{#each ragValues }}
-                            <option value="{{this.id}}"
-                                    {{#ifCond this.id "=="
-                                              ../risk.impact_id}}selected="selected"{{/ifCond}}>{{this.name}}</option>
+                            <option value="{{this}}"
+                                    {{#ifCond this "=="
+                                              ../risk.impact}}selected="selected"{{/ifCond}}>{{this}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -33,9 +33,9 @@
                     <label for="severitySelect" class="col-sm-2 col-form-label">Severity</label>
                     <select name="severity" id="severitySelect">
                         {{#each ragValues }}
-                            <option value="{{this.id}}"
-                                    {{#ifCond this.id "=="
-                                              ../risk.severity_id}}selected="selected"{{/ifCond}}>{{this.name}}</option>
+                            <option value="{{this}}"
+                                    {{#ifCond this "=="
+                                              ../risk.severity}}selected="selected"{{/ifCond}}>{{this}}</option>
                         {{/each}}
                     </select>
                 </div>

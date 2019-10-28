@@ -69,8 +69,7 @@ router.get('/:riskId(\\d+)', security.isAuthenticated, (req, res, next) => {
     riskController.editRiskPage( req, res, next );
 });
 
-router.post('/:riskId(\\d+)', security.isAuthenticated,
-    riskController.updateRisk);
+router.post('/:riskId(\\d+)', security.isAuthenticated, riskController.updateRisk);
 
 function countColours (totals, item) {
     switch (item) {

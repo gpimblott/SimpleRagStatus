@@ -10,8 +10,6 @@ const defaultPassword = process.env.DEFAULT_PASSWORD || 'password';
 /**
  * First setup the required roles
  */
-
-
 const accounts = [
     { username: 'admin', role: 'Admin', firstName: 'admin', surname: 'admin', email: 'admin@dummy.com' },
     { username: 'gordon', role: 'Admin', firstName: 'Gordon', surname: 'Pimblott', email: 'gordon@dummy.com' },

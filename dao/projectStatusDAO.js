@@ -22,20 +22,12 @@ const ProjectStatusDAO = function () {
 ProjectStatusDAO.updateProjectStatusForReportById = function (projectId, reportId , update ) {
     return database.insertOrUpdate(
         `INSERT INTO project_status (project_id, report_id, 
-                            risk_status_id, scope_status_id, schedule_status_id,
+                            risk, scope, schedule,
                             description ) VALUES ( $1, $2, $3, $4, $5, $6 )
                             ON CONFLICT  ON CONSTRAINT project_status_report_id_project_id_key
                                 DO UPDATE 
-                            SET risk_status_id=$3, scope_status_id=$4, schedule_status_id=$5 , description=$6` ,
+                            SET risk=$3, scope=$4, schedule=$5 , description=$6` ,
         [projectId , reportId , update.risk, update.scope, update.schedule, update.reportUpdate ]);
-}
-
-/**
- * Get all of the RAG status values
- * @returns {Promise | Promise<unknown>}
- */
-ProjectStatusDAO.getRAGStatusValues = function () {
-    return database.query( "select * from rag_status order by id",[]);
 }
 
 /**
@@ -62,29 +54,27 @@ ProjectStatusDAO.getClosestReportForApplication = function (applicationId , repo
  * @returns {Promise<unknown>}
  */
 ProjectStatusDAO.getStatusReportByReportId = function (reportId) {
-    return database.query(`with rag as (SELECT ps.*,
+    return database.query(`with rag as (
+                SELECT ps.*,
                     r.report_date,
-                    rs1.name as risk,
-                    rs2.name as schedule,
-                    rs3.name as scope,
-                    LAG(ps.risk_status_id, 1) OVER (
+                    LAG(ps.risk, 1) OVER (
                         PARTITION BY project_id
                         ORDER BY r.report_date asc
                         )       previous_risk,
-                    LAG(ps.schedule_status_id, 1) OVER (
+                    LAG(ps.schedule, 1) OVER (
                         PARTITION BY project_id
                         ORDER BY r.report_date asc
                         )       previous_schedule,
-                    LAG(ps.scope_status_id, 1) OVER (
+                    LAG(ps.scope, 1) OVER (
                         PARTITION BY project_id
                         ORDER BY r.report_date asc
-                        )       previous_scope
+                        )       previous_scope,
+                    LAG(ps.benefits, 1) OVER (
+                        PARTITION BY project_id
+                        ORDER BY r.report_date asc
+                        )       previous_benefits
              FROM project_status ps
-                      --JOIN project p on ps.project_id = p.id
-                      JOIN report r on ps.report_id = r.id
-                      JOIN rag_status rs1 on risk_status_id = rs1.id
-                      JOIN rag_status rs2 on schedule_status_id = rs2.id
-                      JOIN rag_status rs3 on scope_status_id = rs3.id
+                JOIN report r on ps.report_id = r.id
              ORDER BY report_id desc
 )
 select p.name as project_name,
@@ -95,13 +85,12 @@ select p.name as project_name,
        rag.risk,
        rag.schedule,
        rag.scope,
+       rag.benefits,
        p.id as project_id,
        previous_risk,
        previous_schedule,
        previous_scope,
-       (rag.risk_status_id - previous_risk)         as risk_direction,
-       (rag.scope_status_id - previous_scope)       as scope_direction,
-       (rag.schedule_status_id - previous_schedule) as schedule_direction
+       previous_benefits
 from project p
          left join (select * from rag where report_id = $1) rag on rag.project_id = p.id
          order by project_name`,

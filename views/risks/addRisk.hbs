@@ -13,7 +13,7 @@
                     <label for="likelihoodSelect" class="col-sm-2 col-form-label">Likelihood</label>
                     <select name="likelihood" id="likelihoodSelect">
                         {{#each ragValues }}
-                            <option value="{{this.id}}">{{this.name}}</option>
+                            <option value="{{this}}">{{this}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -21,7 +21,7 @@
                     <label for="impactSelect" class="col-sm-2 col-form-label">Impact</label>
                     <select name="impact" id="impactSelect">
                         {{#each ragValues }}
-                            <option value="{{this.id}}">{{this.name}}</option>
+                            <option value="{{this}}">{{this}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -29,7 +29,7 @@
                     <label for="severitySelect" class="col-sm-2 col-form-label">Severity</label>
                     <select name="severity" id="severitySelect">
                         {{#each ragValues }}
-                            <option value="{{this.id}}">{{this.name}}</option>
+                            <option value="{{this}}">{{this}}</option>
                         {{/each}}
                     </select>
                 </div>
