@@ -11,7 +11,16 @@ ProjectDAO.getProjectById = function (id) {
 };
 
 ProjectDAO.getAllProjects = function () {
-    return database.query("select * from project order by name");
+    return database.query(
+        `select p.*,pp.name as phase_name ,pg.name as group_name
+                from project p 
+                    join project_phase pp on p.phase=pp.id 
+                    join project_group pg on p.project_group_id = pg.id
+                order by name`);
+};
+
+ProjectDAO.getProjectGroups = function () {
+    return database.query( "SELECT * from project_group", [])
 };
 
 ProjectDAO.updateProject = function(projectId, project) {
@@ -26,6 +35,13 @@ ProjectDAO.addProject = function( project ) {
 
 ProjectDAO.deleteProject = function( projectId) {
     return database.deleteByIds( 'project', [projectId]);
+}
+
+ProjectDAO.getPhaseCounts = function () {
+    return database.query(`select pp.name as phase_name,count(p.name) as phase_count
+                                from project p
+                                right join project_phase pp on p.phase = pp.id
+                                group by pp.name;`,[])
 }
 
 

@@ -3,6 +3,7 @@ const express = require('express');
 
 const security = require('../authentication/security');
 const reportDao = require("../dao/reportDAO");
+const projectDao = require('../dao/projectDAO');
 
 const router = express.Router();
 
@@ -17,12 +18,12 @@ router.get('/', security.isAuthenticated, (req, res) => {
     } else {
         reportDao.getMostRecent()
             .then(result => {
-                if(result.length!==1) {
+                if (result.length !== 1) {
                     throw("No Reports found");
                 }
                 res.redirect('/report/' + result[ 0 ].id)
             })
-            .catch( error => {
+            .catch(error => {
                 logger.error("Failed to get main index page: %s", error);
                 res.render('error',
                     {
@@ -33,5 +34,41 @@ router.get('/', security.isAuthenticated, (req, res) => {
     }
 });
 
+router.get('/programme', security.isAuthenticated, (req, res) => {
+
+    let promises = [];
+    promises.push(projectDao.getAllProjects());
+    promises.push(projectDao.getPhaseCounts());
+
+    Promise.all(promises)
+        .then(results => {
+
+            let projectArray = results[ 0 ];
+            let countsArray = results[ 1 ];
+            let counts = {};
+            let data = {};
+
+            countsArray.forEach(item => {
+                counts[ item.phase_name ] = item.phase_count;
+            });
+
+            projectArray.forEach(item => {
+                
+                if (data.hasOwnProperty(item.group_name)) {
+                    data[ item.group_name ][ item.phase_name ].push(item);
+                } else {
+                    data[ item.group_name ] = { Prep: [], Discovery: [], Alpha: [], Beta: [], Live: [] };
+                    data[ item.group_name ][ item.phase_name ].push(item);
+                };
+            });
+
+            res.render('programme', {
+                layout: 'programme',
+                projects: data,
+                counts: counts
+            });
+        })
+
+});
 
 module.exports = router;

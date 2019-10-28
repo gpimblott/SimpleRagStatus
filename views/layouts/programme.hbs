@@ -1,0 +1,30 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+
+    {{>page_header}}
+    <link rel="stylesheet" href="/css/simpleRagStatus.css">
+    <link rel="stylesheet" href="/css/programme.css">
+</head>
+<body>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<header>
+    {{>menubar this}}
+</header>
+<main>
+    {{{body}}}
+</main>
+{{>bootstrap_js}}
+
+<footer style="margin-top: 30px">
+    <div>
+        <p class="copyright text-muted small">Copyright &copy; G.Pimblott 2019. All Rights Reserved</p>
+    </div>
+</footer>
+</body>
+</html>
+

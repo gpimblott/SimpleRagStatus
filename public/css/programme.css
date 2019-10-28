@@ -1,0 +1,161 @@
+.tag {
+    color: white !important;
+    font-weight: 700;
+    padding: 1.25em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.tag.green {
+    background-color: #549103
+}
+
+.tag.red {
+    background-color: #d53880
+}
+
+.tag.amber {
+    background-color: #d59e2a
+}
+
+.tag.prep {
+    background-color: #2e358b
+}
+
+.tag.discovery {
+    background-color: #912b88
+}
+
+.tag.alpha {
+    background-color: #d53880
+}
+
+.tag.beta {
+    background-color: #f47738
+}
+
+.tag.live {
+    background-color: #85994b
+}
+
+.txt-prep {
+    color: #2e358b
+}
+
+.txt-discovery {
+    color: #912b88
+}
+
+.txt-alpha {
+    color: #d53880
+}
+
+.txt-beta {
+    color: #f47738
+}
+
+.txt-live {
+    color: #85994b
+}
+
+.big_number {
+    font-size: 96px;
+    font-weight: 700;
+    text-align: center;
+}
+
+
+
+.link-list {
+    font-size: 14px;
+    margin-bottom: 5px;
+    margin-left:0px;
+    background-color: #f8f8f8;
+    border-left: 3px solid transparent;
+}
+
+.list-item {
+    list-style-type: none;
+    padding: 0;
+    display: block;
+    margin-bottom: 5px;
+    /*margin-block-start: 1em;*/
+    /*margin-block-end: 1em;*/
+    /*margin-inline-start: 0px;*/
+    /*margin-inline-end: 0px;*/
+    /*padding-inline-start: 0px;*/
+    border-width: 0px;
+    padding-inline-start: 0px;
+}
+
+ul.link-list {
+    padding-inline-start: 10px;
+}
+
+.border-beta {
+    border-color: #f47738;
+}
+
+.service-area {
+    border-bottom: 1px solid #bfc1c3;
+    margin-bottom: 10px;
+}
+
+.heading-large {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 24px;
+    line-height: 1.0416666667;
+    margin-top: 1.0416666667em;
+    margin-bottom: 0.4166666667em;
+}
+
+ul.timeline {
+    list-style-type: none;
+    position: relative;
+}
+
+ul.timeline:before {
+    content: ' ';
+    background: #d4d9df;
+    display: inline-block;
+    position: absolute;
+    left: 29px;
+    width: 2px;
+    height: 100%;
+    z-index: 400;
+}
+
+ul.timeline > li {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+ul.timeline > li:before {
+    content: ' ';
+    background: white;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #912b88;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    z-index: 400;
+}
+
+.stage-header {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 18px;
+}
+
+
+
+
+
+
+
