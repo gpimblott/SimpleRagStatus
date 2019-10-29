@@ -21,7 +21,7 @@ router.get('/', security.isAuthenticated, (req, res) => {
                 if (result.length !== 1) {
                     throw("No Reports found");
                 }
-                res.redirect('/report/' + result[ 0 ].id)
+                res.redirect('/programme/' + result[ 0 ].id)
             })
             .catch(error => {
                 logger.error("Failed to get main index page: %s", error);
