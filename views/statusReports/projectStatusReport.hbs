@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-md-center align-items-center">
+    <div class="row justify-content-md-center align-items-center dontPrint">
         <div class="col-md-11">
             <p>
                 <a class="btn btn-outline-secondary btn-sm" href="/" role="button">
@@ -22,12 +22,16 @@
                    role="button">
                     <i class="fas fa-exclamation-triangle"></i> Project Risks
                 </a>
+                <button class="btn btn-outline-secondary btn-sm" onclick="window.print();return false;"/>
+                <i class="fas fa-print"></i> Print
+                </button>
             </p>
             <div class="collapse" id="projectDescription">
                 <div class="card card-body">
                     <div class="reportDescription">{{project.description}}</div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -37,13 +41,14 @@
                 <thead class="thead-light">
                 <tr>
                     {{#if user.editor}}
-                        <th class="dontPrint"></th>
+                        <th class="dontPrint actionsFixedWidth"></th>
                     {{/if}}
-                    <th>Date</th>
-                    <th>Schedule</th>
-                    <th>Scope</th>
-                    <th>Risk</th>
-                    <th>Description</th>
+                    <th class="actionsFixedWidth">Date</th>
+                    <th class="rag_status">Benefits</th>
+                    <th class="rag_status">Schedule</th>
+                    <th class="rag_status">Scope</th>
+                    <th class="rag_status">Risk</th>
+                    <th>Highlights/Lowlights</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -58,14 +63,32 @@
 
                         </td>
                         {{/if}}
-                        <td style="width: 150px">
-                            <a data-toggle="tooltip" title="View report" href="/report/{{this.report_id}}">{{formatDate
-                                    this.report_date}}</a>
+                        <td class="actionsFixedWidth" style="width: 150px">
+                            <a data-toggle="tooltip" title="View report"
+                               href="/report/{{this.report_id}}">{{formatDate this.report_date}}</a>
                         </td>
+                        <td class="rag_status {{benefits}}">{{benefits}}</td>
                         <td class="rag_status {{schedule}}">{{schedule}}</td>
                         <td class="rag_status {{scope}}">{{scope}}</td>
                         <td class="rag_status {{risk}}">{{risk}}</td>
-                        <td>{{this.description}}</td>
+                        <td class="text-sm-left">
+                            <div class="d-flex">
+                                <div class="font-weight-bold" style="float: left;">Benefits:</div>
+                                <div class="col">{{this.benefits_text}}</div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="font-weight-bold" style="float: left;">Schedule:</div>
+                                <div class="col ml-auto" style="float: left;">{{this.schedule_text}}</div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="font-weight-bold" style="float: left;">Scope:</div>
+                                <div class="col">{{this.scope_text}}</div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="font-weight-bold" style="float: left;">Risk:</div>
+                                <div class="col">{{this.risk_text}}</div>
+                            </div>
+                        </td>
                     </tr>
                 {{/each}}
                 </tbody>

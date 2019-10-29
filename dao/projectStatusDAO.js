@@ -22,12 +22,15 @@ const ProjectStatusDAO = function () {
 ProjectStatusDAO.updateProjectStatusForReportById = function (projectId, reportId , update ) {
     return database.insertOrUpdate(
         `INSERT INTO project_status (project_id, report_id, 
-                            risk, scope, schedule,
-                            description ) VALUES ( $1, $2, $3, $4, $5, $6 )
-                            ON CONFLICT  ON CONSTRAINT project_status_report_id_project_id_key
-                                DO UPDATE 
-                            SET risk=$3, scope=$4, schedule=$5 , description=$6` ,
-        [projectId , reportId , update.risk, update.scope, update.schedule, update.reportUpdate ]);
+                            risk, scope, schedule, benefits,
+                            risk_text, scope_text, schedule_text, benefits_text ) 
+            VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10 )
+            ON CONFLICT  ON CONSTRAINT project_status_report_id_project_id_key
+            DO UPDATE 
+            SET risk=$3, scope=$4, schedule=$5,benefits=$6, 
+                risk_text=$7, scope_text=$8, schedule_text=$9, benefits_text=$10`,
+        [projectId , reportId , update.risk, update.scope, update.schedule, update.benefits,
+            update.risk_text, update.scope_text ,update.schedule_text,update.benefits_text ]);
 }
 
 /**
@@ -42,7 +45,7 @@ ProjectStatusDAO.getClosestReportForApplication = function (applicationId , repo
             join project_status ps on r.id=ps.report_id
             where project_id=$1 and r.report_date <= (select report_date from report where id=$2)
             order by r.report_date desc
-            limit 1;`,
+            limit 1`,
         [applicationId,reportId]);
 }
 
@@ -79,7 +82,10 @@ ProjectStatusDAO.getStatusReportByReportId = function (reportId) {
 )
 select p.name as project_name,
        rag.report_id,
-       rag.description,
+       rag.risk_text,
+       rag.scope_text,
+       rag.schedule_text,
+       rag.benefits_text,
        p.code,
        rag.report_date,
        rag.risk,

@@ -95,14 +95,14 @@ app.use( '/risk', risk );
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    let err = new Error('Not Found');
+    let err = new Error('Not Found : ' + req.url);
     err.status = 404;
     next(err);
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-    logger.error("Error: %s", err.message);
+    logger.error("Error handler: %s", err.message);
 
     // set locals, only providing error in development
     res.locals.message = err.message;

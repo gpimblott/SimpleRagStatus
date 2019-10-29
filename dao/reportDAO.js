@@ -56,7 +56,9 @@ ReportDAO.getReportsForProjectById = function (projectId) {
                 FROM project_status ps
                 WHERE project_id=$1
                 )
-                SELECT r.report_date,r.id as report_id,rag.risk, rag.schedule, rag.scope, rag.description
+                SELECT r.report_date,r.id as report_id,
+                rag.risk, rag.schedule, rag.scope, rag.benefits, 
+                rag.risk_text,rag.schedule_text, rag.scope_text,rag.benefits_text
                 FROM report r
                 LEFT JOIN rag on rag.report_id=r.id
                 ORDER BY report_date desc;`, [projectId]);

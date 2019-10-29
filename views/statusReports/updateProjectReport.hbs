@@ -1,3 +1,22 @@
+<script>
+    function enforceRAGStatusValue(item, ctlName){
+        if(item.value==='Green') {
+            let oldValue = $('#' + ctlName).val();
+            console.log(oldValue);
+
+            $('#' + ctlName ).data( "oldValue", { value: oldValue  } );
+            $('#' + ctlName).val("On Target");
+            $('#' + ctlName).attr("readonly", true);
+        } else {
+            $('#' + ctlName).attr("readonly", false);
+            let oldValue = $('#' + ctlName ).data( "oldValue" );
+            if( oldValue ) {
+                $('#' + ctlName).val(oldValue.value);
+            }
+        }
+    }
+</script>
+
 <div class="container-fluid">
 
     <div class="row justify-content-md-center align-items-center">
@@ -14,45 +33,86 @@
             <div>
                 <form method="post" action="/project/{{project.id}}/report/{{report.id}}">
                     <div class="form-group row">
-                        <label for="scopeSelect" class="col-sm-2 col-form-label">Scope</label>
-                        <select name="scope" id="scopeSelect">
-                            {{#each ragValues }}
-                                <option value="{{this}}"
-                                        {{#ifCond this "==" ../latestReport.scope}}selected="selected"{{/ifCond}}>
-                                    {{this}}
-                                </option>
-                            {{/each}}
-                        </select>
+                        <div class="col-md-4">
+                            <label for="benefitSelect" class="col-sm-6 col-form-label">Benefits</label>
+                            <select name="benefits" id="benefitSelect" onchange="enforceRAGStatusValue(this, 'benefitText')">
+                                {{#each ragValues }}
+                                    <option value="{{this}}"
+                                            {{#ifCond this "=="
+                                                      ../latestReport.benefits}}selected="selected"{{/ifCond}}>
+                                        {{this}}
+                                    </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <textarea class="form-control" id="benefitText" name="benefits_text"
+                                          rows="3">{{latestReport.benefits_text}}</textarea>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group row">
-                        <label for="riskSelect" class="col-sm-2 col-form-label">Risk</label>
-                        <select name="risk" id="riskSelect">
-                            {{#each ragValues }}
-                                <option value="{{this}}"
-                                        {{#ifCond this "==" ../latestReport.risk}}selected="selected"{{/ifCond}}>
-                                    {{this}}
-                                </option>
-                            {{/each}}
-                        </select>
-
+                        <div class="col-md-4">
+                            <label for="scheduleSelect" class="col-sm-6 col-form-label">Schedule</label>
+                            <select name="schedule" id="scheduleSelect" onchange="enforceRAGStatusValue(this, 'scheduleText')">
+                                {{#each ragValues }}
+                                    <option value="{{this}}"
+                                            {{#ifCond this "=="
+                                                      ../latestReport.schedule}}selected="selected"{{/ifCond}}>
+                                        {{this}}
+                                    </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <textarea class="form-control" id="scheduleText" name="schedule_text"
+                                          rows="3">{{latestReport.schedule_text}}</textarea>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group row">
-                        <label for="scheduleSelect" class="col-sm-2 col-form-label">Schedule</label>
-                        <select name="schedule" id="scheduleSelect">
-                            {{#each ragValues }}
-                                <option value="{{this}}"
-                                        {{#ifCond this "==" ../latestReport.schedule}}selected="selected"{{/ifCond}}>
-                                    {{this}}
-                                </option>
-                            {{/each}}
-                        </select>
+                        <div class="col-md-4">
+                            <label for="scopeSelect" class="col-sm-6 col-form-label">Scope</label>
+                            <select name="scope" id="scopeSelect" onchange="enforceRAGStatusValue(this, 'scopeText')">
+                                {{#each ragValues }}
+                                    <option value="{{this}}"
+                                            {{#ifCond this "==" ../latestReport.scope}}selected="selected"{{/ifCond}}>
+                                        {{this}}
+                                    </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <textarea class="form-control" id="scopeText" name="scope_text"
+                                          rows="3">{{latestReport.scope_text}}</textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="reportUpdate" class="col-form-label">Status update</label>
-                        <textarea class="form-control" id="reportUpdate" name="reportUpdate" rows="3">{{latestReport.description}}</textarea>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label for="riskSelect" class="col-sm-6 col-form-label">Risk</label>
+                            <select name="risk" id="riskSelect" onchange="enforceRAGStatusValue(this, 'riskText')">
+                                {{#each ragValues }}
+                                    <option value="{{this}}"
+                                            {{#ifCond this "==" ../latestReport.risk}}selected="selected"{{/ifCond}}>
+                                        {{this}}
+                                    </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <textarea class="form-control" id="riskText" name="risk_text"
+                                          rows="3">{{latestReport.risk_text}}</textarea>
+                            </div>
+                        </div>
                     </div>
 
-                    <button type="submit" id="submitButton" class="btn btn-primary">Update report</button>
+                    <button type="submit" id="submitButton" class="btn btn-primary btn-sm">Update report</button>
+                    <a class="btn btn-primary btn-sm" href="/project/{{project.id}}" role="button">Cancel</a>
 
                 </form>
             </div>

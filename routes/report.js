@@ -14,7 +14,7 @@ router.param('reportId', function(req, res, next, id){
 });
 
 // Return all of the defined reports
-router.get('/', security.isAuthenticated, (req, res) => {
+router.get('/', security.isAuthenticated, (req, res, next) => {
     let action = (req.query.action || "view").toLowerCase();
 
     if (action === 'add') {

@@ -98,6 +98,7 @@ exports.updateReport = function (req, res, next ) {
  * Add a new report
  * @param req
  * @param res
+ * @param next
  */
 exports.addReport = function (req, res, next ) {
 
@@ -118,6 +119,7 @@ exports.addReport = function (req, res, next ) {
  * Delete an existing report
  * @param req
  * @param res
+ * @param next
  */
 exports.deleteReport = function (req, res, next) {
     let reportId = req.reportId;
@@ -140,6 +142,7 @@ exports.deleteReport = function (req, res, next) {
  * Download a spreadsheet version of the report
  * @param req
  * @param res
+ * @param next
  */
 exports.downloadSpreadsheet = function (req, res, next) {
     let reportId = req.reportId;

@@ -101,8 +101,18 @@ p.copyright {
 }
 
 .actionsFixedWidth {
+    width: 60px;
+    align-content: center;
+}
+
+.project_code_column {
     width: 80px;
 }
+
+.team_column {
+    width: 200px;
+}
+
 
 @media print {
     * {

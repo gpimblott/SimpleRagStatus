@@ -5,6 +5,9 @@
             <div class="pageTitle">RAG report for {{formatDate report.report_date}}</div>
             <div id="headerButtons">
                 <p>
+                    <a class="btn btn-outline-secondary btn-sm" href="/" role="button">
+                        <i class="fas fa-home"></i> Home
+                    </a>
                     <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#reportDashboard"
                        role="button"
                        aria-expanded="true" aria-controls="projectDescription">
@@ -20,8 +23,9 @@
                        aria-expanded="false" aria-controls="downloadLinks">
                         <i class="fas fa-download"></i> Download
                     </a>
-                    <button  class="btn btn-outline-secondary btn-sm" onclick="window.print();return false;" />
-                    <i class="fas fa-print"></i> Print</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="window.print();return false;"/>
+                        <i class="fas fa-print"></i> Print
+                    </button>
 
 
                 </p>
@@ -85,10 +89,11 @@
                 <thead class="thead-light">
                 <tr>
                     {{#if user.editor}}
-                        <th class="dontPrint"></th>
+                        <th class="dontPrint actionsFixedWidth"></th>
                     {{/if}}
-                    <th>Project Code</th>
-                    <th>Service / Team</th>
+                    <th class="project_code_column">Code</th>
+                    <th class="team_column">Service / Team</th>
+                    <th class="rag_status">Benefits</th>
                     <th class="rag_status">Schedule</th>
                     <th class="rag_status">Scope</th>
                     <th class="rag_status">Risk</th>
@@ -116,20 +121,53 @@
                                    href="/project/{{this.project_id}}">{{this.project_name}}</a>
                             </div>
                         </td>
+                        <td class="rag_status {{this.benefits}}">
+                            <div class="textOnLeft {{this.benefits}}">{{this.benefits}}</div>
+                            <div class="iconOnRight {{this.benefits}}">
+                                <i class="{{directionArrow benefits previous_benefits}}"
+                                    aria-hidden="true"></i>
+                            </div>
+                        </td>
                         <td class="rag_status {{this.schedule}}">
                             <div class="textOnLeft {{this.schedule}}">{{this.schedule}}</div>
-                            <div class="iconOnRight {{this.schedule}}"><i class="{{directionArrow schedule previous_schedule}}"
-                                                                          aria-hidden="true"></i></div>
+                            <div class="iconOnRight {{this.schedule}}">
+                                <i class="{{directionArrow schedule previous_schedule}}"
+                                    aria-hidden="true"></i>
+                            </div>
+                        </td>
 
                         <td class="rag_status {{this.scope}}">
                             <div class="textOnLeft {{this.scope}}">{{this.scope}}</div>
-                            <div class="iconOnRight {{this.scope}}"><i class="{{directionArrow scope previous_scope}}"
-                                                                       aria-hidden="true"></i></div>
+                            <div class="iconOnRight {{this.scope}}">
+                                <i class="{{directionArrow scope previous_scope}}"
+                                                                       aria-hidden="true"></i>
+                            </div>
+                        </td>
                         <td class="rag_status {{this.risk}}">
                             <div class="textOnLeft {{this.risk}}">{{this.risk}}</div>
-                            <div class="iconOnRight {{this.risk}}"><i class="{{directionArrow risk previous_risk}}"
-                                                                      aria-hidden="true"></i></div>
-                        <td>{{this.description}}</td>
+                            <div class="iconOnRight {{this.risk}}">
+                                <i class="{{directionArrow risk previous_risk}}"
+                                                                      aria-hidden="true"></i>
+                            </div>
+                        </td>
+                        <td class="text-sm-left">
+                            <div class="d-flex">
+                                <div class="font-weight-bold" style="float: left;">Schedule:</div>
+                                <div class="col ml-auto" style="float: left;">{{this.schedule_text}}</div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="font-weight-bold" style="float: left;">Risk:</div>
+                                <div class="col">{{this.risk_text}}</div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="font-weight-bold" style="float: left;">Scope:</div>
+                                <div class="col">{{this.scope_text}}</div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="font-weight-bold" style="float: left;">Benefits:</div>
+                                <div class="col">{{this.benefits_text}}</div>
+                            </div>
+                        </td>
                     </tr>
                 {{/each}}
                 </tbody>
