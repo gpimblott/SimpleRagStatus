@@ -16,21 +16,7 @@ router.get('/', security.isAuthenticated, (req, res) => {
         delete req.session.redirect_to;
         res.redirect(url);
     } else {
-        reportDao.getMostRecent()
-            .then(result => {
-                if (result.length !== 1) {
-                    throw("No Reports found");
-                }
-                res.redirect('/programme/' + result[ 0 ].id)
-            })
-            .catch(error => {
-                logger.error("Failed to get main index page: %s", error);
-                res.render('error',
-                    {
-                        message: error.message,
-                        error: error
-                    });
-            })
+        res.redirect('/programme/')
     }
 });
 
