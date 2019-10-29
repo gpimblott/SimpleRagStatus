@@ -101,7 +101,12 @@ p.copyright {
 }
 
 .actionsFixedWidth {
-    width: 60px;
+     width: 40px;
+     align-content: center;
+ }
+
+.actionsFixedWidthXL {
+    width: 80px;
     align-content: center;
 }
 
