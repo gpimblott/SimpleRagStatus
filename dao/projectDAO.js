@@ -24,8 +24,8 @@ ProjectDAO.getProjectGroups = function () {
 };
 
 ProjectDAO.updateProject = function(projectId, project) {
-    return database.insertOrUpdate( 'UPDATE project set name=$2 , code=$3, description=$4 where id=$1',
-        [projectId, project.name,project.code,project.description])
+    return database.insertOrUpdate( 'UPDATE project set name=$2 , code=$3, description=$4 , phase=$5 where id=$1',
+        [projectId, project.name,project.code,project.description, project.phase])
 }
 
 ProjectDAO.addProject = function( project ) {
@@ -42,6 +42,10 @@ ProjectDAO.getPhaseCounts = function () {
                                 from project p
                                 right join project_phase pp on p.phase = pp.id
                                 group by pp.name;`,[])
+}
+
+ProjectDAO.getProjectPhases = function() {
+    return database.query( `SELECT * from project_phase`);
 }
 
 

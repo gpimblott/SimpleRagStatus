@@ -32,10 +32,15 @@ exports.displayAllProjects = function (req, res) {
 exports.displayEditProjectPage = function (req, res) {
     let project = req.project;
 
-    res.render('projects/editProject',
-        {
-            project: project
-        });
+    projectDao.getProjectPhases()
+        .then( phases=>{
+            res.render('projects/editProject',
+                {
+                    project: project,
+                    phases: phases
+                });
+        })
+
 }
 
 /**

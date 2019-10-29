@@ -69,6 +69,19 @@ router.get('/:projectId(\\d+)/', security.isAuthenticated, (req, res) => {
 });
 
 /**
+ * Get a specific project
+ */
+router.get('/:projectId(\\d+)/', security.isAuthenticated, (req, res) => {
+    let action = (req.query.action || "view").toLowerCase();
+
+    if (action === 'edit') {
+        projectController.displayEditProjectPage(req, res);
+    } else {
+        projectController.displayProjectPage(req, res);
+    }
+});
+
+/**
  * Display risk page or page to  add a new risk
  */
 router.get('/:projectId(\\d+)/risk/', security.isAuthenticated, (req, res) => {
@@ -82,7 +95,7 @@ router.get('/:projectId(\\d+)/risk/', security.isAuthenticated, (req, res) => {
 });
 
 /**
- * Add a new risk for a project
+ * Update a project
  */
 router.post('/:projectId(\\d+)', security.isAuthenticatedEditor, projectController.updateProject);
 

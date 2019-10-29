@@ -17,6 +17,17 @@
                     <small id="codeHelp" class="form-text text-muted">Code assigned to the project</small>
                 </div>
 
+                <div class="form-group row">
+                    <label for="phaseSelect" class="col-sm-2 col-form-label">Phase</label>
+                    <select name="phase" id="phaseSelect">
+                        {{#each phases }}
+                            <option value="{{this.id}}"
+                                    {{#ifCond this.id "=="
+                                              ../project.phase}}selected="selected"{{/ifCond}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="descriptionInput">Description</label>
                     <textarea rows="3"
