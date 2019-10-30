@@ -48,6 +48,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <textarea class="form-control" id="benefitText" name="benefits_text"
+                                          {{#ifCond 'Green' "==" latestReport.benefits}}readonly{{/ifCond}}
                                           rows="3">{{latestReport.benefits_text}}</textarea>
                             </div>
                         </div>
@@ -68,6 +69,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <textarea class="form-control" id="scheduleText" name="schedule_text"
+                                          {{#ifCond 'Green' "==" latestReport.schedule}}readonly{{/ifCond}}
                                           rows="3">{{latestReport.schedule_text}}</textarea>
                             </div>
                         </div>
@@ -87,6 +89,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <textarea class="form-control" id="scopeText" name="scope_text"
+                                          {{#ifCond 'Green' "==" latestReport.scope}}readonly{{/ifCond}}
                                           rows="3">{{latestReport.scope_text}}</textarea>
                             </div>
                         </div>
@@ -97,7 +100,7 @@
                             <select name="risk" id="riskSelect" onchange="enforceRAGStatusValue(this, 'riskText')">
                                 {{#each ragValues }}
                                     <option value="{{this}}"
-                                            {{#ifCond this "==" ../latestReport.risk}}selected="selected"{{/ifCond}}>
+                                            {{#ifCond this "==" latestReport.risk}}selected="selected"{{/ifCond}}>
                                         {{this}}
                                     </option>
                                 {{/each}}
@@ -106,6 +109,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <textarea class="form-control" id="riskText" name="risk_text"
+                                          {{#ifCond 'Green' "==" ../latestReport.risk}}readonly{{/ifCond}}
                                           rows="3">{{latestReport.risk_text}}</textarea>
                             </div>
                         </div>

@@ -2,6 +2,11 @@ body {
     font-family: 'Raleway', sans-serif;
 }
 
+table {
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    /*font-weight: 300;*/
+}
 
 footer {
     padding: 30px 0;
