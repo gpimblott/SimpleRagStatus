@@ -18,10 +18,16 @@
                    aria-expanded="false" aria-controls="projectDescription">
                     <i class="fas fa-info-circle"></i> Project Description
                 </a>
-                <a class="btn btn-outline-secondary btn-sm"  href="/project/{{project.id}}/risk"
+                <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}/risk"
                    role="button">
                     <i class="fas fa-exclamation-triangle"></i> Project Risks
                 </a>
+                {{#if user.admin}}
+                <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}?action=edit"
+                   role="button">
+                    <i class="fas fa-edit"></i> Edit Project
+                </a>
+                {{/if}}
                 <button class="btn btn-outline-secondary btn-sm" onclick="window.print();return false;"/>
                 <i class="fas fa-print"></i> Print
                 </button>
@@ -55,13 +61,13 @@
                 {{#each reports}}
                     <tr>
                         {{#if ../user.editor}}
-                        <td class="dontPrint">
+                            <td class="dontPrint">
                                 <a data-toggle="tooltip" title="Edit this report"
                                    href="/project/{{../project.id}}/report/{{this.report_id}}">
                                     <i class="fas fa-edit"></i>
                                 </a>
 
-                        </td>
+                            </td>
                         {{/if}}
                         <td class="actionsFixedWidth" style="width: 150px">
                             <a data-toggle="tooltip" title="View report"
