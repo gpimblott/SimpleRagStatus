@@ -16,7 +16,11 @@ router.get('/', security.isAuthenticated, (req, res) => {
         delete req.session.redirect_to;
         res.redirect(url);
     } else {
-        res.redirect('/programme/')
+        reportDao.getMostRecent()
+            .then( report => {
+                res.redirect('/report/' + report[0].id)
+            })
+
     }
 });
 
