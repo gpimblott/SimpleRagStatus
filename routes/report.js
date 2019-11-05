@@ -8,24 +8,37 @@ const router = express.Router();
 
 const reportController = require('../controllers/reportController');
 
+/**
+ * Intercept reportId parameter and set in request
+ */
 router.param('reportId', function(req, res, next, id){
     req.reportId = parseInt(id);
     next();
 });
 
-// Return all of the defined reports
+/**
+ * Display the list of reports or the add page if the action parameter is set
+ */
 router.get('/', security.isAuthenticated, (req, res, next) => {
     let action = (req.query.action || "view").toLowerCase();
 
-    if (action === 'add') {
-        res.render('statusReports/addReport', {});
-    } else {
-        res.render('statusReports/listReports', {});
+    try {
+        if (action === 'add') {
+            res.render('statusReports/addReport', {});
+        } else {
+            res.render('statusReports/listReports', {});
+        }
+    } catch (error) {
+        next(error);
     }
 });
 
-// Display the edit page
-//
+/**
+ * Depending on the parameter 'action' either
+ * 'edit' : Display the update page
+ * 'xlsx' : Download the spreadsheet
+ * 'view' (default) : Display the report
+ */
 // report/{reportId}?action={edit|xlsx|view (default) }
 router.get('/:reportId(\\d+)/', security.isAuthenticated, (req, res, next) => {
     let action = (req.query.action || "view").toLowerCase();

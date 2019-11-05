@@ -14,7 +14,7 @@ RiskDAO.getAllOpenRisks = function () {
              FROM project_risk pr
              JOIN project p ON pr.project_id = p.id
              WHERE pr.is_closed = false
-             ORDER BY date_added`,
+             ORDER BY date_added desc`,
         [])
 };
 /**

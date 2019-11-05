@@ -10,21 +10,26 @@ const router = express.Router();
 /**
  * The default page - currently just redirects to the latest report
  */
-router.get('/', security.isAuthenticated, (req, res) => {
+router.get('/', security.isAuthenticated, (req, res, next) => {
     const url = req.session.redirect_to;
     if (url !== undefined) {
         delete req.session.redirect_to;
         res.redirect(url);
     } else {
         reportDao.getMostRecent()
-            .then( report => {
-                res.redirect('/report/' + report[0].id)
+            .then(report => {
+                res.redirect('/report/' + report[ 0 ].id)
             })
-
+            .catch(error => {
+                next(error);
+            })
     }
 });
 
-router.get('/programme', security.isAuthenticated, (req, res) => {
+/**
+ * High level overview of all projects and their current phase
+ */
+router.get('/programme', security.isAuthenticated, (req, res, next) => {
 
     let promises = [];
     promises.push(projectDao.getAllProjects());
@@ -43,13 +48,14 @@ router.get('/programme', security.isAuthenticated, (req, res) => {
             });
 
             projectArray.forEach(item => {
-                
+
                 if (data.hasOwnProperty(item.group_name)) {
                     data[ item.group_name ][ item.phase_name ].push(item);
                 } else {
                     data[ item.group_name ] = { Prep: [], Discovery: [], Alpha: [], Beta: [], Live: [] };
                     data[ item.group_name ][ item.phase_name ].push(item);
-                };
+                }
+                ;
             });
 
             res.render('programme', {
@@ -57,6 +63,9 @@ router.get('/programme', security.isAuthenticated, (req, res) => {
                 projects: data,
                 counts: counts
             });
+        })
+        .catch(error => {
+            next(error);
         })
 
 });

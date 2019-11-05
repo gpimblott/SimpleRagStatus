@@ -12,8 +12,9 @@ const ragValues = ['Red','Amber','Green'];
  * Display all project page - admins can edit
  * @param req
  * @param res
+ * @param next
  */
-exports.displayAllProjects = function (req, res) {
+exports.displayAllProjects = function (req, res, next) {
 
     projectDao.getAllProjects()
         .then(projects => {
@@ -22,14 +23,19 @@ exports.displayAllProjects = function (req, res) {
                     projects: projects
                 });
         })
+        .catch( error=>{
+            logger.error("Failed to display all projects page: %s", error);
+            next(error);
+        })
 }
 
 /**
  * Display the edit project page
  * @param req
  * @param res
+ * @param next
  */
-exports.displayEditProjectPage = function (req, res) {
+exports.displayEditProjectPage = function (req, res, next) {
     let project = req.project;
 
     projectDao.getProjectPhases()
@@ -39,6 +45,10 @@ exports.displayEditProjectPage = function (req, res) {
                     project: project,
                     phases: phases
                 });
+        })
+        .catch( error=>{
+            logger.error("Failed to display edit project page: %s", error);
+            next(error);
         })
 
 }
@@ -56,6 +66,7 @@ exports.displayAddProjectPage = function (req, res) {
  * Display an individual project
  * @param req
  * @param res
+ * @param next
  */
 exports.displayProjectPage = function (req, res, next) {
     let projectId = req.projectId;
@@ -79,6 +90,7 @@ exports.displayProjectPage = function (req, res, next) {
  * Display the update project report page
  * @param req
  * @param res
+ * @param next
  */
 exports.displayUpdateProjectReportPage = function (req, res, next) {
     let projectId = req.projectId
@@ -101,6 +113,8 @@ exports.displayUpdateProjectReportPage = function (req, res, next) {
                 throw("Unable to find record");
             }
 
+            console.log(latestReport);
+
             res.render('statusReports/updateProjectReport',
                 {
                     report: currentReport,
@@ -119,6 +133,7 @@ exports.displayUpdateProjectReportPage = function (req, res, next) {
  * Update a project report
  * @param req
  * @param res
+ * @param next
  */
 exports.updateProjectReport = function (req, res, next) {
     let projectId = req.projectId;
@@ -136,6 +151,12 @@ exports.updateProjectReport = function (req, res, next) {
         });
 }
 
+/**
+ * Update the details for a project
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.updateProject = function (req, res, next) {
     let projectId = req.projectId;
 
@@ -149,6 +170,12 @@ exports.updateProject = function (req, res, next) {
         })
 }
 
+/**
+ * Add a new project
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.addProject = function (req, res, next) {
 
     projectDao.addProject(req.body)
@@ -161,6 +188,12 @@ exports.addProject = function (req, res, next) {
         })
 }
 
+/**
+ * Delete a project
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.deleteProject = function (req, res, next) {
     let projectId = req.projectId;
 
@@ -171,6 +204,6 @@ exports.deleteProject = function (req, res, next) {
         })
         .catch(error => {
             logger.error("Failed to delete project : %s", projectId)
-            res.sendStatus(500);
+            next(error);
         })
 }

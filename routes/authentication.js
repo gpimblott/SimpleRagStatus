@@ -1,8 +1,13 @@
+'use strict';
+const logger = require('../winstonLogger')(module);
+
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-// Setup the authentication routes
+/**
+ * Display the login page if the user is not logged in
+ */
 router.get('/login', (req, res) => {
     if (req.isAuthenticated()) {
         res.redirect('/');
@@ -11,12 +16,18 @@ router.get('/login', (req, res) => {
     }
 });
 
+/**
+ * Receive the POST  login request
+ */
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/auth/login',
     failureFlash: false
 }));
 
+/**
+ * Logout the current
+ */
 router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/auth/login');

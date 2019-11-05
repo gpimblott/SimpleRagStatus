@@ -8,8 +8,9 @@ const accountDao = require("../dao/accountDAO");
  * Update an account password (after doing some checks)
  * @param req
  * @param res
+ * @param next
  */
-exports.updatePassword = function (req, res) {
+exports.updatePassword = function (req, res, next) {
     let accountId = req.accountId;
 
     logger.info("Updating password %s", accountId);
@@ -31,11 +32,7 @@ exports.updatePassword = function (req, res) {
         })
         .catch(error => {
             logger.error("Error updating password: %s", error);
-            res.render('error',
-                {
-                    message: "Failed to update password",
-                    error: error
-                });
+            next(error);
         });
 }
 
@@ -43,8 +40,9 @@ exports.updatePassword = function (req, res) {
  * Show all of the accounts
  * @param req
  * @param res
+ * @param next
  */
-exports.listAllAccounts = function (req, res) {
+exports.listAllAccounts = function (req, res, next) {
     accountDao.getAllAccounts()
         .then(accounts => {
             res.render('admin/account',
@@ -55,11 +53,7 @@ exports.listAllAccounts = function (req, res) {
         })
         .catch(error => {
             logger.error("Failed to get all accounts: %s", error);
-            res.render('error',
-                {
-                    message: "Failed to get all accounts",
-                    error: error
-                });
+            next(error);
         });
 };
 
@@ -67,8 +61,9 @@ exports.listAllAccounts = function (req, res) {
  * Display the add account page
  * @param req
  * @param res
+ * @param next
  */
-exports.addAccountPage = function (req, res) {
+exports.addAccountPage = function (req, res, next) {
     accountDao.getAllRoles().then(roles => {
         res.render('admin/addAccount',
             {
@@ -77,11 +72,7 @@ exports.addAccountPage = function (req, res) {
             })
             .catch(error => {
                 logger.error("Failed to display add account page: %s", error);
-                res.render('error',
-                    {
-                        message: "Failed to display add account page",
-                        error: error
-                    });
+                next(error);
             });
     });
 };
@@ -90,8 +81,9 @@ exports.addAccountPage = function (req, res) {
  * Display the edit account page
  * @param req
  * @param res
+ * @param next
  */
-exports.editAccountPage = function (req, res) {
+exports.editAccountPage = function (req, res, next) {
     let accountId = req.accountId;
 
     let promises = [];
@@ -111,11 +103,7 @@ exports.editAccountPage = function (req, res) {
         })
         .catch(error => {
             logger.error("Failed to display edit account page: %s", error);
-            res.render('error',
-                {
-                    message: "Failed to display edit account page",
-                    error: error
-                });
+            next(error);
         });
 };
 
@@ -123,23 +111,29 @@ exports.editAccountPage = function (req, res) {
  * Display the change password page
  * @param req
  * @param res
+ * @param next
  */
-exports.changePasswordPage = function (req, res) {
-    let accountId = req.accountId;
-    accountDao.getAccountById(accountId)
+exports.changePasswordPage = function (req, res, next) {
+
+    accountDao.getAccountById(req.accountId)
         .then(account => {
             res.render('admin/changePassword', {
                 account: account[ 0 ]
             });
         })
+        .catch(error => {
+            logger.error("Failed to change password %s", error);
+            next(error);
+        });
 }
 
 /**
  * Add a new account
  * @param req
  * @param res
+ * @param next
  */
-exports.addAccount = function (req, res) {
+exports.addAccount = function (req, res, next) {
     logger.info("Adding new account %s", req.body.username);
 
     accountDao.addAccount(req.body)
@@ -148,15 +142,17 @@ exports.addAccount = function (req, res) {
         })
         .catch(error => {
             logger.error("Error creating account: %s", error);
-            res.render('error',
-                {
-                    message: "Error creating account",
-                    error: error
-                });
+            next(error);
         })
 }
 
-exports.updateAccount = function (req, res) {
+/**
+ * Update the details for an account
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.updateAccount = function (req, res, next) {
     let accountId = req.accountId;
     logger.info("Updating account %s", req.body.username);
 
@@ -166,21 +162,16 @@ exports.updateAccount = function (req, res) {
         })
         .catch(error => {
             logger.error("Error updating account: %s", error);
-            res.render('error',
-                {
-                    message: "Error creating account",
-                    error: error
-                });
+            next(error);
         })
 }
-
 
 /**
  * Delete an existing account
  * @param req
  * @param res
  */
-exports.deleteAccount = function (req, res) {
+exports.deleteAccount = function (req, res, next) {
     let accountId = req.accountId;
 
     logger.info("DELETE user %s", accountId);
@@ -188,5 +179,9 @@ exports.deleteAccount = function (req, res) {
     accountDao.deleteAccountById(accountId)
         .then(result => {
             res.sendStatus(200);
+        })
+        .catch(error => {
+            logger.error("Error deleting account: %s", error);
+            next(error);
         });
 }

@@ -11,23 +11,29 @@ const projectDAO = require("../dao/projectDAO");
 
 const router = express.Router();
 
+/**
+ * Intercept reportId parameter and set in request
+ */
 router.param('reportId', function (req, res, next, id) {
     req.reportId = parseInt(id);
     next();
 });
 
+/**
+ * Intercept riskId parameter and set in request
+ */
 router.param('riskId', function (req, res, next, id) {
     req.riskId = parseInt(id);
     next();
 });
 
 /**
- * For routes that use projectId retrieve the project details
+ * For routes that use projectId parameter retrieve the project details
  */
 router.param('projectId', function (req, res, next, id) {
     req.projectId = parseInt(id);
 
-    if( req.method==='GET') {
+    if (req.method === 'GET') {
         projectDAO.getProjectById(id)
             .then(result => {
                 req.project = result[ 0 ];
@@ -43,54 +49,54 @@ router.param('projectId', function (req, res, next, id) {
 });
 
 /**
- * Show all of the projects
+ * Show all of the projects or the add project page if the 'action' parameter is set
  */
-router.get('/', security.isAuthenticated, (req, res) => {
+router.get('/', security.isAuthenticated, (req, res, next) => {
     let action = (req.query.action || "view").toLowerCase();
 
     if (action === 'add') {
-        projectController.displayAddProjectPage(req, res);
+        projectController.displayAddProjectPage(req, res, next);
     } else {
-        projectController.displayAllProjects(req,res);
+        projectController.displayAllProjects(req, res, next);
     }
 });
 
 /**
- * Get a specific project
+ * Get a specific project or edit page if the 'action' parameter is set
  */
-router.get('/:projectId(\\d+)/', security.isAuthenticated, (req, res) => {
+router.get('/:projectId(\\d+)/', security.isAuthenticated, (req, res, next) => {
     let action = (req.query.action || "view").toLowerCase();
 
     if (action === 'edit') {
-        projectController.displayEditProjectPage(req, res);
+        projectController.displayEditProjectPage(req, res, next);
     } else {
-        projectController.displayProjectPage(req, res);
+        projectController.displayProjectPage(req, res, next);
     }
 });
 
 /**
- * Get a specific project
+ * Get a specific project or the edit page if the 'action' parameter is set
  */
-router.get('/:projectId(\\d+)/', security.isAuthenticated, (req, res) => {
+router.get('/:projectId(\\d+)/', security.isAuthenticated, (req, res, next) => {
     let action = (req.query.action || "view").toLowerCase();
 
     if (action === 'edit') {
-        projectController.displayEditProjectPage(req, res);
+        projectController.displayEditProjectPage(req, res, next);
     } else {
-        projectController.displayProjectPage(req, res);
+        projectController.displayProjectPage(req, res, next);
     }
 });
 
 /**
- * Display risk page or page to  add a new risk
+ * Display risk page or page to add a new risk if the action parameter is set
  */
-router.get('/:projectId(\\d+)/risk/', security.isAuthenticated, (req, res) => {
+router.get('/:projectId(\\d+)/risk/', security.isAuthenticated, (req, res, next) => {
     let action = (req.query.action || "view").toLowerCase();
 
     if (action === 'add') {
-        riskController.displayAddRiskPage(req, res);
+        riskController.displayAddRiskPage(req, res, next);
     } else {
-        riskController.displayRisksForProjectPage(req, res);
+        riskController.displayRisksForProjectPage(req, res, next);
     }
 });
 
@@ -117,8 +123,11 @@ router.post('/:projectId(\\d+)/report/:reportId(\\d+)', security.isAuthenticated
 /**
  * Add a new project
  */
-router.post('/', security.isAuthenticatedEditor, projectController.addProject );
+router.post('/', security.isAuthenticatedEditor, projectController.addProject);
 
-router.delete('/:projectId(\\d+)', security.isAuthenticatedEditor, projectController.deleteProject );
+/**
+ * Delete a project
+ */
+router.delete('/:projectId(\\d+)', security.isAuthenticatedEditor, projectController.deleteProject);
 
 module.exports = router;

@@ -21,15 +21,15 @@ router.param('riskId', function (req, res, next, id) {
             next();
         })
         .catch(error => {
-            next( error );
+            next(error);
         });
 
 });
 
 /**
- * The default page - currently just redirects to the latest report
+ * Display all of the defined risks
  */
-router.get('/', security.isAuthenticated, (req, res) => {
+router.get('/', security.isAuthenticated, (req, res, next) => {
 
     riskDao.getAllOpenRisks()
         .then(risks => {
@@ -54,23 +54,27 @@ router.get('/', security.isAuthenticated, (req, res) => {
         })
         .catch(error => {
             logger.error("Failed to get all risks: %s", error);
-            res.render('error',
-                {
-                    message: "Error getting all risks",
-                    error: error
-                });
+            next(error);
         });
 });
 
 /**
- * View or edit a specific risk
+ * edit a specific risk
  */
 router.get('/:riskId(\\d+)', security.isAuthenticated, (req, res, next) => {
-    riskController.editRiskPage( req, res, next );
+    riskController.editRiskPage(req, res, next);
 });
 
+/**
+ * Add a new Risk
+ */
 router.post('/:riskId(\\d+)', security.isAuthenticated, riskController.updateRisk);
 
+/**
+ * Private function to count how many of each colour
+ * @param totals Current totals to increment
+ * @param item The current item to check
+ */
 function countColours (totals, item) {
     switch (item) {
         case 'Red' :

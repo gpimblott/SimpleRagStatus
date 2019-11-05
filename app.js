@@ -100,7 +100,16 @@ app.use(function (req, res, next) {
     next(err);
 });
 
-// error handler
+// Catch API requests and return a 500 error
+function clientErrorHandler (err, req, res, next) {
+    if (req.xhr) {
+        res.status(500).send({ error: 'Something failed!' })
+    } else {
+        next(err)
+    }
+}
+
+// General error handler
 app.use(function (err, req, res, next) {
     logger.error("Error handler: %s", err.message);
 
@@ -111,7 +120,7 @@ app.use(function (err, req, res, next) {
     // render the error page
     res.render('error',
         {
-            message: "Error encountered",
+            message: err.message,
             error: err
         });
 });

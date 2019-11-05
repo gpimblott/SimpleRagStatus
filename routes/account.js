@@ -2,33 +2,36 @@
 
 const express = require('express');
 const security = require('../authentication/security');
+const router = express.Router();
 
 const accountController = require('../controllers/accountController');
 
-const router = express.Router();
-
+/**
+ * If the route has an 'accountId' parameter then extract it
+ */
 router.param('accountId', function (req, res, next, id) {
     req.accountId = parseInt(id);
     next();
 });
 
 /**
- * Display the page of add accounts
+ * Display all of the accounts or the 'add' account page if the
+ * action parameter is defined
  *
- * GET /
+ * GET /account/
  */
-router.get('/', security.isAuthenticatedAdmin, (req, res) => {
+router.get('/', security.isAuthenticatedAdmin, (req, res, next) => {
     let action = (req.query.action || "view").toLowerCase();
 
     if (action === 'add') {
-        accountController.addAccountPage(req, res);
+        accountController.addAccountPage(req, res, next);
     } else {
-        accountController.listAllAccounts(req, res);
+        accountController.listAllAccounts(req, res, next);
     }
 });
 
 /**
- * Edit an account
+ * Edit the specified account account
  */
 router.get("/:accountId(\\d+)", security.isAuthenticatedAdmin, accountController.editAccountPage );
 

@@ -3,16 +3,17 @@
 const logger = require('../winstonLogger')(module);
 
 const riskDao = require("../dao/riskDAO");
-const projectStatusDao = require("../dao/projectStatusDAO");
 const projectDao = require("../dao/projectDAO");
 
-const ragValues = ['Red','Amber','Green'];
+const ragValues = ['Red', 'Amber', 'Green'];
+
 /**
  * Display the add risk page
  * @param req
  * @param res
+ * @param next
  */
-exports.displayAddRiskPage = function (req, res) {
+exports.displayAddRiskPage = function (req, res, next) {
     let projectId = req.projectId;
 
     riskDao.getRiskByProjectId(projectId)
@@ -30,11 +31,7 @@ exports.displayAddRiskPage = function (req, res) {
         })
         .catch(error => {
             logger.error("Failed to display add risk page: %s", error);
-            res.render('error',
-                {
-                    message: "Error displaying add risk page",
-                    error: error
-                });
+            next(error);
         });
 };
 
@@ -42,8 +39,9 @@ exports.displayAddRiskPage = function (req, res) {
  * Display the risk for a specific project
  * @param req
  * @param res
+ * @param next
  */
-exports.displayRisksForProjectPage = function (req, res) {
+exports.displayRisksForProjectPage = function (req, res, next) {
     let projectId = req.projectId;
 
     riskDao.getRiskByProjectId(projectId)
@@ -59,11 +57,7 @@ exports.displayRisksForProjectPage = function (req, res) {
         })
         .catch(error => {
             logger.error("Failed to get project risks: %s", error);
-            res.render('error',
-                {
-                    message: "Error getting project risks",
-                    error: error
-                });
+            next(error);
         });
 };
 
@@ -72,7 +66,7 @@ exports.displayRisksForProjectPage = function (req, res) {
  * @param req
  * @param res
  */
-exports.addProjectRisk = function (req, res) {
+exports.addProjectRisk = function (req, res, next) {
     let projectId = req.projectId;
 
     riskDao.addRisk(projectId, req.body)
@@ -81,20 +75,22 @@ exports.addProjectRisk = function (req, res) {
         })
         .catch(error => {
             logger.error("Error adding project risk: %s", error);
-            res.render('error',
-                {
-                    message: "Error adding project risks",
-                    error: error
-                });
+            next(error);
         });
 };
 
+/**
+ * Edit a Risk
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.editRiskPage = function (req, res, next) {
     let risk = req.risk;
 
     projectDao.getProjectById(risk.project_id)
         .then(results => {
-            let project = results[0][0];
+            let project = results[ 0 ][ 0 ];
 
             res.render('risks/editRisk', {
                 risk: risk,
@@ -108,6 +104,12 @@ exports.editRiskPage = function (req, res, next) {
         });
 };
 
+/**
+ * Update a risk
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.updateRisk = function (req, res, next) {
     let riskId = req.riskId;
     let risk = req.risk;
@@ -116,7 +118,7 @@ exports.updateRisk = function (req, res, next) {
         .then(result => {
             res.redirect('/project/' + risk.project_id + '/risk');
         })
-        .catch(error=>{
+        .catch(error => {
             logger.error("Error updating risk %s", riskId);
             next(error);
         });

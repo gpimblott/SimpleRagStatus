@@ -38,8 +38,7 @@
                             <select name="benefits" id="benefitSelect" onchange="enforceRAGStatusValue(this, 'benefitText')">
                                 {{#each ragValues }}
                                     <option value="{{this}}"
-                                            {{#ifCond this "=="
-                                                      ../latestReport.benefits}}selected="selected"{{/ifCond}}>
+                                            {{#ifCond this "==" ../latestReport.benefits}}selected="selected"{{/ifCond}}>
                                         {{this}}
                                     </option>
                                 {{/each}}
@@ -59,8 +58,7 @@
                             <select name="schedule" id="scheduleSelect" onchange="enforceRAGStatusValue(this, 'scheduleText')">
                                 {{#each ragValues }}
                                     <option value="{{this}}"
-                                            {{#ifCond this "=="
-                                                      ../latestReport.schedule}}selected="selected"{{/ifCond}}>
+                                            {{#ifCond this "==" ../latestReport.schedule}}selected="selected"{{/ifCond}}>
                                         {{this}}
                                     </option>
                                 {{/each}}
@@ -100,7 +98,7 @@
                             <select name="risk" id="riskSelect" onchange="enforceRAGStatusValue(this, 'riskText')">
                                 {{#each ragValues }}
                                     <option value="{{this}}"
-                                            {{#ifCond this "==" latestReport.risk}}selected="selected"{{/ifCond}}>
+                                            {{#ifCond this "==" ../latestReport.risk}}selected="selected"{{/ifCond}}>
                                         {{this}}
                                     </option>
                                 {{/each}}
@@ -109,7 +107,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <textarea class="form-control" id="riskText" name="risk_text"
-                                          {{#ifCond 'Green' "==" ../latestReport.risk}}readonly{{/ifCond}}
+                                          {{#ifCond 'Green' "==" latestReport.risk}}readonly{{/ifCond}}
                                           rows="3">{{latestReport.risk_text}}</textarea>
                             </div>
                         </div>
