@@ -1,3 +1,5 @@
+'use strict';
+
 const logger = require('../winstonLogger')(module);
 const database = require('../database/dbConnection.js');
 

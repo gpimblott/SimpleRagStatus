@@ -1,3 +1,5 @@
+'use strict';
+
 const logger = require('../winstonLogger')(module);
 const database = require('../database/dbConnection.js');
 
@@ -51,7 +53,7 @@ ProjectStatusDAO.getClosestReportForApplication = function (applicationId , repo
 
 /**
  * Monster query to get all the details for a report
- * It is so complicated as it gets the previous status values and determines the 'direction'
+ * It is so complicated as it gets the previous status values
  *
  * @param reportId
  * @returns {Promise<unknown>}

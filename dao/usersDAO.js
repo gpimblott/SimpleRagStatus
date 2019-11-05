@@ -3,10 +3,8 @@
 const logger = require('../winstonLogger')(module);
 const User = require('../models/User');
 
-const pg = require('pg');
 const database = require('../database/dbConnection.js');
 
-// This is an example implementation - you would normally store users in the DB
 const UsersDAO = function () {
 };
 
@@ -38,7 +36,8 @@ UsersDAO.findById = function (id, done) {
 
 /**
  * Add a new user
- * @param username Username of the user to search for
+ * @param user Definition of the user being added
+ * @param password The password for the new user
  * @param done Function to call with the result
  */
 UsersDAO.addUser = function (user, password, done) {
