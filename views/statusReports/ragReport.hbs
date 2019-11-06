@@ -24,7 +24,7 @@
                         <i class="fas fa-download"></i> Download
                     </a>
                     <button class="btn btn-outline-secondary btn-sm" onclick="window.print();return false;"/>
-                        <i class="fas fa-print"></i> Print
+                    <i class="fas fa-print"></i> Print
                     </button>
 
 
@@ -45,52 +45,44 @@
     </div>
 
     <div class="row justify-content-md-center align-items-center collapse show" id="reportDashboard">
-        <div class="col col-lg-2">
+        <div class="col col-md-2">
             <div class="card">
-                <h5 class="card-header text-center">Benefits</h5>
-                <div class="card-body" style="margin: 0 auto">
-                    <ul class="list-group list-group-vertical list-group-flush">
-                        <li class="list-group-item bg-danger h5 font-weight-bold text-center">{{benefitTotals.red}}</li>
-                        <li class="list-group-item bg-warning h5 font-weight-bold text-center">{{benefitTotals.amber}}</li>
-                        <li class="list-group-item bg-success h5 font-weight-bold text-center">{{benefitTotals.green}}</li>
-                    </ul>
-                </div>
+                <h6 class="card-header text-center">Benefits</h6>
+                <ul class="list-group list-group-vertical list-group-flush">
+                    <li class="list-group-item bg-danger h5 font-weight-bold text-center">{{benefitTotals.red}}</li>
+                    <li class="list-group-item bg-warning h5 font-weight-bold text-center">{{benefitTotals.amber}}</li>
+                    <li class="list-group-item bg-success h5 font-weight-bold text-center">{{benefitTotals.green}}</li>
+                </ul>
             </div>
         </div>
-        <div class="col col-lg-2">
+        <div class="col col-md-2">
             <div class="card">
-                <h5 class="card-header text-center">Scope</h5>
-                <div class="card-body" style="margin: 0 auto">
-                    <ul class="list-group list-group-vertical list-group-flush">
-                        <li class="list-group-item bg-danger h5 font-weight-bold text-center">{{scopeTotals.red}}</li>
-                        <li class="list-group-item bg-warning h5 font-weight-bold text-center">{{scopeTotals.amber}}</li>
-                        <li class="list-group-item bg-success h5 font-weight-bold text-center">{{scopeTotals.green}}</li>
-                    </ul>
-                </div>
+                <h6 class="card-header text-center">Scope</h6>
+                <ul class="list-group list-group-vertical list-group-flush">
+                    <li class="list-group-item bg-danger h5 font-weight-bold text-center">{{scopeTotals.red}}</li>
+                    <li class="list-group-item bg-warning h5 font-weight-bold text-center">{{scopeTotals.amber}}</li>
+                    <li class="list-group-item bg-success h5 font-weight-bold text-center">{{scopeTotals.green}}</li>
+                </ul>
             </div>
         </div>
-        <div class="col col-lg-2">
+        <div class="col col-md-2">
             <div class="card">
-                <h5 class="card-header text-center">Schedule</h5>
-                <div class="card-body" style="margin: 0 auto">
-                    <ul class="list-group list-group-vertical list-group-flush">
-                        <li class="list-group-item bg-danger h5 text-center font-weight-bold">{{scheduleTotals.red}}</li>
-                        <li class="list-group-item bg-warning h5 text-center font-weight-bold">{{scheduleTotals.amber}}</li>
-                        <li class="list-group-item bg-success h5 text-center font-weight-bold">{{scheduleTotals.green}}</li>
-                    </ul>
-                </div>
+                <h6 class="card-header text-center">Schedule</h6>
+                <ul class="list-group list-group-vertical list-group-flush">
+                    <li class="list-group-item bg-danger h5 text-center font-weight-bold">{{scheduleTotals.red}}</li>
+                    <li class="list-group-item bg-warning h5 text-center font-weight-bold">{{scheduleTotals.amber}}</li>
+                    <li class="list-group-item bg-success h5 text-center font-weight-bold">{{scheduleTotals.green}}</li>
+                </ul>
             </div>
         </div>
-        <div class="col col-lg-2">
+        <div class="col col-md-2">
             <div class="card">
-                <h5 class="card-header text-center">Risk</h5>
-                <div class="card-body" style="margin: 0 auto">
-                    <ul class="list-group list-group-vertical list-group-flush">
-                        <li class="list-group-item bg-danger h5 text-center font-weight-bold">{{riskTotals.red}}</li>
-                        <li class="list-group-item bg-warning h5 text-center font-weight-bold">{{riskTotals.amber}}</li>
-                        <li class="list-group-item bg-success h5 text-center font-weight-bold">{{riskTotals.green}}</li>
-                    </ul>
-                </div>
+                <h6 class="card-header text-center">Risk</h6>
+                <ul class="list-group list-group-vertical list-group-flush">
+                    <li class="list-group-item bg-danger h5 text-center font-weight-bold">{{riskTotals.red}}</li>
+                    <li class="list-group-item bg-warning h5 text-center font-weight-bold">{{riskTotals.amber}}</li>
+                    <li class="list-group-item bg-success h5 text-center font-weight-bold">{{riskTotals.green}}</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -137,14 +129,14 @@
                             <div class="textOnLeft {{this.benefits}}">{{this.benefits}}</div>
                             <div class="iconOnRight {{this.benefits}}">
                                 <i class="{{directionArrow benefits previous_benefits}}"
-                                    aria-hidden="true"></i>
+                                   aria-hidden="true"></i>
                             </div>
                         </td>
                         <td class="rag_status {{this.schedule}}">
                             <div class="textOnLeft {{this.schedule}}">{{this.schedule}}</div>
                             <div class="iconOnRight {{this.schedule}}">
                                 <i class="{{directionArrow schedule previous_schedule}}"
-                                    aria-hidden="true"></i>
+                                   aria-hidden="true"></i>
                             </div>
                         </td>
 
@@ -152,14 +144,14 @@
                             <div class="textOnLeft {{this.scope}}">{{this.scope}}</div>
                             <div class="iconOnRight {{this.scope}}">
                                 <i class="{{directionArrow scope previous_scope}}"
-                                                                       aria-hidden="true"></i>
+                                   aria-hidden="true"></i>
                             </div>
                         </td>
                         <td class="rag_status {{this.risk}}">
                             <div class="textOnLeft {{this.risk}}">{{this.risk}}</div>
                             <div class="iconOnRight {{this.risk}}">
                                 <i class="{{directionArrow risk previous_risk}}"
-                                                                      aria-hidden="true"></i>
+                                   aria-hidden="true"></i>
                             </div>
                         </td>
                         <td class="text-sm-left">
