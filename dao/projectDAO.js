@@ -3,7 +3,6 @@
 const logger = require('../winstonLogger')(module);
 const database = require('../database/dbConnection.js');
 
-
 const ProjectDAO = function () {
 };
 
@@ -13,7 +12,7 @@ const ProjectDAO = function () {
  * @returns {Promise | Promise<unknown>}
  */
 ProjectDAO.getProjectById = function (id) {
-    return database.query( "SELECT * from project where id = $1", [id])
+    return database.query("SELECT * from project where id = $1", [id])
 };
 
 /**
@@ -22,11 +21,11 @@ ProjectDAO.getProjectById = function (id) {
  */
 ProjectDAO.getAllProjects = function () {
     return database.query(
-        `select p.*,pp.name as phase_name ,pg.name as group_name
-                from project p 
-                    join project_phase pp on p.phase=pp.id 
-                    left outer join project_group pg on p.project_group_id = pg.id
-                order by name`);
+            `select p.*, pp.name as phase_name, pg.name as group_name
+             from project p
+                      join project_phase pp on p.phase = pp.id
+                      left outer join project_group pg on p.project_group_id = pg.id
+             order by name`);
 };
 
 /**
@@ -34,7 +33,7 @@ ProjectDAO.getAllProjects = function () {
  * @returns {Promise | Promise<unknown>}
  */
 ProjectDAO.getProjectGroups = function () {
-    return database.query( "SELECT * from project_group", [])
+    return database.query("SELECT * from project_group", [])
 };
 
 /**
@@ -43,9 +42,10 @@ ProjectDAO.getProjectGroups = function () {
  * @param project
  * @returns {Promise | Promise<unknown>}
  */
-ProjectDAO.updateProject = function(projectId, project) {
-    return database.insertOrUpdate( 'UPDATE project set name=$2 , code=$3, description=$4 , phase=$5 where id=$1',
-        [projectId, project.name,project.code,project.description, project.phase])
+ProjectDAO.updateProject = function (projectId, project) {
+    return database.insertOrUpdate(
+        'UPDATE project set name=$2 , code=$3, description=$4 , phase=$5, project_group_id=$6 where id=$1',
+        [projectId, project.name, project.code, project.description, project.phase, project.projectGroup])
 }
 
 /**
@@ -53,9 +53,10 @@ ProjectDAO.updateProject = function(projectId, project) {
  * @param project
  * @returns {Promise | Promise<unknown>}
  */
-ProjectDAO.addProject = function( project ) {
-    return database.insertOrUpdate( `INSERT INTO project (name,code,description) VALUES ($1,$2,$3)`,
-        [project.name,project.code,project.description]);
+ProjectDAO.addProject = function (project) {
+    return database.insertOrUpdate(`INSERT INTO project (name, code, description, phase, project_group_id)
+                                    VALUES ($1, $2, $3, $4, $5)`,
+        [project.name, project.code, project.description, project.phase, project.projectGroup]);
 }
 
 /**
@@ -63,8 +64,8 @@ ProjectDAO.addProject = function( project ) {
  * @param projectId
  * @returns {Promise | Promise<unknown>}
  */
-ProjectDAO.deleteProject = function( projectId) {
-    return database.deleteByIds( 'project', [projectId]);
+ProjectDAO.deleteProject = function (projectId) {
+    return database.deleteByIds('project', [projectId]);
 }
 
 /**
@@ -72,19 +73,19 @@ ProjectDAO.deleteProject = function( projectId) {
  * @returns {Promise | Promise<unknown>}
  */
 ProjectDAO.getPhaseCounts = function () {
-    return database.query(`select pp.name as phase_name,count(p.name) as phase_count
-                                from project p
-                                right join project_phase pp on p.phase = pp.id
-                                group by pp.name;`,[])
+    return database.query(`select pp.name as phase_name, count(p.name) as phase_count
+                           from project p
+                                    right join project_phase pp on p.phase = pp.id
+                           group by pp.name;`, [])
 }
 
 /**
  * Get the possible project phases
  * @returns {Promise | Promise<unknown>}
  */
-ProjectDAO.getProjectPhases = function() {
-    return database.query( `SELECT * from project_phase`);
+ProjectDAO.getProjectPhases = function () {
+    return database.query(`SELECT *
+                           from project_phase`);
 }
-
 
 module.exports = ProjectDAO;

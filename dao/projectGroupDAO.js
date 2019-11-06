@@ -21,5 +21,13 @@ ProjectGroupDAO.addProjectGroup = function (name) {
         [name]);
 };
 
+/**
+ * Get all of the project groups
+ * @returns {Promise | Promise<unknown>}
+ */
+ProjectGroupDAO.getAll = function() {
+    return database.query( `SELECT * from project_group`);
+}
+
 
 module.exports = ProjectGroupDAO;

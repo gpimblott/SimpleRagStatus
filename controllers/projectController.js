@@ -4,6 +4,7 @@ const logger = require('../winstonLogger')(module);
 
 const reportDao = require("../dao/reportDAO");
 const projectStatusDao = require("../dao/projectStatusDAO");
+const projectGroupDao = require("../dao/projectGroupDAO");
 const projectDao = require("../dao/projectDAO");
 
 const ragValues = ['Red','Amber','Green'];
@@ -38,12 +39,19 @@ exports.displayAllProjects = function (req, res, next) {
 exports.displayEditProjectPage = function (req, res, next) {
     let project = req.project;
 
-    projectDao.getProjectPhases()
-        .then( phases=>{
+    let promises = [];
+    promises.push( projectGroupDao.getAll() );
+    promises.push( projectDao.getProjectPhases() )
+
+    Promise.all( promises )
+        .then( results=>{
+            let phases = results[1];
+            let groups = results[0];
             res.render('projects/editProject',
                 {
                     project: project,
-                    phases: phases
+                    phases: phases,
+                    groups:groups
                 });
         })
         .catch( error=>{
@@ -58,8 +66,26 @@ exports.displayEditProjectPage = function (req, res, next) {
  * @param req
  * @param res
  */
-exports.displayAddProjectPage = function (req, res) {
-    res.render('projects/addProject', {});
+exports.displayAddProjectPage = function (req, res, next ) {
+    let promises = [];
+    promises.push( projectGroupDao.getAll() );
+    promises.push( projectDao.getProjectPhases() )
+
+    Promise.all( promises )
+        .then( results=>{
+            let phases = results[1];
+            let groups = results[0];
+
+            res.render('projects/addProject', {
+                groups : groups,
+                phases : phases
+            });
+        })
+        .catch( error=> {
+            logger.error("Failed to display add project page: %s", error);
+            next(error);
+        })
+
 }
 
 /**

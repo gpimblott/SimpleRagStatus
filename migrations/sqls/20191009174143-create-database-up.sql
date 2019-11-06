@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS report
 CREATE TABLE IF NOT EXISTS project_status
 (
     id                 SERIAL PRIMARY KEY,
-    project_id         integer REFERENCES project (id),
+    project_id         integer REFERENCES project (id) ON DELETE CASCADE,
 
     schedule            rag_status,
     scope               rag_status,
