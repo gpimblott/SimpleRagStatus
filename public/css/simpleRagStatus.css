@@ -123,6 +123,12 @@ p.copyright {
     width: 200px;
 }
 
+.traffic_light {
+    width:33.3%;
+    text-align:center;
+    margin-left: 0;
+    margin-right: 0;
+}
 
 @media print {
     * {

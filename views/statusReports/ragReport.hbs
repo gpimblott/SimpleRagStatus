@@ -45,48 +45,48 @@
     </div>
 
     <div class="row justify-content-md-center align-items-center collapse show" id="reportDashboard">
-        <div class="col col-md-2">
+        <div class="col col-lg-2">
             <div class="card">
                 <h6 class="card-header text-center">Benefits</h6>
-                <ul class="list-group list-group-vertical list-group-flush">
-                    <li class="list-group-item bg-danger h5 font-weight-bold text-center">{{benefitTotals.red}}</li>
-                    <li class="list-group-item bg-warning h5 font-weight-bold text-center">{{benefitTotals.amber}}</li>
-                    <li class="list-group-item bg-success h5 font-weight-bold text-center">{{benefitTotals.green}}</li>
+                <ul class="list-group list-group-horizontal list-group-flush">
+                    <li class="list-group-item bg-danger h5 font-weight-bold text-center traffic_light">{{benefitTotals.red}}</li>
+                    <li class="list-group-item bg-warning h5 font-weight-bold text-center traffic_light">{{benefitTotals.amber}}</li>
+                    <li class="list-group-item bg-success h5 font-weight-bold text-center traffic_light">{{benefitTotals.green}}</li>
                 </ul>
             </div>
         </div>
-        <div class="col col-md-2">
+        <div class="col col-lg-2">
             <div class="card">
                 <h6 class="card-header text-center">Scope</h6>
-                <ul class="list-group list-group-vertical list-group-flush">
-                    <li class="list-group-item bg-danger h5 font-weight-bold text-center">{{scopeTotals.red}}</li>
-                    <li class="list-group-item bg-warning h5 font-weight-bold text-center">{{scopeTotals.amber}}</li>
-                    <li class="list-group-item bg-success h5 font-weight-bold text-center">{{scopeTotals.green}}</li>
+                <ul class="list-group list-group-horizontal list-group-flush">
+                    <li class="list-group-item bg-danger h5 font-weight-bold text-center traffic_light">{{scopeTotals.red}}</li>
+                    <li class="list-group-item bg-warning h5 font-weight-bold text-center traffic_light">{{scopeTotals.amber}}</li>
+                    <li class="list-group-item bg-success h5 font-weight-bold text-center traffic_light">{{scopeTotals.green}}</li>
                 </ul>
             </div>
         </div>
-        <div class="col col-md-2">
+        <div class="col col-lg-2">
             <div class="card">
                 <h6 class="card-header text-center">Schedule</h6>
-                <ul class="list-group list-group-vertical list-group-flush">
-                    <li class="list-group-item bg-danger h5 text-center font-weight-bold">{{scheduleTotals.red}}</li>
-                    <li class="list-group-item bg-warning h5 text-center font-weight-bold">{{scheduleTotals.amber}}</li>
-                    <li class="list-group-item bg-success h5 text-center font-weight-bold">{{scheduleTotals.green}}</li>
+                <ul class="list-group list-group-horizontal list-group-flush">
+                    <li class="list-group-item bg-danger h5 text-center font-weight-bold traffic_light">{{scheduleTotals.red}}</li>
+                    <li class="list-group-item bg-warning h5 text-center font-weight-bold traffic_light">{{scheduleTotals.amber}}</li>
+                    <li class="list-group-item bg-success h5 text-center font-weight-bold traffic_light">{{scheduleTotals.green}}</li>
                 </ul>
             </div>
         </div>
-        <div class="col col-md-2">
+        <div class="col col-lg-2">
             <div class="card">
                 <h6 class="card-header text-center">Risk</h6>
-                <ul class="list-group list-group-vertical list-group-flush">
-                    <li class="list-group-item bg-danger h5 text-center font-weight-bold">{{riskTotals.red}}</li>
-                    <li class="list-group-item bg-warning h5 text-center font-weight-bold">{{riskTotals.amber}}</li>
-                    <li class="list-group-item bg-success h5 text-center font-weight-bold">{{riskTotals.green}}</li>
+                <ul class="list-group list-group-horizontal list-group-flush">
+                    <li class="list-group-item bg-danger h5 text-center font-weight-bold traffic_light">{{riskTotals.red}}</li>
+                    <li class="list-group-item bg-warning h5 text-center font-weight-bold traffic_light">{{riskTotals.amber}}</li>
+                    <li class="list-group-item bg-success h5 text-center font-weight-bold traffic_light">{{riskTotals.green}}</li>
                 </ul>
             </div>
         </div>
     </div>
-    <br>
+    <hr>
     <div class="row justify-content-md-center align-items-center">
         <div class="col-md-11">
             <table id="report_table" class="table table-striped table-hover table-bordered">
