@@ -27,13 +27,13 @@
     </div>
 
     <div class="row justify-content-md-center align-items-center">
-        <div class="col col-md-8">
+        <div class="col col-md-10">
             <div class="reportDescription">{{report.title}}</div>
             <hr>
             <div>
                 <form method="post" action="/project/{{project.id}}/report/{{report.id}}">
                     <div class="form-group row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="benefitSelect" class="col-sm-6 col-form-label">Benefits</label>
                             <select name="benefits" id="benefitSelect" onchange="enforceRAGStatusValue(this, 'benefitText')">
                                 {{#each ragValues }}
@@ -48,12 +48,12 @@
                             <div class="form-group">
                                 <textarea class="form-control" id="benefitText" name="benefits_text"
                                           {{#ifCond 'Green' "==" latestReport.benefits}}readonly{{/ifCond}}
-                                          rows="3">{{latestReport.benefits_text}}</textarea>
+                                          rows="5">{{latestReport.benefits_text}}</textarea>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="scheduleSelect" class="col-sm-6 col-form-label">Schedule</label>
                             <select name="schedule" id="scheduleSelect" onchange="enforceRAGStatusValue(this, 'scheduleText')">
                                 {{#each ragValues }}
@@ -68,12 +68,12 @@
                             <div class="form-group">
                                 <textarea class="form-control" id="scheduleText" name="schedule_text"
                                           {{#ifCond 'Green' "==" latestReport.schedule}}readonly{{/ifCond}}
-                                          rows="3">{{latestReport.schedule_text}}</textarea>
+                                          rows="5">{{latestReport.schedule_text}}</textarea>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="scopeSelect" class="col-sm-6 col-form-label">Scope</label>
                             <select name="scope" id="scopeSelect" onchange="enforceRAGStatusValue(this, 'scopeText')">
                                 {{#each ragValues }}
@@ -88,12 +88,12 @@
                             <div class="form-group">
                                 <textarea class="form-control" id="scopeText" name="scope_text"
                                           {{#ifCond 'Green' "==" latestReport.scope}}readonly{{/ifCond}}
-                                          rows="3">{{latestReport.scope_text}}</textarea>
+                                          rows="5">{{latestReport.scope_text}}</textarea>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="riskSelect" class="col-sm-6 col-form-label">Risk</label>
                             <select name="risk" id="riskSelect" onchange="enforceRAGStatusValue(this, 'riskText')">
                                 {{#each ragValues }}
@@ -108,7 +108,7 @@
                             <div class="form-group">
                                 <textarea class="form-control" id="riskText" name="risk_text"
                                           {{#ifCond 'Green' "==" latestReport.risk}}readonly{{/ifCond}}
-                                          rows="3">{{latestReport.risk_text}}</textarea>
+                                          rows="5">{{latestReport.risk_text}}</textarea>
                             </div>
                         </div>
                     </div>
