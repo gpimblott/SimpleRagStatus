@@ -21,11 +21,13 @@ exports.displayReport = function (req, res , next) {
             let scopeTotals = { red: 0, amber: 0, green: 0 };
             let scheduleTotals = { red: 0, amber: 0, green: 0 };
             let riskTotals = { red: 0, amber: 0, green: 0 };
+            let benefitTotals = { red: 0, amber: 0, green: 0 };
 
             ragReports.forEach(item => {
                 countColours(scopeTotals, item.scope);
                 countColours(scheduleTotals, item.schedule);
                 countColours(riskTotals, item.risk);
+                countColours(benefitTotals, item.benefits);
             });
 
             let theReport = res.locals.project_reports.find(item => { return item.id === reportId });
@@ -37,7 +39,8 @@ exports.displayReport = function (req, res , next) {
                         report: theReport,
                         scopeTotals: scopeTotals,
                         scheduleTotals: scheduleTotals,
-                        riskTotals: riskTotals
+                        riskTotals: riskTotals,
+                        benefitTotals: benefitTotals
                     });
             } else {
                 throw ("Can't find report for id " + reportId);
