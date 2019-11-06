@@ -25,7 +25,7 @@ ProjectDAO.getAllProjects = function () {
         `select p.*,pp.name as phase_name ,pg.name as group_name
                 from project p 
                     join project_phase pp on p.phase=pp.id 
-                    full outer join project_group pg on p.project_group_id = pg.id
+                    left outer join project_group pg on p.project_group_id = pg.id
                 order by name`);
 };
 
