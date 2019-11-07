@@ -128,6 +128,8 @@ p.copyright {
     text-align:center;
     margin-left: 0;
     margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 @media print {
