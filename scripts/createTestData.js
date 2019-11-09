@@ -12,7 +12,6 @@ const defaultPassword = process.env.DEFAULT_PASSWORD || 'password';
  */
 const accounts = [
     { username: 'admin', role: 'Admin', firstName: 'admin', surname: 'admin', email: 'admin@dummy.com' },
-    { username: 'gordon', role: 'Admin', firstName: 'Gordon', surname: 'Pimblott', email: 'gordon@dummy.com' },
     { username: 'guest', role: 'User', firstName: 'Test', surname: 'Guest', email: 'guest@dummy.com' },
     { username: 'editor', role: 'Editor', firstName: 'Test', surname: 'Editor', email: 'editor@dummy.com' }
 ];
@@ -39,6 +38,7 @@ accounts.forEach(item => {
             }
         },
         error => {
+            console.log(error);
             console.log("Couldn't find Role: " + item.role);
         })
 });

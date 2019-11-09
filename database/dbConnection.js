@@ -161,7 +161,7 @@ class DBConnection {
                 host: process.env.PGHOST,
                 port: process.env.PGPORT,
                 database: process.env.PGDATABASE,
-                sslmode: 'require'
+                sslmode: (process.env.SSLMODE?'require':'')
             };
 
             return config;
@@ -175,7 +175,7 @@ class DBConnection {
                 host: params.hostname,
                 port: params.port,
                 database: params.pathname.split('/')[ 1 ],
-                ssl: true
+                ssl: !!process.env.SSLMODE
             };
 
             return config;

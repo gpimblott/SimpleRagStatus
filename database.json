@@ -3,6 +3,9 @@
     "driver": "pg",
     "ENV": "DATABASE_URL"
   },
+  "dev": {
+    "ENV": "DATABASE_URL"
+  },
   "local": {
     "driver": "pg",
     "user": "docker",

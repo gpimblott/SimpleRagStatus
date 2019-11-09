@@ -4,7 +4,10 @@
   "scripts": {
     "start": "node -r esm ./bin/www.js",
     "test": "mocha --require esm tests/*.js --exit",
-    "dev": "nodemon -r esm ./bin/www.js"
+    "dev": "nodemon -r esm ./bin/www.js",
+    "migrate-up": "db-migrate up",
+    "migrate-down": "db-migrate down",
+    "create-test-data": "node -r esm ./scripts/createTestData"
   },
   "engines": {
     "node": "12.4"
@@ -20,6 +23,8 @@
     "bcrypt": "latest",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
+    "db-migrate": "^0.11.6",
+    "db-migrate-pg": "^1.0.0",
     "debug": "latest",
     "dotenv": "^8.1.0",
     "esm": "^3.2.25",
