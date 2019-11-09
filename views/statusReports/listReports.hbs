@@ -35,19 +35,22 @@
                 <tbody>
                 {{#each project_reports}}
                     <tr>
+
                         <td class="actionsFixedWidth">
                             <a data-toggle="tooltip" title="View report" href="/report/{{this.id}}">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a data-toggle="tooltip" title="Edit report" href="/report/{{this.id}}?action=edit">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a data-toggle="tooltip" title="Delete report" href="/report/{{this.id}}"
-                               data-method="delete"
-                               data-target-url="/report/"
-                               data-confirm="Are you sure?">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                            {{#if user.editor}}
+                                <a data-toggle="tooltip" title="Edit report" href="/report/{{this.id}}?action=edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a data-toggle="tooltip" title="Delete report" href="/report/{{this.id}}"
+                                   data-method="delete"
+                                   data-target-url="/report/"
+                                   data-confirm="Are you sure?">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            {{/if}}
                         </td>
                         <td class="dateFixedWidth"><a data-toggle="tooltip" title="View report"
                                                       href="/report/{{this.id}}">{{formatDate this.report_date}}</a>

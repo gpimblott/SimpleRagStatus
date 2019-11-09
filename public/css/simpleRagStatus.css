@@ -18,15 +18,22 @@ p.copyright {
 }
 
 .navbar-color {
-    background-color: darkslategrey;
+    background-color: slategray;
+    color: white;
 }
 
 .navbar a {
     color: white;
 }
 
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,1);
+    font-size: 14px;
+}
+
 .dropdown-menu a {
     color: black;
+    font-size: 14px;
 }
 
 .Amber {

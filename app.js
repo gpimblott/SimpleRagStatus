@@ -29,6 +29,7 @@ const authentication = require('./routes/authentication');
 
 // DAO database access
 const reportDao = require("./dao/reportDAO");
+const projectDao = require("./dao/projectDAO");
 
 const app = express();
 
@@ -75,8 +76,13 @@ app.use(cookieParser());
 app.use(function(req,res,next){
     res.locals.user = req.user;
 
-    reportDao.getAll().then( reports=> {
-        res.locals.project_reports = reports;
+    let promises = [];
+    promises.push(reportDao.getAll());
+    promises.push(projectDao.getProjectNames());
+
+    Promise.all(promises).then( results => {
+        res.locals.project_reports = results[0];
+        res.locals.project_names = results[1];
         next();
     })
     .catch(error=>{

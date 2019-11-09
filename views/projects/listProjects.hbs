@@ -38,15 +38,20 @@
                 {{#each projects}}
                     <tr>
                         <td class="actionsFixedWidthXL">
-                            <a data-toggle="tooltip" title="Edit project" href="/project/{{this.id}}?action=edit">
-                                <i class="fas fa-edit"></i>
+                            <a data-toggle="tooltip" title="View report" href="/project/{{this.id}}">
+                                <i class="fas fa-eye"></i>
                             </a>
-                            <a data-toggle="tooltip" title="Delete project" href="/project/{{this.id}}"
-                               data-method="delete"
-                               data-target-url="/project/"
-                               data-confirm="Are you sure?">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                            {{#if user.editor}}
+                                <a data-toggle="tooltip" title="Edit project" href="/project/{{this.id}}?action=edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a data-toggle="tooltip" title="Delete project" href="/project/{{this.id}}"
+                                   data-method="delete"
+                                   data-target-url="/project/"
+                                   data-confirm="Are you sure?">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            {{/if}}
                         </td>
                         <td>{{this.name}}</td>
                         <td>{{this.code}}</td>

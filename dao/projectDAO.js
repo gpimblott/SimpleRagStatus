@@ -3,6 +3,10 @@
 const logger = require('../winstonLogger')(module);
 const database = require('../database/dbConnection.js');
 
+const Cache = require('../lib/dataCache');
+const ttl = 60 * 60 * 1; // cache for 1 Hour
+const cache = new Cache(ttl);
+
 const ProjectDAO = function () {
 };
 
@@ -43,10 +47,11 @@ ProjectDAO.getProjectGroups = function () {
  * @returns {Promise | Promise<unknown>}
  */
 ProjectDAO.updateProject = function (projectId, project) {
+    cache.flush();
     return database.insertOrUpdate(
         'UPDATE project set name=$2 , code=$3, description=$4 , phase=$5, project_group_id=$6 where id=$1',
         [projectId, project.name, project.code, project.description, project.phase, project.projectGroup])
-}
+};
 
 /**
  * Add a new project
@@ -54,10 +59,11 @@ ProjectDAO.updateProject = function (projectId, project) {
  * @returns {Promise | Promise<unknown>}
  */
 ProjectDAO.addProject = function (project) {
+    cache.flush();
     return database.insertOrUpdate(`INSERT INTO project (name, code, description, phase, project_group_id)
                                     VALUES ($1, $2, $3, $4, $5)`,
         [project.name, project.code, project.description, project.phase, project.projectGroup]);
-}
+};
 
 /**
  * Delete a project
@@ -65,8 +71,9 @@ ProjectDAO.addProject = function (project) {
  * @returns {Promise | Promise<unknown>}
  */
 ProjectDAO.deleteProject = function (projectId) {
+    cache.flush();
     return database.deleteByIds('project', [projectId]);
-}
+};
 
 /**
  * Get the number of projects in each 'phase' e.g. discovery
@@ -77,7 +84,7 @@ ProjectDAO.getPhaseCounts = function () {
                            from project p
                                     right join project_phase pp on p.phase = pp.id
                            group by pp.name;`, [])
-}
+};
 
 /**
  * Get the possible project phases
@@ -86,6 +93,16 @@ ProjectDAO.getPhaseCounts = function () {
 ProjectDAO.getProjectPhases = function () {
     return database.query(`SELECT *
                            from project_phase`);
+};
+
+/**
+ * Get the list of project names
+ * @returns {*|Promise<unknown>}
+ */
+ProjectDAO.getProjectNames = function() {
+    return cache.get("project_names", () => {
+        return database.query('SELECT id,name from project order by name');
+    });
 }
 
 module.exports = ProjectDAO;

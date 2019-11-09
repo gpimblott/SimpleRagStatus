@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-5">
-            <div class="pageTitle">Add reporting date</div>
+            <div class="pageTitle">Add new report</div>
             <form action="/report" method="post">
                 <div class="form-group">
                     <label for="dateInput">Report date</label>
@@ -22,3 +22,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    Date.prototype.toDateInputValue = (function() {
+        let local = new Date(this);
+        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+        return local.toJSON().slice(0,10);
+    });
+
+    document.getElementById('dateInput').value = new Date().toDateInputValue();
+
+</script>

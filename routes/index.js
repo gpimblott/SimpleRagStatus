@@ -18,7 +18,12 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
     } else {
         reportDao.getMostRecent()
             .then(report => {
-                res.redirect('/report/' + report[ 0 ].id)
+                // If there is a report defined then display it
+                if(report.length===1) {
+                    res.redirect('/report/' + report[0].id)
+                } else {
+                    res.redirect('/report?action=add');
+                }
             })
             .catch(error => {
                 next(error);
