@@ -28,7 +28,7 @@ exports.displayAllProjects = function (req, res, next) {
             logger.error("Failed to display all projects page: %s", error);
             next(error);
         })
-}
+};
 
 /**
  * Display the edit project page
@@ -41,7 +41,7 @@ exports.displayEditProjectPage = function (req, res, next) {
 
     let promises = [];
     promises.push( projectGroupDao.getAll() );
-    promises.push( projectDao.getProjectPhases() )
+    promises.push( projectDao.getProjectPhases() );
 
     Promise.all( promises )
         .then( results=>{
@@ -59,7 +59,7 @@ exports.displayEditProjectPage = function (req, res, next) {
             next(error);
         })
 
-}
+};
 
 /**
  * Display the add project page
@@ -86,7 +86,7 @@ exports.displayAddProjectPage = function (req, res, next ) {
             next(error);
         })
 
-}
+};
 
 /**
  * Display an individual project
@@ -97,7 +97,6 @@ exports.displayAddProjectPage = function (req, res, next ) {
 exports.displayProjectPage = function (req, res, next) {
     let projectId = req.projectId;
 
-    logger.info("Get project %s", projectId);
     reportDao.getReportsForProjectById(projectId)
         .then(reports => {
             res.render('statusReports/projectStatusReport',
@@ -119,10 +118,8 @@ exports.displayProjectPage = function (req, res, next) {
  * @param next
  */
 exports.displayUpdateProjectReportPage = function (req, res, next) {
-    let projectId = req.projectId
+    let projectId = req.projectId;
     let reportId = req.reportId;
-
-    logger.info("Edit project (%s) report (%s)", projectId, reportId);
 
     let promises = [];
     promises.push(reportDao.getReportById(reportId));
@@ -138,8 +135,6 @@ exports.displayUpdateProjectReportPage = function (req, res, next) {
             if (currentProject === undefined || currentReport === undefined) {
                 throw("Unable to find record");
             }
-
-            console.log(latestReport);
 
             res.render('statusReports/updateProjectReport',
                 {
@@ -175,7 +170,7 @@ exports.updateProjectReport = function (req, res, next) {
             logger.error("Failed to update project report : %s", error);
             next(error);
         });
-}
+};
 
 /**
  * Update the details for a project
@@ -194,7 +189,7 @@ exports.updateProject = function (req, res, next) {
             logger.error("Error updating project %s", projectId);
             next(error);
         })
-}
+};
 
 /**
  * Add a new project
@@ -212,7 +207,7 @@ exports.addProject = function (req, res, next) {
             logger.error("Error adding new project %s", req.body.name);
             next(error);
         })
-}
+};
 
 /**
  * Delete a project
@@ -232,4 +227,4 @@ exports.deleteProject = function (req, res, next) {
             logger.error("Failed to delete project : %s", projectId)
             next(error);
         })
-}
+};

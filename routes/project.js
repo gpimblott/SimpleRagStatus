@@ -36,7 +36,7 @@ router.param('projectId', function (req, res, next, id) {
     if (req.method === 'GET') {
         projectDAO.getProjectById(id)
             .then(result => {
-                req.project = result[ 0 ];
+                req.project = result[0];
                 next();
             })
             .catch(error => {
@@ -45,16 +45,15 @@ router.param('projectId', function (req, res, next, id) {
     } else {
         next();
     }
-
 });
+
 
 /**
  * Show all of the projects or the add project page if the 'action' parameter is set
  */
-router.get('/', security.isAuthenticated, (req, res, next) => {
-    let action = (req.query.action || "view").toLowerCase();
+router.get('/', security.isAuthenticatedAdminWithAction, (req, res, next) => {
 
-    if (action === 'add') {
+    if (req.action === 'add') {
         projectController.displayAddProjectPage(req, res, next);
     } else {
         projectController.displayAllProjects(req, res, next);
@@ -64,10 +63,9 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
 /**
  * Get a specific project or edit page if the 'action' parameter is set
  */
-router.get('/:projectId(\\d+)/', security.isAuthenticated, (req, res, next) => {
-    let action = (req.query.action || "view").toLowerCase();
+router.get('/:projectId(\\d+)/', security.isAuthenticatedAdminWithAction, (req, res, next) => {
 
-    if (action === 'edit') {
+    if (req.action === 'edit') {
         projectController.displayEditProjectPage(req, res, next);
     } else {
         projectController.displayProjectPage(req, res, next);
@@ -77,23 +75,22 @@ router.get('/:projectId(\\d+)/', security.isAuthenticated, (req, res, next) => {
 /**
  * Get a specific project or the edit page if the 'action' parameter is set
  */
-router.get('/:projectId(\\d+)/', security.isAuthenticated, (req, res, next) => {
-    let action = (req.query.action || "view").toLowerCase();
+router.get('/:projectId(\\d+)/', security.isAuthenticatedAdminWithAction, (req, res, next) => {
 
-    if (action === 'edit') {
+    if (req.action === 'edit') {
         projectController.displayEditProjectPage(req, res, next);
     } else {
         projectController.displayProjectPage(req, res, next);
     }
 });
 
+
 /**
  * Display risk page or page to add a new risk if the action parameter is set
  */
-router.get('/:projectId(\\d+)/risk/', security.isAuthenticated, (req, res, next) => {
-    let action = (req.query.action || "view").toLowerCase();
+router.get('/:projectId(\\d+)/risk/', security.isAuthenticatedEditorWithAction, (req, res, next) => {
 
-    if (action === 'add') {
+    if (req.action === 'add') {
         riskController.displayAddRiskPage(req, res, next);
     } else {
         riskController.displayRisksForProjectPage(req, res, next);
@@ -101,19 +98,21 @@ router.get('/:projectId(\\d+)/risk/', security.isAuthenticated, (req, res, next)
 });
 
 /**
+ * Edit a project report
+ */
+router.get('/:projectId(\\d+)/report/:reportId(\\d+)', security.isAuthenticatedEditor,
+    projectController.displayUpdateProjectReportPage);
+
+/************************** The methods below require the user to be an EDITOR or Admin*******************/
+/**
  * Update a project
  */
-router.post('/:projectId(\\d+)', security.isAuthenticatedEditor, projectController.updateProject);
+router.post('/:projectId(\\d+)', security.isAuthenticatedAdmin, projectController.updateProject);
 
 /**
  * Add a new risk for a project
  */
 router.post('/:projectId(\\d+)/risk', security.isAuthenticatedEditor, riskController.addProjectRisk);
-
-/**
- * Edit a project report
- */
-router.get('/:projectId(\\d+)/report/:reportId(\\d+)', security.isAuthenticated, projectController.displayUpdateProjectReportPage);
 
 /**
  * Update the report for a project
@@ -123,11 +122,11 @@ router.post('/:projectId(\\d+)/report/:reportId(\\d+)', security.isAuthenticated
 /**
  * Add a new project
  */
-router.post('/', security.isAuthenticatedEditor, projectController.addProject);
+router.post('/', security.isAuthenticatedAdmin, projectController.addProject);
 
 /**
  * Delete a project
  */
-router.delete('/:projectId(\\d+)', security.isAuthenticatedEditor, projectController.deleteProject);
+router.delete('/:projectId(\\d+)', security.isAuthenticatedAdmin, projectController.deleteProject);
 
 module.exports = router;

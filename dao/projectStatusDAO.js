@@ -33,7 +33,7 @@ ProjectStatusDAO.updateProjectStatusForReportById = function (projectId, reportI
                 risk_text=$7, scope_text=$8, schedule_text=$9, benefits_text=$10`,
         [projectId , reportId , update.risk, update.scope, update.schedule, update.benefits,
             update.risk_text, update.scope_text ,update.schedule_text,update.benefits_text ]);
-}
+};
 
 /**
  * Get the latest completed report for the given application and report
@@ -49,7 +49,7 @@ ProjectStatusDAO.getClosestReportForApplication = function (applicationId , repo
             order by r.report_date desc
             limit 1`,
         [applicationId,reportId]);
-}
+};
 
 /**
  * Monster query to get all the details for a report

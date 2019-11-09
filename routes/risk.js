@@ -59,16 +59,16 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
 });
 
 /**
- * edit a specific risk
+ * Show the edit risk page
  */
 router.get('/:riskId(\\d+)', security.isAuthenticated, (req, res, next) => {
     riskController.editRiskPage(req, res, next);
 });
 
 /**
- * Add a new Risk
+ * Update a new Risk
  */
-router.post('/:riskId(\\d+)', security.isAuthenticated, riskController.updateRisk);
+router.post('/:riskId(\\d+)', security.isAuthenticatedEditor, riskController.updateRisk);
 
 /**
  * Private function to count how many of each colour
