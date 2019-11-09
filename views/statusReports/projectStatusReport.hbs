@@ -10,9 +10,12 @@
             </nav>
         </div>
     </div>
+    <div class="row">
+        <div class="col text-center"><h3>'{{project.name}}' reports</h3></div>
+    </div>
 
     <div class="row justify-content-md-center align-items-center dontPrint">
-        <div class="col-md-11">
+        <div class="col-md-12">
             <p>
                 <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#projectDescription"
                    role="button"
@@ -24,10 +27,10 @@
                     <i class="fas fa-exclamation-triangle"></i> Project Risks
                 </a>
                 {{#if user.admin}}
-                <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}?action=edit"
-                   role="button">
-                    <i class="fas fa-edit"></i> Edit Project
-                </a>
+                    <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}?action=edit"
+                       role="button">
+                        <i class="fas fa-edit"></i> Edit Project
+                    </a>
                 {{/if}}
                 <button class="btn btn-outline-secondary btn-sm" onclick="window.print();return false;"/>
                 <i class="fas fa-print"></i> Print
@@ -38,19 +41,18 @@
                     <div class="reportDescription">{{project.description}}</div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <div class="row justify-content-md-center align-items-center">
-        <div class="col col-md-11">
+        <div class="col col-md-12">
             <table id="report_table" class="table table-striped table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
                     {{#if user.editor}}
                         <th class="dontPrint actionsFixedWidth"></th>
                     {{/if}}
-                    <th class="actionsFixedWidth">Date</th>
+                    <th class="dateFixedWidth">Date</th>
                     <th class="rag_status">Benefits</th>
                     <th class="rag_status">Schedule</th>
                     <th class="rag_status">Scope</th>
@@ -70,7 +72,7 @@
 
                             </td>
                         {{/if}}
-                        <td class="actionsFixedWidth" style="width: 150px">
+                        <td class="dateFixedWidth">
                             <a data-toggle="tooltip" title="View report"
                                href="/report/{{this.report_id}}">{{formatDate this.report_date}}</a>
                         </td>
@@ -80,20 +82,16 @@
                         <td class="rag_status {{risk}}">{{risk}}</td>
                         <td class="text-sm-left">
                             <div class="d-flex">
-                                <div class="font-weight-bold" style="float: left;">Benefits:</div>
-                                <div class="col">{{breaklines this.benefits_text}}</div>
+                                <p><b>Benefits:</b> {{breaklines this.benefits_text}}</p>
                             </div>
                             <div class="d-flex">
-                                <div class="font-weight-bold" style="float: left;">Schedule:</div>
-                                <div class="col ml-auto" style="float: left;">{{breaklines this.schedule_text}}</div>
+                                <p><b>Schedule:</b> {{breaklines this.schedule_text}}</p>
                             </div>
                             <div class="d-flex">
-                                <div class="font-weight-bold" style="float: left;">Scope:</div>
-                                <div class="col">{{breaklines this.scope_text}}</div>
+                                <p><b>Scope:</b> {{breaklines this.scope_text}}</p>
                             </div>
                             <div class="d-flex">
-                                <div class="font-weight-bold" style="float: left;">Risk:</div>
-                                <div class="col">{{breaklines this.risk_text}}</div>
+                                <p><b>Risk:</b> {{breaklines this.risk_text}}</p>
                             </div>
                         </td>
                     </tr>
