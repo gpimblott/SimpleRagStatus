@@ -76,6 +76,8 @@ app.use(cookieParser());
 app.use(function(req,res,next){
     res.locals.user = req.user;
 
+    console.log(res.locals.user);
+
     let promises = [];
     promises.push(reportDao.getAll());
     promises.push(projectDao.getProjectNames());

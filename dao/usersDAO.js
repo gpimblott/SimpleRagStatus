@@ -104,6 +104,6 @@ User.recordToUser = function (record) {
     user.editor = record.is_editor;
 
     return user;
-}
+};
 
 module.exports = UsersDAO;

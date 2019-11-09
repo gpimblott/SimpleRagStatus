@@ -9,4 +9,4 @@ module.exports = class User{
         this.email = email;
         this.enabled = enabled;
     }
-}
+};

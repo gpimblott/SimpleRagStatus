@@ -31,7 +31,7 @@ passport.use(new LocalStrategy(
                 return cb(err);
             }
             if (!user) {
-                return cb(null, false, { message: 'Incorrect login' });
+                return cb(null, false, {message: 'Incorrect login'});
             }
 
             if (!user.enabled) {
@@ -46,7 +46,7 @@ passport.use(new LocalStrategy(
                     return cb(null, user);
                 } else {
                     logger.warn("Login failure due to password");
-                    return cb(null, false, { message: 'Incorrect login' });
+                    return cb(null, false, {message: 'Incorrect login'});
                 }
             });
 
