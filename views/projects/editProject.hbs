@@ -1,7 +1,18 @@
 <div class="container-fluid">
+    <div class="row">
+        <div class="col col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item" aria-current="page"><a href="/project">Projects</a></li>
+                    <li class="breadcrumb-item" aria-current="page"><a href="/project/{{project.id}}">{{project.name}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit project</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-8">
-            <div class="pageTitle">Edit {{project.name}}</div>
             <form action="/project/{{project.id}}" method="post">
                 <div class="form-group">
                     <label for="text">Name</label>

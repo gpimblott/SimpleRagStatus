@@ -70,10 +70,6 @@ exports.addAccountPage = function (req, res, next) {
                 roles: roles,
                 layout: "main"
             })
-            .catch(error => {
-                logger.error("Failed to display add account page: %s", error);
-                next(error);
-            });
     });
 };
 
@@ -92,8 +88,8 @@ exports.editAccountPage = function (req, res, next) {
 
     Promise.all(promises)
         .then(results => {
-            let account = results[ 0 ][ 0 ];
-            let roles = results[ 1 ];
+            let account = results[0][0];
+            let roles = results[1];
 
             res.render('admin/editAccount',
                 {
@@ -118,7 +114,7 @@ exports.changePasswordPage = function (req, res, next) {
     accountDao.getAccountById(req.accountId)
         .then(account => {
             res.render('admin/changePassword', {
-                account: account[ 0 ]
+                account: account[0]
             });
         })
         .catch(error => {

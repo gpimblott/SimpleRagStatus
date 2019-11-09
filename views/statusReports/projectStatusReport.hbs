@@ -1,18 +1,19 @@
 <div class="container-fluid">
-
-    <div class="row justify-content-md-center align-items-center">
-        <div class="col col-md-11">
-            <div class="pageTitle">{{project.name}}</div>
-            <div class="pageSubTitle">Status reports</div>
+    <div class="row">
+        <div class="col col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/project">Projects</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{project.name}}</li>
+                </ol>
+            </nav>
         </div>
     </div>
 
     <div class="row justify-content-md-center align-items-center dontPrint">
         <div class="col-md-11">
             <p>
-                <a class="btn btn-outline-secondary btn-sm" href="/" role="button">
-                    <i class="fas fa-home"></i> Home
-                </a>
                 <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#projectDescription"
                    role="button"
                    aria-expanded="false" aria-controls="projectDescription">

@@ -1,13 +1,24 @@
 <div class="container-fluid">
+    <div class="row">
+        <div class="col col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item" aria-current="page"><a href="/project">Projects</a></li>
+                    <li class="breadcrumb-item" aria-current="page"><a href="/project/{{project.id}}">{{project.name}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Add Risk</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-8">
-            <div class="pageTitle">Add risk for {{project.name}}</div>
             <form action="/project/{{projectId}}/risk" method="post">
                 <div class="form-group">
                     <label for="dateInput">Risk date</label>
                     <input type="date" class="form-control" name="riskDate" id="dateInput" aria-describedby="dateHelp"
                            placeholder="Enter risk date">
-                    <small id="dateHelp" class="form-text text-muted">The date that the risk was added</small>
+                    <small id="dateHelp" class="form-text text-muted">The date that the risk was raised</small>
                 </div>
                 <div class="form-group row">
                     <label for="likelihoodSelect" class="col-sm-2 col-form-label">Likelihood</label>

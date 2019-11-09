@@ -90,8 +90,7 @@ exports.editRiskPage = function (req, res, next) {
 
     projectDao.getProjectById(risk.project_id)
         .then(results => {
-            let project = results[ 0 ][ 0 ];
-
+            let project = results[ 0 ];
             res.render('risks/editRisk', {
                 risk: risk,
                 ragValues: ragValues,

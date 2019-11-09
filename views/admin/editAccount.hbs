@@ -1,8 +1,19 @@
 <div class="container-fluid">
+    <div class="row">
+        <div class="col col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/account">Accounts</a></li>
+                    <li class="breadcrumb-item"><a href="/account/{{account.id}}">{{account.username}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit account</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-8">
-            <div class="pageTitle">Edit account</div>
-
             <form method="post" action="/account/{{account.id}}?action=update">
                 <div class="form-group">
                     <label for="usernameInput">Username</label>
