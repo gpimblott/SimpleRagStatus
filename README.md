@@ -12,11 +12,23 @@ update their RAG status against a report date which will update the dashboard.
 ##Installation
 
 
-```
+
 Clone this repo
 npm install
-run './bin.www.js'
-```
+
+## Database creation
+(It expects DATABASE_URL to contain the connection string)
+
+npm run migrate-up 
+
+## Test account setup
+
+npm run create-test-data
+
+
+To run:
+
+npm run start
 
 
 
