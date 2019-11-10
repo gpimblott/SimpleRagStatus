@@ -18,7 +18,19 @@
 </script>
 
 <div class="container-fluid">
-
+    <div class="row">
+        <div class="col col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/project/{{project.id}}">{{project.name}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">RAG Report ( {{formatDate
+                            report.report_date}} )
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-11">
             <div class="pageTitle">{{project.name}}</div>
@@ -48,7 +60,7 @@
                             <div class="form-group">
                                 <textarea class="form-control" id="benefitText" name="benefits_text"
                                           {{#ifCond 'Green' "==" latestReport.benefits}}readonly{{/ifCond}}
-                                          rows="5">{{latestReport.benefits_text}}</textarea>
+                                          rows="5" placeholder="Enter benefits update">{{latestReport.benefits_text}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -68,7 +80,7 @@
                             <div class="form-group">
                                 <textarea class="form-control" id="scheduleText" name="schedule_text"
                                           {{#ifCond 'Green' "==" latestReport.schedule}}readonly{{/ifCond}}
-                                          rows="5">{{latestReport.schedule_text}}</textarea>
+                                          rows="5" placeholder="Enter schedule update">{{latestReport.schedule_text}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -88,7 +100,7 @@
                             <div class="form-group">
                                 <textarea class="form-control" id="scopeText" name="scope_text"
                                           {{#ifCond 'Green' "==" latestReport.scope}}readonly{{/ifCond}}
-                                          rows="5">{{latestReport.scope_text}}</textarea>
+                                          rows="5" placeholder="Enter scope update">{{latestReport.scope_text}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -108,7 +120,7 @@
                             <div class="form-group">
                                 <textarea class="form-control" id="riskText" name="risk_text"
                                           {{#ifCond 'Green' "==" latestReport.risk}}readonly{{/ifCond}}
-                                          rows="5">{{latestReport.risk_text}}</textarea>
+                                          rows="5" placeholder="Enter risk update">{{latestReport.risk_text}}</textarea>
                             </div>
                         </div>
                     </div>

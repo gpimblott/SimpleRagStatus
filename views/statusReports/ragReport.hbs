@@ -105,13 +105,10 @@
                     {{#if user.editor}}
                         <th class="dontPrint actionsFixedWidth"></th>
                     {{/if}}
-                    <th class="project_code_column">Code</th>
-                    <th class="team_column">Service / Team</th>
-                    <th class="rag_status">Benefits</th>
-                    <th class="rag_status">Schedule</th>
-                    <th class="rag_status">Scope</th>
-                    <th class="rag_status">Risk</th>
-                    <th>Highlights/Lowlights
+                    <th class="team_column">Service / Team
+                    </th>
+
+                    <th>Highlights / Lowlights
                     </th>
                 </tr>
                 </thead>
@@ -128,42 +125,49 @@
                                 </div>
                             </td>
                         {{/if}}
-                        <td>{{this.code}}</td>
-                        <td>
-                            <div class="">
-                                <a data-toggle="tooltip" title="View all reports for this project"
-                                   href="/project/{{this.project_id}}">{{this.project_name}}</a>
-                            </div>
-                        </td>
-                        <td class="rag_status {{this.benefits}}">
-                            <div class="textOnLeft {{this.benefits}}">{{this.benefits}}</div>
-                            <div class="iconOnRight {{this.benefits}}">
-                                <i class="{{directionArrow benefits previous_benefits}}"
-                                   aria-hidden="true"></i>
-                            </div>
-                        </td>
-                        <td class="rag_status {{this.schedule}}">
-                            <div class="textOnLeft {{this.schedule}}">{{this.schedule}}</div>
-                            <div class="iconOnRight {{this.schedule}}">
-                                <i class="{{directionArrow schedule previous_schedule}}"
-                                   aria-hidden="true"></i>
-                            </div>
+                        <td class="team_column"><a data-toggle="tooltip" title="View all reports for this project"
+                               href="/project/{{this.project_id}}">{{this.project_name}} ({{this.code}})</a>
+                            <table class="table">
+                                <thead>
+                                <th>Benefits</th>
+                                <th>Schedule</th>
+                                <th>Scope</th>
+                                <th>Risk</th>
+                                </thead>
+                                <tr>
+                                    <td class="rag_status {{this.benefits}}">
+                                        <div class="textOnLeft {{this.benefits}}">{{this.benefits}}</div>
+                                        <div class="iconOnRight {{this.benefits}}">
+                                            <i class="{{directionArrow benefits previous_benefits}}"
+                                               aria-hidden="true"></i>
+                                        </div>
+                                    </td>
+                                    <td class="rag_status {{this.schedule}}">
+                                        <div class="textOnLeft {{this.schedule}}">{{this.schedule}}</div>
+                                        <div class="iconOnRight {{this.schedule}}">
+                                            <i class="{{directionArrow schedule previous_schedule}}"
+                                               aria-hidden="true"></i>
+                                        </div>
+                                    </td>
+
+                                    <td class="rag_status {{this.scope}}">
+                                        <div class="textOnLeft {{this.scope}}">{{this.scope}}</div>
+                                        <div class="iconOnRight {{this.scope}}">
+                                            <i class="{{directionArrow scope previous_scope}}"
+                                               aria-hidden="true"></i>
+                                        </div>
+                                    </td>
+                                    <td class="rag_status {{this.risk}}">
+                                        <div class="textOnLeft {{this.risk}}">{{this.risk}}</div>
+                                        <div class="iconOnRight {{this.risk}}">
+                                            <i class="{{directionArrow risk previous_risk}}"
+                                               aria-hidden="true"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
 
-                        <td class="rag_status {{this.scope}}">
-                            <div class="textOnLeft {{this.scope}}">{{this.scope}}</div>
-                            <div class="iconOnRight {{this.scope}}">
-                                <i class="{{directionArrow scope previous_scope}}"
-                                   aria-hidden="true"></i>
-                            </div>
-                        </td>
-                        <td class="rag_status {{this.risk}}">
-                            <div class="textOnLeft {{this.risk}}">{{this.risk}}</div>
-                            <div class="iconOnRight {{this.risk}}">
-                                <i class="{{directionArrow risk previous_risk}}"
-                                   aria-hidden="true"></i>
-                            </div>
-                        </td>
                         <td class="text-sm-left">
                             <div class="d-flex">
                                 <p><b>Benefits:</b> {{breaklines this.benefits_text}}</p>
