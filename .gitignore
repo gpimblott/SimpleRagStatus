@@ -1,6 +1,7 @@
 # Don't upload the real environment variables to github ;)
 /process.env
-/bin/prototyper-error.log
 /node_modules/
 /.idea/
-/rage-error.log
+*.log
+
+/scripts/createPrivateTestData.js
