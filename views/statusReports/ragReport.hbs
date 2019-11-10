@@ -4,15 +4,15 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">RAG Report ( {{formatDate
-                            report.report_date}} )
+                    <li class="breadcrumb-item"><a href="/report">Reports</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"> {{formatDate report.report_date}}
                     </li>
                 </ol>
             </nav>
         </div>
     </div>
     <div class="row">
-        <div class="col text-center"><h3>RAG Report</h3></div>
+        <div class="col text-center"><h3>RAG Report ({{formatDate report.report_date}})</h3></div>
     </div>
 
 

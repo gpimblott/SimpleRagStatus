@@ -35,8 +35,8 @@
                     Programme
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/programme/">Dashboard</a>
-                    <a class="dropdown-item" href="/risk/">Risk register</a>
+                    <a class="dropdown-item" href="/programme/dashboard/">Dashboard</a>
+                    <a class="dropdown-item" href="/programme/risks/">Risk register</a>
                 </div>
             </li>
 
@@ -52,11 +52,10 @@
                     {{/each}}
 
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/project">All projects</a>
+                    <a class="dropdown-item" href="/project">View all projects</a>
 
                     {{#if user.admin}}
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/project?action=add">Add project</a>
+                        <a class="dropdown-item" href="/project?action=add">Add new project</a>
                     {{/if}}
 
                 </div>
