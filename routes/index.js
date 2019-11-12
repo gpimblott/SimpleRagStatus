@@ -23,6 +23,8 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
             })
             .then( reports => {
 
+                console.log(reports);
+
                 let scopeTotals = { red: 0, amber: 0, green: 0 };
                 let scheduleTotals = { red: 0, amber: 0, green: 0 };
                 let riskTotals = { red: 0, amber: 0, green: 0 };
