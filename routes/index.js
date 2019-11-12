@@ -15,20 +15,53 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
         delete req.session.redirect_to;
         res.redirect(url);
     } else {
+        let latestReport;
         reportDao.getMostRecent()
-            .then(report => {
-                // If there is a report defined then display it
-                if(report.length===1) {
-                    res.redirect('/report/' + report[0].id)
-                } else {
-                    res.redirect('/report?action=add');
-                }
+            .then( report => {
+                latestReport = report[0];
+                return reportDao.getReportsForProjectById( report[0].id );
+            })
+            .then( reports => {
+
+                let scopeTotals = { red: 0, amber: 0, green: 0 };
+                let scheduleTotals = { red: 0, amber: 0, green: 0 };
+                let riskTotals = { red: 0, amber: 0, green: 0 };
+                let benefitTotals = { red: 0, amber: 0, green: 0 };
+
+                reports.forEach(item => {
+                    countColours(scopeTotals, item.scope);
+                    countColours(scheduleTotals, item.schedule);
+                    countColours(riskTotals, item.risk);
+                    countColours(benefitTotals, item.benefits);
+                });
+
+                res.render ( 'home', {
+                    projectReports: reports,
+                    latestReport: latestReport,
+                    scopeTotals: scopeTotals,
+                    scheduleTotals: scheduleTotals,
+                    riskTotals: riskTotals,
+                    benefitTotals: benefitTotals
+                })
             })
             .catch(error => {
+                logger.error(error);
                 next(error);
             })
     }
 });
 
+function countColours (totals, item) {
+    switch (item) {
+        case 'Red' :
+            totals.red += 1;
+            break;
+        case 'Amber' :
+            totals.amber += 1;
+            break;
+        case 'Green' :
+            totals.green += 1;
+    }
+}
 
 module.exports = router;

@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <div class="row dontPrint">
+        <div class="col col-md-12">
+            <nav class="breadcrumb navbar py-0">
+                <ul class="breadcrumb mr-auto pb-0">
+                    <li class="breadcrumb-item active"><a href="/">Home</a></li>
+                </ul>
+            </nav>
+
+            <div class="row">
+                <div class="col text-center"><h3>RAG-e</h3></div>
+            </div>
+
+            <div class="row" id="projectDescription">
+                <div class="col text-center reportDescription">The latest report is dated
+                    <a href="/report/{{latestReport.id}}">{{formatDate latestReport.report_date}}</a>
+                </div>
+            </div>
+
+            <br>
+            <div class="row justify-content-md-center align-items-center no-gutters" id="reportDashboard">
+                <div class="col col-md-2">
+                    <div class="card">
+                        <h6 class="card-header text-center">Benefits</h6>
+                        <ul class="list-group list-group-horizontal list-group-flush">
+                            <li class="list-group-item Red h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.red}}</li>
+                            <li class="list-group-item Amber h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.amber}}</li>
+                            <li class="list-group-item Green h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.green}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col col-md-2">
+                    <div class="card">
+                        <h6 class="card-header text-center">Scope</h6>
+                        <ul class="list-group list-group-horizontal list-group-flush">
+                            <li class="list-group-item Red h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.red}}</li>
+                            <li class="list-group-item Amber h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.amber}}</li>
+                            <li class="list-group-item Green h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.green}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col col-md-2">
+                    <div class="card">
+                        <h6 class="card-header text-center">Schedule</h6>
+                        <ul class="list-group list-group-horizontal list-group-flush">
+                            <li class="list-group-item Red h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.red}}</li>
+                            <li class="list-group-item Amber h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.amber}}</li>
+                            <li class="list-group-item Green h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.green}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col col-md-2">
+                    <div class="card">
+                        <h6 class="card-header text-center">Risk</h6>
+                        <ul class="list-group list-group-horizontal list-group-flush">
+                            <li class="list-group-item Red h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.red}}</li>
+                            <li class="list-group-item Amber h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.amber}}</li>
+                            <li class="list-group-item Green h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.green}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row" id="projectDescription">
+                <div class="col text-center reportDescription">
+                    <a href="/report/{{latestReport.id}}">View the full report</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

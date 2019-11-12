@@ -17,6 +17,11 @@ p.copyright {
     margin: 5px 0 0 30px;
 }
 
+th {
+    text-align: center;
+    align-content: center;
+}
+
 .navbar-color {
     background-color: slategray;
     color: white;
@@ -38,6 +43,14 @@ p.copyright {
 
 .breadcrumb {
     font-size: 14px;
+}
+
+li.breadcrumb-item>a {
+    color: black;
+}
+
+.navbar a {
+    color: black;
 }
 
 .Amber {

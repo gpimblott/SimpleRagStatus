@@ -42,9 +42,18 @@ ReportDAO.addReport = function (reportDate, reportTitle) {
  */
 ReportDAO.getMostRecent = function () {
     return cache.get("most-recent", () => {
-        return database.query("SELECT * FROM report ORDER BY report_date DESC LIMIT 1;");
+        return database.query("SELECT * FROM report ORDER BY report_date DESC LIMIT 1");
     });
 };
+
+/**
+ * get all the status reports for the current report
+ * @returns {Promise | Promise<unknown>}
+ */
+ReportDAO.getCurrentStatusReports = function () {
+    return database.query(`select * from project_status 
+            where report_id=(select id from report order by report_date desc limit 1)`);
+}
 
 /**
  * Get all the reports for the specified project
