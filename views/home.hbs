@@ -14,6 +14,7 @@
             <div class="row" id="projectDescription">
                 <div class="col text-center reportDescription">The latest report is dated
                     <a href="/report/{{latestReport.id}}">{{formatDate latestReport.report_date}}</a>
+                    <br>The following is a summary of the reported RAG statuses
                 </div>
             </div>
 
@@ -64,6 +65,28 @@
             <div class="row" id="projectDescription">
                 <div class="col text-center reportDescription">
                     <a href="/report/{{latestReport.id}}">View the full report</a>
+                </div>
+            </div>
+            <hr>
+            <div class="row justify-content-md-center ">
+                <div class="col col-5">
+                    <div class="tableTitle">Last 5 reports</div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                        <th>Report Date</th>
+                        <th>Title</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#each reports}}
+                            <tr>
+                                <td><a href="/report/{{this.id}}">{{formatDate report_date}}</a></td>
+                                <td>{{title}}</td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

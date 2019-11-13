@@ -40,9 +40,10 @@ ReportDAO.addReport = function (reportDate, reportTitle) {
  * Get the most recent report entry
  * @returns {Promise<unknown>}
  */
-ReportDAO.getMostRecent = function () {
+ReportDAO.getMostRecent = function (numberOfEntries) {
     return cache.get("most-recent", () => {
-        return database.query("SELECT * FROM report ORDER BY report_date DESC LIMIT 1");
+        return database.query("SELECT * FROM report ORDER BY report_date DESC LIMIT $1",
+            [numberOfEntries]);
     });
 };
 
@@ -83,6 +84,7 @@ ReportDAO.getReportsForProjectById = function (projectId) {
 ReportDAO.getReportById = function (id) {
     return database.query("select * from report where id=$1", [id]);
 }
+
 
 /**
  * Update the title of a report

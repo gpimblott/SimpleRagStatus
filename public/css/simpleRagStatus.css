@@ -85,6 +85,14 @@ li.breadcrumb-item>a {
     text-transform: uppercase;
 }
 
+.tableTitle {
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    margin: 20px 0 0px;
+    text-align: left;
+}
+
 .bigChange {
     color: red;
 }

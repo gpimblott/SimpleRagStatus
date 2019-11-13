@@ -52,13 +52,23 @@ ProjectStatusDAO.getClosestReportForApplication = function (applicationId , repo
 };
 
 /**
+ * Get all of the status reports for a report ID
+ * @param reportId
+ */
+ProjectStatusDAO.getStatusReportByReportId = function (reportId) {
+    return database.query(`SELECT * FROM project_status where report_id=$1`, [reportId]);
+}
+
+/**
+ *
+ * @Todo Why is this in here ?  It should be in ReportDao ?
  * Monster query to get all the details for a report
  * It is so complicated as it gets the previous status values
  *
  * @param reportId
  * @returns {Promise<unknown>}
  */
-ProjectStatusDAO.getStatusReportByReportId = function (reportId) {
+ProjectStatusDAO.getFullStatusReportByReportId = function (reportId) {
     return database.query(`with rag as (
                 SELECT ps.*,
                     r.report_date,

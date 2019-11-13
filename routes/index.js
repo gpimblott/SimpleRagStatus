@@ -3,6 +3,7 @@ const express = require('express');
 
 const security = require('../authentication/security');
 const reportDao = require("../dao/reportDAO");
+const projectStatusDao = require("../dao/projectStatusDAO");
 
 const router = express.Router();
 
@@ -16,14 +17,14 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
         res.redirect(url);
     } else {
         let latestReport;
-        reportDao.getMostRecent()
-            .then( report => {
-                latestReport = report[0];
-                return reportDao.getReportsForProjectById( report[0].id );
+        let lastFiveReports;
+        reportDao.getMostRecent(5)
+            .then( results => {
+                lastFiveReports = results;
+                latestReport = results[0];
+                return projectStatusDao.getStatusReportByReportId( latestReport.id );
             })
             .then( reports => {
-
-                console.log(reports);
 
                 let scopeTotals = { red: 0, amber: 0, green: 0 };
                 let scheduleTotals = { red: 0, amber: 0, green: 0 };
@@ -38,7 +39,7 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
                 });
 
                 res.render ( 'home', {
-                    projectReports: reports,
+                    reports: lastFiveReports,
                     latestReport: latestReport,
                     scopeTotals: scopeTotals,
                     scheduleTotals: scheduleTotals,

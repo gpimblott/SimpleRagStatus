@@ -15,7 +15,7 @@ const projectStatusDao = require("../dao/projectStatusDAO");
 exports.displayReport = function (req, res , next) {
     let reportId = req.reportId;
 
-    projectStatusDao.getStatusReportByReportId(reportId)
+    projectStatusDao.getFullStatusReportByReportId(reportId)
         .then((ragReports) => {
 
             let scopeTotals = { red: 0, amber: 0, green: 0 };
