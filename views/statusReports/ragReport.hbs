@@ -21,152 +21,151 @@
                     </ul>
                 </div>
             </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <div class="pageTitle">Programme Report ({{formatDate report.report_date}})</div>
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="col text-center">
-                    <div class="pageTitle">Programme Report ({{formatDate report.report_date}})</div>
-                </div>
-            </div>
+    <div class="row" id="projectDescription">
+        <div class="col text-center pageSubTitle">{{report.title}}</div>
+    </div>
 
-            <div class="row" id="projectDescription">
-                <div class="col text-center pageSubTitle">{{report.title}}</div>
+    <div class="row justify-content-md-center align-items-center no-gutters" id="reportDashboard">
+        <div class="col col-md-2">
+            <div class="card">
+                <h6 class="card-header text-center columnHeading">Benefits</h6>
+                <ul class="list-group list-group-horizontal list-group-flush">
+                    <li class="list-group-item Red h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.red}}</li>
+                    <li class="list-group-item Amber h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.amber}}</li>
+                    <li class="list-group-item Green h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.green}}</li>
+                </ul>
             </div>
-
-            <div class="row justify-content-md-center align-items-center no-gutters" id="reportDashboard">
-                <div class="col col-md-2">
-                    <div class="card">
-                        <h6 class="card-header text-center columnHeading">Benefits</h6>
-                        <ul class="list-group list-group-horizontal list-group-flush">
-                            <li class="list-group-item Red h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.red}}</li>
-                            <li class="list-group-item Amber h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.amber}}</li>
-                            <li class="list-group-item Green h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.green}}</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col col-md-2">
-                    <div class="card">
-                        <h6 class="card-header text-center columnHeading">Scope</h6>
-                        <ul class="list-group list-group-horizontal list-group-flush">
-                            <li class="list-group-item Red h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.red}}</li>
-                            <li class="list-group-item Amber h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.amber}}</li>
-                            <li class="list-group-item Green h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.green}}</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col col-md-2">
-                    <div class="card">
-                        <h6 class="card-header text-center columnHeading">Schedule</h6>
-                        <ul class="list-group list-group-horizontal list-group-flush">
-                            <li class="list-group-item Red h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.red}}</li>
-                            <li class="list-group-item Amber h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.amber}}</li>
-                            <li class="list-group-item Green h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.green}}</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col col-md-2">
-                    <div class="card">
-                        <h6 class="card-header text-center columnHeading">Risk</h6>
-                        <ul class="list-group list-group-horizontal list-group-flush">
-                            <li class="list-group-item Red h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.red}}</li>
-                            <li class="list-group-item Amber h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.amber}}</li>
-                            <li class="list-group-item Green h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.green}}</li>
-                        </ul>
-                    </div>
-                </div>
+        </div>
+        <div class="col col-md-2">
+            <div class="card">
+                <h6 class="card-header text-center columnHeading">Scope</h6>
+                <ul class="list-group list-group-horizontal list-group-flush">
+                    <li class="list-group-item Red h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.red}}</li>
+                    <li class="list-group-item Amber h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.amber}}</li>
+                    <li class="list-group-item Green h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.green}}</li>
+                </ul>
             </div>
-            <p></p>
-            <div class="row justify-content-md-center align-items-center">
-                <div class="col-md-11">
-                    <table id="report_table" class="table table-hover table-bordered">
-                        <thead class="thead-light">
-                        <tr>
-                            {{#if user.editor}}
-                                <th class="dontPrint actionButtonColumn"></th>
-                            {{/if}}
-                            <th class="team_column">Service / Team
-                            </th>
-                            <th>Highlights / Lowlights
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {{#each project_rag}}
-                            <tr>
-                                {{#if ../user.editor}}
-                                    <td class="dontPrint actionButtonColumn">
-                                        <div>
-                                            <a data-toggle="tooltip" title="Edit project status"
-                                               href="/project/{{this.project_id}}/report/{{../report.id}}">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
+        </div>
+        <div class="col col-md-2">
+            <div class="card">
+                <h6 class="card-header text-center columnHeading">Schedule</h6>
+                <ul class="list-group list-group-horizontal list-group-flush">
+                    <li class="list-group-item Red h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.red}}</li>
+                    <li class="list-group-item Amber h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.amber}}</li>
+                    <li class="list-group-item Green h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.green}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col col-md-2">
+            <div class="card">
+                <h6 class="card-header text-center columnHeading">Risk</h6>
+                <ul class="list-group list-group-horizontal list-group-flush">
+                    <li class="list-group-item Red h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.red}}</li>
+                    <li class="list-group-item Amber h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.amber}}</li>
+                    <li class="list-group-item Green h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.green}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col-md-11">
+            <table id="report_table" class="table table-hover table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    {{#if user.editor}}
+                        <th class="dontPrint actionButtonColumn"></th>
+                    {{/if}}
+                    <th class="team_column">Service / Team
+                    </th>
+                    <th>Highlights / Lowlights
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each project_rag}}
+                    <tr>
+                        {{#if ../user.editor}}
+                            <td class="dontPrint actionButtonColumn">
+                                <div>
+                                    <a data-toggle="tooltip" title="Edit project status"
+                                       href="/project/{{this.project_id}}/report/{{../report.id}}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        {{/if}}
+                        <td class="team_column"><a data-toggle="tooltip"
+                                                   title="View all reports for this project"
+                                                   href="/project/{{this.project_id}}">{{this.project_name}}
+                            ({{this.code}})</a>
+                            <table class="table">
+                                <thead>
+                                <th>Benefits</th>
+                                <th>Schedule</th>
+                                <th>Scope</th>
+                                <th>Risk</th>
+                                </thead>
+                                <tr>
+                                    <td class="rag_status {{this.benefits}}">
+                                        <div class="textOnLeft {{this.benefits}}">{{this.benefits}}</div>
+                                        <div class="iconOnRight {{this.benefits}}">
+                                            <i class="{{directionArrow benefits previous_benefits}}"
+                                               aria-hidden="true"></i>
                                         </div>
                                     </td>
-                                {{/if}}
-                                <td class="team_column"><a data-toggle="tooltip"
-                                                           title="View all reports for this project"
-                                                           href="/project/{{this.project_id}}">{{this.project_name}}
-                                    ({{this.code}})</a>
-                                    <table class="table">
-                                        <thead>
-                                        <th>Benefits</th>
-                                        <th>Schedule</th>
-                                        <th>Scope</th>
-                                        <th>Risk</th>
-                                        </thead>
-                                        <tr>
-                                            <td class="rag_status {{this.benefits}}">
-                                                <div class="textOnLeft {{this.benefits}}">{{this.benefits}}</div>
-                                                <div class="iconOnRight {{this.benefits}}">
-                                                    <i class="{{directionArrow benefits previous_benefits}}"
-                                                       aria-hidden="true"></i>
-                                                </div>
-                                            </td>
-                                            <td class="rag_status {{this.schedule}}">
-                                                <div class="textOnLeft {{this.schedule}}">{{this.schedule}}</div>
-                                                <div class="iconOnRight {{this.schedule}}">
-                                                    <i class="{{directionArrow schedule previous_schedule}}"
-                                                       aria-hidden="true"></i>
-                                                </div>
-                                            </td>
+                                    <td class="rag_status {{this.schedule}}">
+                                        <div class="textOnLeft {{this.schedule}}">{{this.schedule}}</div>
+                                        <div class="iconOnRight {{this.schedule}}">
+                                            <i class="{{directionArrow schedule previous_schedule}}"
+                                               aria-hidden="true"></i>
+                                        </div>
+                                    </td>
 
-                                            <td class="rag_status {{this.scope}}">
-                                                <div class="textOnLeft {{this.scope}}">{{this.scope}}</div>
-                                                <div class="iconOnRight {{this.scope}}">
-                                                    <i class="{{directionArrow scope previous_scope}}"
-                                                       aria-hidden="true"></i>
-                                                </div>
-                                            </td>
-                                            <td class="rag_status {{this.risk}}">
-                                                <div class="textOnLeft {{this.risk}}">{{this.risk}}</div>
-                                                <div class="iconOnRight {{this.risk}}">
-                                                    <i class="{{directionArrow risk previous_risk}}"
-                                                       aria-hidden="true"></i>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
+                                    <td class="rag_status {{this.scope}}">
+                                        <div class="textOnLeft {{this.scope}}">{{this.scope}}</div>
+                                        <div class="iconOnRight {{this.scope}}">
+                                            <i class="{{directionArrow scope previous_scope}}"
+                                               aria-hidden="true"></i>
+                                        </div>
+                                    </td>
+                                    <td class="rag_status {{this.risk}}">
+                                        <div class="textOnLeft {{this.risk}}">{{this.risk}}</div>
+                                        <div class="iconOnRight {{this.risk}}">
+                                            <i class="{{directionArrow risk previous_risk}}"
+                                               aria-hidden="true"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
 
-                                <td class="text-sm-left">
-                                    <div class="d-flex">
-                                        <p><b>Benefits:</b> {{breaklines this.benefits_text}}</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p><b>Schedule:</b> {{breaklines this.schedule_text}}</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p><b>Scope:</b> {{breaklines this.scope_text}}</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p><b>Risk:</b> {{breaklines this.risk_text}}</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        {{/each}}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        <td class="text-sm-left">
+                            <div class="d-flex">
+                                <p><b>Benefits:</b> {{breaklines this.benefits_text}}</p>
+                            </div>
+                            <div class="d-flex">
+                                <p><b>Schedule:</b> {{breaklines this.schedule_text}}</p>
+                            </div>
+                            <div class="d-flex">
+                                <p><b>Scope:</b> {{breaklines this.scope_text}}</p>
+                            </div>
+                            <div class="d-flex">
+                                <p><b>Risk:</b> {{breaklines this.risk_text}}</p>
+                            </div>
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
