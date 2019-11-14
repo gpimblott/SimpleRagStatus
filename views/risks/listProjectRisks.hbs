@@ -2,36 +2,35 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col col-md-12">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+            <nav class="breadcrumb navbar py-0">
+                <ul class="breadcrumb mr-auto pb-0">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="/project">Projects</a></li>
                     <li class="breadcrumb-item"><a href="/project/{{project.id}}">{{project.name}}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Risks</li>
-                </ol>
+                </ul>
+                <div class="navbar pt-3 pb-0">
+                    <ul class="list-inline">
+                        {{#if user.admin}}
+                            <li class="list-inline-item">
+                                <a class="" href="/project/{{project.id}}/risk?action=add">
+                                    <i class="fas fa-plus-square"></i> Add new risk
+                                </a>
+                            </li>
+                        {{/if}}
+                    </ul>
+                </div>
             </nav>
         </div>
     </div>
 
     <div class="row">
-        <div class="col text-center"><h3>'{{project.name}}' risks</h3></div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <p class="dontPrint">
-                {{#if user.editor}}
-                    <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}/risk?action=add"
-                       role="button">
-                        <i class="fas fa-plus-square"></i> Add new risk
-                    </a>
-                {{/if}}
-            </p>
-        </div>
+        <div class="col text-center"><div class="pageTitle">'{{project.name}}' risks</div></div>
     </div>
 
 
     <div class="row justify-content-md-center align-items-center">
-        <div class="col col-md-12">
+        <div class="col col-md-11">
             <table id="report_table" class="table table-striped table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
@@ -51,8 +50,7 @@
                 {{#each risks}}
                     <tr>
                         {{#if ../user.editor}}
-                            <td class="dontPrint">
-
+                            <td class="dontPrint actionButtonColumn">
                                 <a data-toggle="tooltip" title="Edit this risk"
                                    href="/risk/{{id}}?action=edit">
                                     <i class="fas fa-edit"></i>
@@ -69,7 +67,7 @@
                         {{#if this.is_closed}}
                             <td>Closed</td>
                         {{else}}
-                            <td class="Open">Open</td>{{/if}}
+                            <td class="Open riskStateColumn">Open</td>{{/if}}
 
                     </tr>
                 {{/each}}

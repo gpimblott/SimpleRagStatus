@@ -22,7 +22,7 @@
             <div class="row justify-content-md-center align-items-center no-gutters" id="reportDashboard">
                 <div class="col col-md-2">
                     <div class="card">
-                        <h6 class="card-header text-center">Benefits</h6>
+                        <h6 class="card-header text-center columnHeading">Benefits</h6>
                         <ul class="list-group list-group-horizontal list-group-flush">
                             <li class="list-group-item Red h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.red}}</li>
                             <li class="list-group-item Amber h6 font-weight-bold text-center traffic_light m-0">{{benefitTotals.amber}}</li>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="col col-md-2">
                     <div class="card">
-                        <h6 class="card-header text-center">Scope</h6>
+                        <h6 class="card-header text-center columnHeading">Scope</h6>
                         <ul class="list-group list-group-horizontal list-group-flush">
                             <li class="list-group-item Red h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.red}}</li>
                             <li class="list-group-item Amber h6 font-weight-bold text-center traffic_light m-0">{{scopeTotals.amber}}</li>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="col col-md-2">
                     <div class="card">
-                        <h6 class="card-header text-center">Schedule</h6>
+                        <h6 class="card-header text-center columnHeading">Schedule</h6>
                         <ul class="list-group list-group-horizontal list-group-flush">
                             <li class="list-group-item Red h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.red}}</li>
                             <li class="list-group-item Amber h6 text-center font-weight-bold traffic_light m-0">{{scheduleTotals.amber}}</li>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="col col-md-2">
                     <div class="card">
-                        <h6 class="card-header text-center">Risk</h6>
+                        <h6 class="card-header text-center columnHeading">Risk</h6>
                         <ul class="list-group list-group-horizontal list-group-flush">
                             <li class="list-group-item Red h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.red}}</li>
                             <li class="list-group-item Amber h6 text-center font-weight-bold traffic_light m-0">{{riskTotals.amber}}</li>
@@ -68,20 +68,26 @@
                 </div>
             </div>
             <hr>
+            <div class="row justify-content-md-center">
+                <div class="col col-6">
+                    <div class="tableTitle">Last 5 reports</div>
+                </div>
+            </div>
+
             <div class="row justify-content-md-center ">
                 <div class="col col-5">
-                    <div class="tableTitle">Last 5 reports</div>
                     <table class="table">
                         <thead>
                         <tr>
-                        <th>Report Date</th>
-                        <th>Title</th>
+                            <th>Date</th>
+                            <th>Title</th>
                         </tr>
                         </thead>
                         <tbody>
                         {{#each reports}}
                             <tr>
-                                <td><a href="/report/{{this.id}}">{{formatDate report_date}}</a></td>
+                                <td class="dateFixedWidth"><a href="/report/{{this.id}}">{{formatDate report_date}}</a>
+                                </td>
                                 <td>{{title}}</td>
                             </tr>
                         {{/each}}

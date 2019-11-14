@@ -7,51 +7,48 @@
                     <li class="breadcrumb-item"><a href="/project">Projects</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{project.name}}</li>
                 </ul>
-                <div class="d-flex">
-                    <ol class="navbar-nav pb-0">
-                        <li class="nav-item">
+                <div class="navbar pt-3 pb-0">
+                    <ul class="list-inline">
+                        {{#if user.admin}}
+                            <li class="list-inline-item">
+                                <a class="" href="/project/{{project.id}}?action=edit">
+                                    <i class="fas fa-edit"></i> Edit Project
+                                </a>
+                            </li>
+                        {{/if}}
+                        <li class="list-inline-item">
+                            <a class="" href="/project/{{project.id}}/risk"
+                               role="button">
+                                <i class="fas fa-exclamation-triangle"></i> Project Risks
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
                             <a href="#" onclick="window.print();return false;">
                                 <i class="fas fa-print"></i> Print
                             </a>
                         </li>
-                    </ol>
+                    </ul>
                 </div>
             </nav>
         </div>
     </div>
     <div class="row">
-        <div class="col text-center"><h3>'{{project.name}}' reports</h3></div>
-    </div>
-    <div class="row" id="projectDescription">
-        <div class="col text-center reportDescription">{{project.description}}</div>
-    </div>
-
-    <div class="row justify-content-md-center align-items-center dontPrint">
-        <div class="col-md-12">
-            <p>
-
-                <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}/risk"
-                   role="button">
-                    <i class="fas fa-exclamation-triangle"></i> Project Risks
-                </a>
-                {{#if user.admin}}
-                    <a class="btn btn-outline-secondary btn-sm" href="/project/{{project.id}}?action=edit"
-                       role="button">
-                        <i class="fas fa-edit"></i> Edit Project
-                    </a>
-                {{/if}}
-
-            </p>
+        <div class="col text-center">
+            <div class="pageTitle">'{{project.name}}' reports</div>
         </div>
     </div>
+    <div class="row" id="projectDescription">
+        <div class="col text-center pageSubTitle">{{project.description}}</div>
+    </div>
+
 
     <div class="row justify-content-md-center align-items-center">
-        <div class="col col-md-12">
+        <div class="col col-md-11">
             <table id="report_table" class="table table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
                     {{#if user.editor}}
-                        <th class="dontPrint actionsFixedWidth"></th>
+                        <th class="dontPrint actionButtonColumn"></th>
                     {{/if}}
                     <th class="dateFixedWidth">Date</th>
                     <th class="rag_status">Benefits</th>
@@ -65,7 +62,7 @@
                 {{#each reports}}
                     <tr>
                         {{#if ../user.editor}}
-                            <td class="dontPrint">
+                            <td class="dontPrint actionButtonColumn">
                                 <a data-toggle="tooltip" title="Edit this report"
                                    href="/project/{{../project.id}}/report/{{this.report_id}}">
                                     <i class="fas fa-edit"></i>

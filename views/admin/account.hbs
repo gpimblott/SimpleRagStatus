@@ -2,60 +2,66 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col col-md-12">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+            <nav class="breadcrumb navbar py-0">
+                <ul class="breadcrumb mr-auto pb-0">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Accounts</li>
-                </ol>
+                </ul>
+                <div class="navbar pt-3 pb-0">
+                    <ul class="list-inline">
+                        {{#if user.admin}}
+                            <li class="list-inline-item">
+                                <a class="" href="/account?action=add" role="button">
+                                    <i class="fas fa-plus-square"></i> Add Account
+                                </a>
+                            </li>
+                        {{/if}}
+                    </ul>
+                </div>
             </nav>
         </div>
     </div>
 
     <div class="row">
-        <div class="col text-center"><h3>Accounts</h3></div>
+        <div class="col text-center"><div class="pageTitle">Accounts</div></div>
     </div>
-    <div class="row justify-content-md-center align-items-center dontPrint">
-        <div class="col col-md-8">
-            <p>
-                <a class="btn btn-outline-secondary btn-sm" href="/account?action=add" role="button">
-                    <i class="fas fa-plus-square"></i> Add Account
-                </a>
-            </p>
-        </div>
-    </div>
+
 
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-8">
 
-            <table id="account_table" class="table">
+            <table id="account_table" class="table table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    <th>Actions</th>
+                    <th></th>
                     <th>Username</th>
                     <th>Name</th>
                     <th>Role</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {{#each accounts}}
                     <tr>
-                        <td style="width: 80px">
+                        <td class="actionButtonColumn">
                             <a data-toggle="tooltip" title="Edit account" href="/account/{{this.id}}?action=edit">
                                 <i class="fas fa-edit"></i>
-                            </a>
-                            <a data-toggle="tooltip" title="Delete account" href="/account/{{this.id}}"
-                               data-method="delete"
-                               data-target-url="/account/"
-                               data-confirm="Are you sure?">
-                                <i class="fas fa-trash-alt"></i>
                             </a>
                             <a data-toggle="tooltip" title="Change password" href="/account/{{this.id}}/password">
                                 <i class="fas fa-key"></i>
                             </a>
                         </td>
-                        <td style="width: 120px">{{this.username}}</td>
+                        <td class="usernameColumn">{{this.username}}</td>
                         <td>{{this.firstname}} {{this.surname}}</td>
-                        <td>{{this.role_name}}</td>
+                        <td class="userRoleStateColumn">{{this.role_name}}</td>
+                        <td class="deleteButtonColumn">
+                            <a class="btn btn-outline-danger btn-sm"
+                               data-toggle="tooltip" title="Delete account" href="/account/{{this.id}}"
+                               data-method="delete"
+                               data-target-url="/account/"
+                               data-confirm="Are you sure?">
+                                <i class="fas fa-trash-alt"></i> Delete</a>
+                        </td>
                     </tr>
                 {{/each}}
                 </tbody>

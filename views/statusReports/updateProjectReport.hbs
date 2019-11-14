@@ -20,15 +20,15 @@
 <div class="container-fluid">
     <div class="row dontPrint">
         <div class="col col-md-12">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+            <nav class="breadcrumb navbar py-0">
+                <ul class="breadcrumb mr-auto pb-0">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="/project">Projects</a></li>
                     <li class="breadcrumb-item"><a href="/project/{{project.id}}">{{project.name}}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">RAG Report ( {{formatDate
                             report.report_date}} )
                     </li>
-                </ol>
+                </ul>
             </nav>
         </div>
     </div>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="row justify-content-md-center align-items-center">
-        <div class="col col-md-10">
+        <div class="col col-md-8">
             <div class="reportDescription">{{report.title}}</div>
             <hr>
             <div>

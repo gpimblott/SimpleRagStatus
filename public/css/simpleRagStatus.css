@@ -5,7 +5,6 @@ body {
 table {
     font-family: 'Raleway', sans-serif;
     font-size: 14px;
-    /*font-weight: 300;*/
 }
 
 footer {
@@ -17,10 +16,6 @@ p.copyright {
     margin: 5px 0 0 30px;
 }
 
-th {
-    text-align: center;
-    align-content: center;
-}
 
 .navbar-color {
     background-color: slategray;
@@ -32,7 +27,7 @@ th {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-    color: rgba(255,255,255,1);
+    color: rgba(255, 255, 255, 1);
     font-size: 14px;
 }
 
@@ -45,8 +40,16 @@ th {
     font-size: 14px;
 }
 
-li.breadcrumb-item>a {
+li.breadcrumb-item > a {
     color: black;
+}
+
+th {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: center;
+    align-content: center;
 }
 
 .navbar a {
@@ -89,7 +92,7 @@ li.breadcrumb-item>a {
     font-family: 'Raleway', sans-serif;
     font-size: 18px;
     font-weight: 800;
-    margin: 20px 0 0px;
+    margin: 20px 0 15px;
     text-align: left;
 }
 
@@ -104,10 +107,10 @@ li.breadcrumb-item>a {
 .pageTitle {
     font-family: 'Raleway', sans-serif;
     font-size: 24px;
-    font-weight: 600;
-    margin: 10px 0 5px;
+    font-weight: 800;
+    margin: 10px 0 15px;
     text-align: center;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 }
 
 .pageSubTitle {
@@ -115,6 +118,14 @@ li.breadcrumb-item>a {
     font-size: 20px;
     font-weight: 400;
     margin: 0 0 10px;
+    text-align: center;
+    /*text-transform: uppercase;*/
+}
+
+.columnHeading {
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
     text-align: center;
     /*text-transform: uppercase;*/
 }
@@ -133,21 +144,41 @@ li.breadcrumb-item>a {
     width: 10%;
 }
 
-.dateFixedWidth {
+td.dateFixedWidth {
     width: 100px;
 }
 
-.actionsFixedWidth {
-     width: 40px;
-     align-content: center;
- }
-
-.actionsFixedWidthXL {
-    width: 80px;
+td.actionButtonColumn {
     align-content: center;
+    text-align: center;
+    width: 60px;
 }
 
-.project_code_column {
+td.deleteButtonColumn {
+    align-content: center;
+    text-align: center;
+    width: 130px;
+}
+
+td.riskStateColumn {
+    align-content: center;
+    text-align: center;
+    width: 130px;
+}
+
+td.userRoleStateColumn {
+    align-content: center;
+    text-align: center;
+    width: 100px;
+}
+
+td.usernameColumn {
+    align-content: center;
+    text-align: center;
+    width: 200px;
+}
+
+td.project_code_column {
     width: 80px;
 }
 
@@ -156,8 +187,8 @@ li.breadcrumb-item>a {
 }
 
 .traffic_light {
-    width:33.3%;
-    text-align:center;
+    width: 33.3%;
+    text-align: center;
     margin-left: 0;
     margin-right: 0;
     padding-left: 0;

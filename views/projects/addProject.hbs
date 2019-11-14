@@ -1,12 +1,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col col-md-12">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+            <nav class="breadcrumb navbar py-0">
+                <ul class="breadcrumb mr-auto pb-0">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item" aria-current="page"><a href="/project">Projects</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Add project</li>
-                </ol>
+                </ul>
             </nav>
         </div>
     </div>
@@ -30,20 +30,25 @@
 
                 <div class="form-group row">
                     <label for="groupSelect" class="col-sm-2 col-form-label">Group</label>
-                    <select name="projectGroup" id="groupSelect">
-                        {{#each groups }}
-                            <option value="{{this.id}}">{{this.name}}</option>
-                        {{/each}}
-                    </select>
+
+                    {{#each groups }}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="projectGroup" id="projectGroup_{{this.id}}" value="{{this.id}}">
+                        <label class="form-check-label" for="projectGroup_{{this.id}}">{{this.name}}</label>
+                    </div>
+                    {{/each}}
                 </div>
 
                 <div class="form-group row">
                     <label for="phaseSelect" class="col-sm-2 col-form-label">Phase</label>
-                    <select name="phase" id="phaseSelect">
-                        {{#each phases }}
-                            <option value="{{this.id}}">{{this.name}}</option>
-                        {{/each}}
-                    </select>
+
+                    {{#each phases }}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="phase" id="phaseSelect_{{this.id}}" value="{{this.id}}">
+                            <label class="form-check-label" for="phaseSelect_{{this.id}}">{{this.name}}</label>
+                        </div>
+                    {{/each}}
+
                 </div>
 
 
