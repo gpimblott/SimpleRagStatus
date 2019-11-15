@@ -144,6 +144,10 @@ th {
     width: 10%;
 }
 
+.top5table > thead > tr:first-child > th {
+    border: none;
+}
+
 td.dateFixedWidth {
     width: 100px;
 }
