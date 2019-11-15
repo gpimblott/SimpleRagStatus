@@ -74,10 +74,10 @@
                             <a data-toggle="tooltip" title="View report"
                                href="/report/{{this.report_id}}">{{formatDate this.report_date}}</a>
                         </td>
-                        <td class="rag_status {{benefits}}">{{benefits}}</td>
-                        <td class="rag_status {{schedule}}">{{schedule}}</td>
-                        <td class="rag_status {{scope}}">{{scope}}</td>
-                        <td class="rag_status {{risk}}">{{risk}}</td>
+                        <td class="rag_status {{benefits}}"><div class="{{benefits}}">{{benefits}}</div></td>
+                        <td class="rag_status {{schedule}}"><div class="{{schedule}}">{{schedule}}</div></td>
+                        <td class="rag_status {{scope}}"><div class="{{scope}}">{{scope}}</div></td>
+                        <td class="rag_status {{risk}}"><div class="{{risk}}">{{risk}}</div></td>
                         <td class="text-sm-left">
                             <div class="d-flex">
                                 <p><b>Benefits:</b> {{breaklines this.benefits_text}}</p>
