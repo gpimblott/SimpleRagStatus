@@ -1,3 +1,5 @@
+
+
 body {
     font-family: 'Raleway', sans-serif;
 }
@@ -110,7 +112,10 @@ th {
     font-weight: 800;
     margin: 10px 0 15px;
     text-align: center;
-    /*text-transform: uppercase;*/
+}
+
+.bigPageTitle {
+    font-size: 36px;
 }
 
 .pageSubTitle {
@@ -119,7 +124,6 @@ th {
     font-weight: 400;
     margin: 0 0 10px;
     text-align: center;
-    /*text-transform: uppercase;*/
 }
 
 .columnHeading {
