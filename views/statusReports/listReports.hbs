@@ -27,31 +27,37 @@
     </div>
 
     <div class="row justify-content-md-center align-items-center">
-        <div class="col col-md-11">
+        <div class="col col-md-8">
 
             <table id="report_table" class="table table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
+                    {{#if user.admin}}
                     <th></th>
+                    {{/if}}
                     <th>Date</th>
                     <th>Description</th>
+                    {{#if user.admin}}
                     <th></th>
+                    {{/if}}
                 </tr>
                 </thead>
                 <tbody>
                 {{#each project_reports}}
                     <tr>
+                        {{#if ../user.admin}}
                         <td class="actionButtonColumn">
-                            {{#if ../user.admin}}
+
                                 <a data-toggle="tooltip" title="Edit report" href="/report/{{this.id}}?action=edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                            {{/if}}
                         </td>
+                        {{/if}}
                         <td class="dateFixedWidth"><a data-toggle="tooltip" title="View report"
                                                       href="/report/{{this.id}}">{{formatDate this.report_date}}</a>
                         </td>
                         <td>{{this.title}}</td>
+                        {{#if ../user.admin}}
                         <td class="deleteButtonColumn">
                             <a class="btn btn-outline-danger btn-sm"
                                data-toggle="tooltip" title="Delete report" href="/report/{{this.id}}"
@@ -60,6 +66,7 @@
                                data-confirm="Are you sure?">
                                 <i class="fas fa-trash-alt"></i> Delete</a>
                         </td>
+                        {{/if}}
                     </tr>
                 {{/each}}
                 </tbody>
