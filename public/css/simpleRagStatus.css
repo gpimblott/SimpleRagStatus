@@ -1,11 +1,10 @@
 
 
 body {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 table {
-    font-family: 'Raleway', sans-serif;
     font-size: 14px;
 }
 
@@ -47,7 +46,6 @@ li.breadcrumb-item > a {
 }
 
 th {
-    font-family: 'Raleway', sans-serif;
     font-size: 14px;
     font-weight: 800;
     text-align: center;
@@ -82,7 +80,6 @@ th {
 }
 
 .projectName {
-    font-family: 'Raleway', sans-serif;
     font-size: 24px;
     font-weight: 600;
     margin: 20px 0 0px;
@@ -91,7 +88,6 @@ th {
 }
 
 .tableTitle {
-    font-family: 'Raleway', sans-serif;
     font-size: 18px;
     font-weight: 800;
     margin: 20px 0 15px;
@@ -107,7 +103,6 @@ th {
 }
 
 .pageTitle {
-    font-family: 'Raleway', sans-serif;
     font-size: 24px;
     font-weight: 800;
     margin: 10px 0 15px;
@@ -119,7 +114,6 @@ th {
 }
 
 .pageSubTitle {
-    font-family: 'Raleway', sans-serif;
     font-size: 20px;
     font-weight: 400;
     margin: 0 0 10px;
@@ -127,11 +121,9 @@ th {
 }
 
 .columnHeading {
-    font-family: 'Raleway', sans-serif;
     font-size: 16px;
     font-weight: 800;
     text-align: center;
-    /*text-transform: uppercase;*/
 }
 
 .reportDescription {

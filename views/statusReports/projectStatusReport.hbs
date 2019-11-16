@@ -34,7 +34,7 @@
     </div>
     <div class="row">
         <div class="col text-center">
-            <div class="pageTitle">'{{project.name}}' Reports</div>
+            <div class="pageTitle">Project Report ({{project.name}})</div>
         </div>
     </div>
     <div class="row" id="projectDescription">
@@ -50,11 +50,7 @@
                     {{#if user.editor}}
                         <th class="dontPrint actionButtonColumn"></th>
                     {{/if}}
-                    <th class="dateFixedWidth">Date</th>
-                    <th class="rag_status">Benefits</th>
-                    <th class="rag_status">Schedule</th>
-                    <th class="rag_status">Scope</th>
-                    <th class="rag_status">Risk</th>
+                    <th class="team_column">Report</th>
                     <th>Highlights / Lowlights</th>
                 </tr>
                 </thead>
@@ -70,14 +66,34 @@
 
                             </td>
                         {{/if}}
-                        <td class="dateFixedWidth">
+                        <td>
                             <a data-toggle="tooltip" title="View report"
-                               href="/report/{{this.report_id}}">{{formatDate this.report_date}}</a>
+                               href="/report/{{this.report_id}}">Date : {{formatDate this.report_date}}</a>
+                            <table class="table">
+                                <thead>
+                                <th>Benefits</th>
+                                <th>Schedule</th>
+                                <th>Scope</th>
+                                <th>Risk</th>
+                                </thead>
+                                <tr>
+                                    <td class="rag_status {{this.benefits}}">
+                                        <div class="{{this.benefits}}">{{this.benefits}}</div>
+                                    </td>
+                                    <td class="rag_status {{this.schedule}}">
+                                        <div class="{{this.schedule}}">{{this.schedule}}</div>
+                                    </td>
+
+                                    <td class="rag_status {{this.scope}}">
+                                        <div class="{{this.scope}}">{{this.scope}}</div>
+                                    </td>
+                                    <td class="rag_status {{this.risk}}">
+                                        <div class="{{this.risk}}">{{this.risk}}</div>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
-                        <td class="rag_status {{benefits}}"><div class="{{benefits}}">{{benefits}}</div></td>
-                        <td class="rag_status {{schedule}}"><div class="{{schedule}}">{{schedule}}</div></td>
-                        <td class="rag_status {{scope}}"><div class="{{scope}}">{{scope}}</div></td>
-                        <td class="rag_status {{risk}}"><div class="{{risk}}">{{risk}}</div></td>
+
                         <td class="text-sm-left">
                             <div class="d-flex">
                                 <p><b>Benefits:</b> {{breaklines this.benefits_text}}</p>

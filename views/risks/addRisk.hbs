@@ -1,3 +1,4 @@
+<script src="/js/dateInputDefaultValue.js"></script>
 <div class="container-fluid">
     <div class="row">
         <div class="col col-md-12">
@@ -71,12 +72,7 @@
 </div>
 
 <script>
-    Date.prototype.toDateInputValue = (function() {
-        let local = new Date(this);
-        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-        return local.toJSON().slice(0,10);
+    $(function() {
+        document.getElementById('dateInput').value = new Date().toDateInputValue();
     });
-
-    document.getElementById('dateInput').value = new Date().toDateInputValue();
-
 </script>
