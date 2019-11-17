@@ -5,13 +5,15 @@ const express = require('express');
 const security = require('../authentication/security');
 
 const projectController = require("../controllers/projectController");
-const riskController = require("../controllers/riskController");
-const milestoneController = require("../controllers/milestoneController");
 
 const projectDAO = require("../dao/projectDAO");
 
-// Subroutes for /project/:id/milestone
+// Subroutes for
+// /project/:id/milestone
+// /project/:id/risk
 const milestoneRoutes = require('./milestone');
+const riskRoutes = require('./risk');
+const projectStatusRoutes = require('./projectStatus');
 
 const router = express.Router();
 
@@ -64,6 +66,11 @@ router.get('/', security.isAuthenticatedAdminWithAction, (req, res, next) => {
 });
 
 /**
+ * Add a new project
+ */
+router.post('/', security.isAuthenticatedAdmin, projectController.addProject);
+
+/**
  * Get a specific project or edit page if the 'action' parameter is set
  */
 router.get('/:projectId(\\d+)/', security.isAuthenticatedAdminWithAction, (req, res, next) => {
@@ -76,65 +83,18 @@ router.get('/:projectId(\\d+)/', security.isAuthenticatedAdminWithAction, (req, 
 });
 
 /**
- * Get a specific project or the edit page if the 'action' parameter is set
- */
-router.get('/:projectId(\\d+)/', security.isAuthenticatedAdminWithAction, (req, res, next) => {
-
-    if (req.action === 'edit') {
-        projectController.displayEditProjectPage(req, res, next);
-    } else {
-        projectController.displayProjectPage(req, res, next);
-    }
-});
-
-/**
- * Display risk page or page to add a new risk if the action parameter is set
- */
-router.get('/:projectId(\\d+)/risk/', security.isAuthenticatedEditorWithAction, (req, res, next) => {
-
-    if (req.action === 'add') {
-        riskController.displayAddRiskPage(req, res, next);
-    } else {
-        riskController.displayRisksForProjectPage(req, res, next);
-    }
-});
-
-
-/**
- * Edit a project report
- */
-router.get('/:projectId(\\d+)/report/:reportId(\\d+)', security.isAuthenticatedEditor,
-    projectController.displayUpdateProjectReportPage);
-
-/************************** The methods below require the user to be an EDITOR or Admin*******************/
-/**
  * Update a project
  */
 router.post('/:projectId(\\d+)', security.isAuthenticatedAdmin, projectController.updateProject);
-
-/**
- * Add a new risk for a project
- */
-router.post('/:projectId(\\d+)/risk', security.isAuthenticatedEditor, riskController.addProjectRisk);
-
-
-/**
- * Update the report for a project
- */
-router.post('/:projectId(\\d+)/report/:reportId(\\d+)', security.isAuthenticatedEditor, projectController.updateProjectReport);
-
-/**
- * Add a new project
- */
-router.post('/', security.isAuthenticatedAdmin, projectController.addProject);
 
 /**
  * Delete a project
  */
 router.delete('/:projectId(\\d+)', security.isAuthenticatedAdmin, projectController.deleteProject);
 
-
 // Setup the sub routes
+router.use('/:projectId(\\d+)/status', projectStatusRoutes);
+router.use('/:projectId(\\d+)/risk', riskRoutes);
 router.use('/:projectId(\\d+)/milestone', milestoneRoutes);
 
 module.exports = router;

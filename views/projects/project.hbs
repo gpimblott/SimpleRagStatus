@@ -93,11 +93,12 @@
                                         <p> {{{description}}} </p>
                                     </li>
                                 {{else}}
-                                    <div class="pageSubTitle">No milestones defined</div>
+                                    <div class="pageSubTitle">No milestones defined
+                                        <br><a href="/project/{{project.id}}/milestone?action=add">Add a milestone</a></div>
                                 {{/each}}
                             </ul>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="border-left: 1px solid #ccc;">
                             <div class="row">
                                 <div class="col">
                                     <h4 class="">Product Owner</h4>
@@ -154,8 +155,8 @@
                             <tr>
                                 {{#if ../user.editor}}
                                     <td class="dontPrint actionButtonColumn">
-                                        <a data-toggle="tooltip" title="Edit this report"
-                                           href="/project/{{../project.id}}/report/{{this.report_id}}">
+                                        <a data-toggle="tooltip" title="Edit this status report"
+                                           href="/project/{{../project.id}}/status/{{this.report_id}}">
                                             <i class="fas fa-edit"></i>
                                         </a>
 

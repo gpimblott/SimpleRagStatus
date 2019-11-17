@@ -23,19 +23,40 @@ router.param('riskId', function (req, res, next, id) {
         .catch(error => {
             next(error);
         });
-
 });
 
 /**
- * Show the edit risk page
+ * Display risk page or page to add a new risk if the action parameter is set
  */
-router.get('/:riskId(\\d+)', security.isAuthenticated, (req, res, next) => {
-    riskController.editRiskPage(req, res, next);
+router.get('/', security.isAuthenticatedEditorWithAction, (req, res, next) => {
+
+    if (req.action === 'add') {
+        riskController.displayAddRiskPage(req, res, next);
+    } else {
+        riskController.displayRisksForProjectPage(req, res, next);
+    }
 });
 
 /**
- * Update a new Risk
+ * Add a new risk for a project
+ */
+router.post('/', security.isAuthenticatedEditor, riskController.addProjectRisk);
+
+/**
+ * Display the edit page
+ */
+router.get('/:riskId(\\d+)', security.isAuthenticatedEditorWithAction, (req, res, next) => {
+    if (req.action === 'edit') {
+        riskController.editRiskPage(req, res, next);
+    } else {
+        throw(new Error('Not yet implemented'));
+    }
+});
+
+/**
+ * Update a Risk
  */
 router.post('/:riskId(\\d+)', security.isAuthenticatedEditor, riskController.updateRisk);
+
 
 module.exports = router;

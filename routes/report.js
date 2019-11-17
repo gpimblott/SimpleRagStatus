@@ -7,6 +7,7 @@ const security = require('../authentication/security');
 const router = express.Router();
 
 const reportController = require('../controllers/reportController');
+const projectController = require("../controllers/projectController");
 
 /**
  * Intercept reportId parameter and set in request
@@ -46,7 +47,6 @@ router.get('/:reportId(\\d+)/', security.isAuthenticatedEditorWithAction, (req, 
         reportController.displayReport(req, res, next);
     }
 });
-
 
 /**
  * Add a new report

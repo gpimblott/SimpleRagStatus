@@ -22,8 +22,6 @@ exports.displayEditMilestonePage = function (req, res, next) {
     let project = req.project;
     let milestone = req.milestone;
 
-    console.log(milestone);
-
     res.render('milestones/editMilestone',
         {
             project: project,

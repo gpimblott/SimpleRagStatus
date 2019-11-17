@@ -11,7 +11,7 @@
                 </ul>
                 <div class="navbar mt-2 mb-0 py-0">
                     <ul class="list-inline">
-                        {{#if user.admin}}
+                        {{#if user.editor}}
                             <li class="list-inline-item">
                                 <a class="" href="/project/{{project.id}}/risk?action=add">
                                     <i class="fas fa-plus-square"></i> Add new risk
@@ -52,7 +52,7 @@
                         {{#if ../user.editor}}
                             <td class="dontPrint actionButtonColumn">
                                 <a data-toggle="tooltip" title="Edit this risk"
-                                   href="/risk/{{id}}?action=edit">
+                                   href="/project/{{../project.id}}/risk/{{id}}?action=edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>
@@ -71,7 +71,8 @@
                         {{/if}}
                     </tr>
                 {{else}}
-                    <tr><td colspan="8" align="center">There are no risks defined for {{project.name}}</td></tr>
+                    <tr><td colspan="8" align="center">There are no risks defined for {{project.name}}
+                        <br><a href="/project/{{project.id}}/risk?action=add">Add the first risk</a></td></tr>
                 {{/each}}
                 </tbody>
             </table>

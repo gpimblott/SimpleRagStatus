@@ -64,7 +64,8 @@
                         </td>
                     </tr>
                 {{else}}
-                    <tr><td colspan="5" align="center">No milestones defined for project</td></tr>
+                    <tr><td colspan="5" align="center">No milestones defined for project<br>
+                        <a href="/project/{{project.id}}/milestone?action=add">Add the first milestone</a></td></tr>
                 {{/each}}
                 </tbody>
             </table>
