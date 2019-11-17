@@ -31,7 +31,7 @@
 
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-11">
-            <table id="report_table" class="table table-striped table-hover table-bordered">
+            <table id="report_table" class="table table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
                     {{#if user.editor}}
@@ -67,9 +67,11 @@
                         {{#if this.is_closed}}
                             <td>Closed</td>
                         {{else}}
-                            <td class="Open riskStateColumn">Open</td>{{/if}}
-
+                            <td class="Open riskStateColumn">Open</td>
+                        {{/if}}
                     </tr>
+                {{else}}
+                    <tr><td colspan="8" align="center">There are no risks defined for {{project.name}}</td></tr>
                 {{/each}}
                 </tbody>
             </table>

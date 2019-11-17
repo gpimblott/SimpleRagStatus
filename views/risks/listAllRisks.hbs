@@ -72,6 +72,8 @@
                         <td>{{breaklines this.risk}}</td>
                         <td>{{breaklines this.mitigating_action}}</td>
                     </tr>
+                {{else}}
+                    <tr><td colspan="7" align="center">There are no open risks for the programme</td></tr>
                 {{/each}}
                 </tbody>
             </table>

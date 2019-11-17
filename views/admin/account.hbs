@@ -26,7 +26,6 @@
         <div class="col text-center"><div class="pageTitle">Accounts</div></div>
     </div>
 
-
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-8">
 
@@ -63,6 +62,8 @@
                                 <i class="fas fa-trash-alt"></i> Delete</a>
                         </td>
                     </tr>
+                {{else}}
+                    <tr><td colspan="5" align="center">There are no accounts defined</td></tr>
                 {{/each}}
                 </tbody>
             </table>
