@@ -33,6 +33,7 @@
     "express-enforces-ssl": "latest",
     "express-handlebars": "^3.1.0",
     "express-session": "^1.16.2",
+    "handlebars-dateformat": "^1.1.1",
     "helmet": "^3.21.0",
     "morgan": "latest",
     "node-cache": "latest",

@@ -49,8 +49,17 @@ ProjectDAO.getProjectGroups = function () {
 ProjectDAO.updateProject = function (projectId, project) {
     cache.flush();
     return database.insertOrUpdate(
-        'UPDATE project set name=$2 , code=$3, description=$4 , phase=$5, project_group_id=$6 where id=$1',
-        [projectId, project.name, project.code, project.description, project.phase, project.projectGroup])
+            `UPDATE project
+             set name=$2,
+                 code=$3,
+                 description=$4,
+                 phase=$5,
+                 project_group_id=$6,
+                 product_owner=$7,
+                 tech_lead=$8
+             WHERE id = $1`,
+        [projectId, project.name, project.code, project.description, project.phase,
+            project.projectGroup, project.product_owner, project.tech_lead])
 };
 
 /**
@@ -60,10 +69,14 @@ ProjectDAO.updateProject = function (projectId, project) {
  */
 ProjectDAO.addProject = function (project) {
     cache.flush();
-    return database.insertOrUpdate(`INSERT INTO project (name, code, description, phase, project_group_id)
-                                    VALUES ($1, $2, $3, $4, $5)`,
-        [project.name, project.code, project.description, project.phase, project.projectGroup]);
+    return database.insertOrUpdate(
+            `INSERT INTO project (name, code, description, phase, project_group_id, product_owner, tech_lead)
+             VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [project.name, project.code, project.description, project.phase,
+            project.projectGroup, project.product_owner, project.tech_lead]);
 };
+
+
 
 /**
  * Delete a project
@@ -99,7 +112,7 @@ ProjectDAO.getProjectPhases = function () {
  * Get the list of project names
  * @returns {*|Promise<unknown>}
  */
-ProjectDAO.getProjectNames = function() {
+ProjectDAO.getProjectNames = function () {
     return cache.get("project_names", () => {
         return database.query('SELECT id,name from project order by name');
     });

@@ -5,14 +5,16 @@
             <nav class="breadcrumb navbar py-0">
                 <ul class="breadcrumb mr-auto pb-0">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Projects</li>
+                    <li class="breadcrumb-item"><a href="/project">Projects</a></li>
+                    <li class="breadcrumb-item"><a href="/project/{{project.id}}">{{project.name}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Milestones</li>
                 </ul>
                 <div class="navbar mt-2 mb-0 py-0">
                     <ul class="list-inline">
-                        {{#if user.admin}}
+                        {{#if user.editor}}
                             <li class="list-inline-item">
-                                <a class="" href="/project?action=add">
-                                    <i class="fas fa-plus-square"></i> Add Project
+                                <a class="" href="/project/{{project.id}}/milestone?action=add">
+                                    <i class="fas fa-plus-square"></i> Add Milestone
                                 </a>
                             </li>
                         {{/if}}
@@ -22,7 +24,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col text-center"><div class="pageTitle">Projects</div></div>
+        <div class="col text-center"><div class="pageTitle">Milestones</div></div>
     </div>
 
     <div class="row justify-content-md-center align-items-center">
@@ -32,31 +34,31 @@
                 <thead class="thead-light">
                 <tr>
                     <th></th>
-                    <th>Name</th>
-                    <th>Code</th>
+                    <th>Date</th>
+                    <th>Title</th>
                     <th>Description</th>
-                    <th>Phase</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                {{#each projects}}
+                {{#each milestones}}
                     <tr>
                         <td class="actionButtonColumn">
-                            {{#if ../user.admin}}
-                                <a class="" data-toggle="tooltip" title="Edit project" href="/project/{{this.id}}?action=edit">
+                            {{#if ../user.editor}}
+                                <a class="" data-toggle="tooltip" title="Edit milestone"
+                                   href="/project/{{../project.id}}/milestone/{{this.id}}?action=edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             {{/if}}
                         </td>
-                        <td><a  href="/project/{{this.id}}"> {{this.name}}</a></td>
-                        <td>{{this.code}}</td>
+                        <td>{{formatDate this.date}}</td>
+                        <td>{{this.title}}</td>
                         <td>{{this.description}}</td>
-                        <td>{{this.phase_name}}</td>
                         <td class="deleteButtonColumn">
-                            <a class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title="Delete project" href="/project/{{this.id}}"
+                            <a class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title="Delete Milestone"
+                                href="/project/{{../project.id}}/milestone/{{this.id}}"
                                 data-method="delete"
-                                data-target-url="/project/"
+                                data-target-url="/project/{{../project.id}}/milestone"
                                 data-confirm="Are you sure?" role="button">
                             <i class="fas fa-trash-alt"></i> Delete</a>
                         </td>

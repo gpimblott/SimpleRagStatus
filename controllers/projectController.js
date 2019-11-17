@@ -6,8 +6,9 @@ const reportDao = require("../dao/reportDAO");
 const projectStatusDao = require("../dao/projectStatusDAO");
 const projectGroupDao = require("../dao/projectGroupDAO");
 const projectDao = require("../dao/projectDAO");
+const milestoneDao = require("../dao/milestoneDAO");
 
-const ragValues = ['Red','Amber','Green'];
+const ragValues = ['Red', 'Amber', 'Green'];
 
 /**
  * Display all project page - admins can edit
@@ -24,11 +25,13 @@ exports.displayAllProjects = function (req, res, next) {
                     projects: projects
                 });
         })
-        .catch( error=>{
+        .catch(error => {
             logger.error("Failed to display all projects page: %s", error);
             next(error);
         })
 };
+
+
 
 /**
  * Display the edit project page
@@ -40,21 +43,21 @@ exports.displayEditProjectPage = function (req, res, next) {
     let project = req.project;
 
     let promises = [];
-    promises.push( projectGroupDao.getAll() );
-    promises.push( projectDao.getProjectPhases() );
+    promises.push(projectGroupDao.getAll());
+    promises.push(projectDao.getProjectPhases());
 
-    Promise.all( promises )
-        .then( results=>{
-            let phases = results[1];
-            let groups = results[0];
+    Promise.all(promises)
+        .then(results => {
+            let phases = results[ 1 ];
+            let groups = results[ 0 ];
             res.render('projects/editProject',
                 {
                     project: project,
                     phases: phases,
-                    groups:groups
+                    groups: groups
                 });
         })
-        .catch( error=>{
+        .catch(error => {
             logger.error("Failed to display edit project page: %s", error);
             next(error);
         })
@@ -66,22 +69,22 @@ exports.displayEditProjectPage = function (req, res, next) {
  * @param req
  * @param res
  */
-exports.displayAddProjectPage = function (req, res, next ) {
+exports.displayAddProjectPage = function (req, res, next) {
     let promises = [];
-    promises.push( projectGroupDao.getAll() );
-    promises.push( projectDao.getProjectPhases() )
+    promises.push(projectGroupDao.getAll());
+    promises.push(projectDao.getProjectPhases())
 
-    Promise.all( promises )
-        .then( results=>{
-            let phases = results[1];
-            let groups = results[0];
+    Promise.all(promises)
+        .then(results => {
+            let phases = results[ 1 ];
+            let groups = results[ 0 ];
 
             res.render('projects/addProject', {
-                groups : groups,
-                phases : phases
+                groups: groups,
+                phases: phases
             });
         })
-        .catch( error=> {
+        .catch(error => {
             logger.error("Failed to display add project page: %s", error);
             next(error);
         })
@@ -97,12 +100,19 @@ exports.displayAddProjectPage = function (req, res, next ) {
 exports.displayProjectPage = function (req, res, next) {
     let projectId = req.projectId;
 
-    reportDao.getReportsForProjectById(projectId)
-        .then(reports => {
-            res.render('statusReports/projectStatusReport',
+    let promises = [];
+    promises.push(reportDao.getReportsForProjectById(projectId));
+    promises.push(milestoneDao.getMilestonesForProject(projectId));
+
+    Promise.all(promises)
+        .then(results => {
+            let reports = results[0];
+            let milestones = results[1];
+            res.render('projects/project',
                 {
                     project: req.project,
-                    reports: reports
+                    reports: reports,
+                    milestones: milestones
                 });
         })
         .catch(error => {
@@ -208,6 +218,8 @@ exports.addProject = function (req, res, next) {
             next(error);
         })
 };
+
+
 
 /**
  * Delete a project

@@ -52,8 +52,8 @@
             <table id="report_table" class="table table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    <th>Project</th>
                     <th>Date</th>
+                    <th>Project</th>
                     <th>Likelihood</th>
                     <th>Impact</th>
                     <th>Severity</th>
@@ -64,8 +64,8 @@
                 <tbody>
                 {{#each risks}}
                     <tr>
-                        <td><a href="/project/{{this.project_id}}/risk">{{this.project_name}}</a></td>
                         <td class="dateFixedWidth">{{formatDate this.date_added}}</td>
+                        <td><a href="/project/{{this.project_id}}/risk">{{this.project_name}}</a></td>
                         <td class="rag_status {{this.likelihood}}">{{this.likelihood}}</td>
                         <td class="rag_status {{this.impact}}">{{this.impact}}</td>
                         <td class="rag_status {{this.severity}}">{{this.severity}}</td>

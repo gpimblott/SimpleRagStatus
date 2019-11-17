@@ -6,8 +6,12 @@ const security = require('../authentication/security');
 
 const projectController = require("../controllers/projectController");
 const riskController = require("../controllers/riskController");
+const milestoneController = require("../controllers/milestoneController");
 
 const projectDAO = require("../dao/projectDAO");
+
+// Subroutes for /project/:id/milestone
+const milestoneRoutes = require('./milestone');
 
 const router = express.Router();
 
@@ -36,7 +40,7 @@ router.param('projectId', function (req, res, next, id) {
     if (req.method === 'GET') {
         projectDAO.getProjectById(id)
             .then(result => {
-                req.project = result[0];
+                req.project = result[ 0 ];
                 next();
             })
             .catch(error => {
@@ -46,7 +50,6 @@ router.param('projectId', function (req, res, next, id) {
         next();
     }
 });
-
 
 /**
  * Show all of the projects or the add project page if the 'action' parameter is set
@@ -84,7 +87,6 @@ router.get('/:projectId(\\d+)/', security.isAuthenticatedAdminWithAction, (req, 
     }
 });
 
-
 /**
  * Display risk page or page to add a new risk if the action parameter is set
  */
@@ -96,6 +98,7 @@ router.get('/:projectId(\\d+)/risk/', security.isAuthenticatedEditorWithAction, 
         riskController.displayRisksForProjectPage(req, res, next);
     }
 });
+
 
 /**
  * Edit a project report
@@ -114,6 +117,7 @@ router.post('/:projectId(\\d+)', security.isAuthenticatedAdmin, projectControlle
  */
 router.post('/:projectId(\\d+)/risk', security.isAuthenticatedEditor, riskController.addProjectRisk);
 
+
 /**
  * Update the report for a project
  */
@@ -128,5 +132,9 @@ router.post('/', security.isAuthenticatedAdmin, projectController.addProject);
  * Delete a project
  */
 router.delete('/:projectId(\\d+)', security.isAuthenticatedAdmin, projectController.deleteProject);
+
+
+// Setup the sub routes
+router.use('/:projectId(\\d+)/milestone', milestoneRoutes);
 
 module.exports = router;

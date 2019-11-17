@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col col-md-12">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+            <nav class="breadcrumb navbar py-0">
+                <ul class="breadcrumb mr-auto pb-0">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item" aria-current="page"><a href="/project">Projects</a></li>
                     <li class="breadcrumb-item" aria-current="page"><a href="/project/{{project.id}}/risk">{{project.name}}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Edit Risk</li>
-                </ol>
+                </ul>
             </nav>
         </div>
     </div>
@@ -18,6 +18,14 @@
     <div class="row justify-content-md-center align-items-center">
         <div class="col col-md-8">
             <form action="/risk/{{risk.id}}" method="post">
+                <div class="form-group row">
+                    <label for="statusSelect" class="col-sm-2 col-form-label">Status</label>
+                    <select name="status" id="statusSelect">
+                        <option value="1" {{#if risk.is_closed}}selected="selected"{{/if}}>Closed</option>
+                        <option value="0" {{#unless risk.is_closed}}selected="selected"{{/unless}}>Open</option>
+                    </select>
+                </div>
+                <hr>
                 <div class="form-group">
                     <label for="dateInput">Risk date</label>
                     <input type="date" class="form-control" name="riskDate" id="dateInput" aria-describedby="dateHelp"
@@ -71,13 +79,7 @@
                               id="mitigationInput"
                               placeholder="Mitigation action being taken for the risk">{{risk.mitigating_action}}</textarea>
                 </div>
-                <div class="form-group row">
-                    <label for="statusSelect" class="col-sm-2 col-form-label">Status</label>
-                    <select name="status" id="statusSelect">
-                        <option value="1" {{#if risk.is_closed}}selected="selected"{{/if}}>Closed</option>
-                        <option value="0" {{#unless risk.is_closed}}selected="selected"{{/unless}}>Open</option>
-                    </select>
-                </div>
+
                 <button type="submit" class="btn btn-primary">Update risk</button>
             </form>
         </div>

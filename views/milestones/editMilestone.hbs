@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-md-12">
+            <nav class="breadcrumb navbar py-0">
+                <ul class="breadcrumb mr-auto pb-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/project">Projects</a></li>
+                    <li class="breadcrumb-item"><a href="/project/{{project.id}}">{{project.name}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Update milestone</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col text-center"><div class="pageTitle">Update Milestone</div></div>
+    </div>
+    <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-6">
+            <form action="/project/{{project.id}}/milestone/{{milestone.id}}" method="post">
+                <div class="form-group">
+                    <label for="dateInput">Risk date</label>
+                    <input type="date" class="form-control" name="milestoneDate" id="dateInput" aria-describedby="dateHelp"
+                           placeholder="Enter risk date" value="{{formatLinkDate milestone.date}}">
+                    <small id="dateHelp" class="form-text text-muted">The expected date of the milestone</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectName">Title</label>
+                    <input type="text" class="form-control" name="title" id="milestoneTitle" aria-describedby="titleHelp"
+                           placeholder="Title" value="{{milestone.title}}">
+                    <small id="titleHelp" class="form-text text-muted">Title of the milestone</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="descriptionInput">Description</label>
+                    <textarea rows="3"
+                              class="form-control"
+                              name="description"
+                              id="descriptionInput"
+                              placeholder="Description of the milestone">{{milestone.description}}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update milestone</button>
+            </form>
+        </div>
+    </div>
+</div>

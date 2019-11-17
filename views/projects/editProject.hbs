@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col col-md-12">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+            <nav class="breadcrumb navbar py-0">
+                <ul class="breadcrumb mr-auto pb-0">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item" aria-current="page"><a href="/project">Projects</a></li>
                     <li class="breadcrumb-item" aria-current="page"><a href="/project/{{project.id}}">{{project.name}}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Edit project</li>
-                </ol>
+                </ul>
             </nav>
         </div>
     </div>
@@ -29,6 +29,20 @@
                     <input type="text" class="form-control" name="code" id="projectCode" aria-describedby="codeHelp"
                            placeholder="Project code" value="{{project.code}}">
                     <small id="codeHelp" class="form-text text-muted">Code assigned to the project</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="productOwner">Product Owner</label>
+                    <input type="text" class="form-control" name="product_owner" id="productOwner" aria-describedby="poHelp"
+                           placeholder="Product owner" value="{{project.product_owner}}">
+                    <small id="poHelp" class="form-text text-muted">Name of the product owner</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="techLead">Tech lead</label>
+                    <input type="text" class="form-control" name="tech_lead" id="techLead" aria-describedby="tlHelp"
+                           placeholder="Technical lead" value="{{project.tech_lead}}">
+                    <small id="tlHelp" class="form-text text-muted">Name of the technical lead</small>
                 </div>
 
                 <div class="form-group row">
