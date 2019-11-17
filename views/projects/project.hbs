@@ -94,7 +94,11 @@
                                     </li>
                                 {{else}}
                                     <div class="pageSubTitle">No milestones defined
-                                        <br><a href="/project/{{project.id}}/milestone?action=add">Add a milestone</a></div>
+                                        {{#if user.editor}}
+                                            <br>
+                                            <a href="/project/{{project.id}}/milestone?action=add">Add a milestone</a>
+                                        {{/if}}
+                                    </div>
                                 {{/each}}
                             </ul>
                         </div>

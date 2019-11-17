@@ -22,7 +22,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col text-center"><div class="pageTitle">Projects</div></div>
+        <div class="col text-center">
+            <div class="pageTitle">Projects</div>
+        </div>
     </div>
 
     <div class="row justify-content-md-center align-items-center">
@@ -31,38 +33,49 @@
             <table id="report_table" class="table table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    <th></th>
+                    {{#if ../user.admin}}
+                        <th></th>
+                    {{/if}}
                     <th>Name</th>
                     <th>Code</th>
                     <th>Description</th>
                     <th>Phase</th>
-                    <th></th>
+                    {{#if ../user.admin}}
+                        <th></th>
+                    {{/if}}
                 </tr>
                 </thead>
                 <tbody>
                 {{#each projects}}
                     <tr>
-                        <td class="actionButtonColumn">
-                            {{#if ../user.admin}}
-                                <a class="" data-toggle="tooltip" title="Edit project" href="/project/{{this.id}}?action=edit">
+                        {{#if ../user.admin}}
+                            <td class="actionButtonColumn">
+
+                                <a class="" data-toggle="tooltip" title="Edit project"
+                                   href="/project/{{this.id}}?action=edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                            {{/if}}
-                        </td>
-                        <td><a  href="/project/{{this.id}}"> {{this.name}}</a></td>
+                            </td>
+                        {{/if}}
+                        <td><a href="/project/{{this.id}}"> {{this.name}}</a></td>
                         <td>{{this.code}}</td>
                         <td>{{this.description}}</td>
                         <td>{{this.phase_name}}</td>
-                        <td class="deleteButtonColumn">
-                            <a class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title="Delete project" href="/project/{{this.id}}"
-                                data-method="delete"
-                                data-target-url="/project/"
-                                data-confirm="Are you sure?" role="button">
-                            <i class="fas fa-trash-alt"></i> Delete</a>
-                        </td>
+                        {{#if ../user.admin}}
+                            <td class="deleteButtonColumn">
+                                <a class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title="Delete project"
+                                   href="/project/{{this.id}}"
+                                   data-method="delete"
+                                   data-target-url="/project/"
+                                   data-confirm="Are you sure?" role="button">
+                                    <i class="fas fa-trash-alt"></i> Delete</a>
+                            </td>
+                        {{/if}}
                     </tr>
                 {{else}}
-                    <tr><td colspan="6" align="center">There are no projects defined for the programme</td></tr>
+                    <tr>
+                        <td colspan="6" align="center">There are no projects defined for the programme</td>
+                    </tr>
                 {{/each}}
                 </tbody>
             </table>

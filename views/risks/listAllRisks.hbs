@@ -52,11 +52,7 @@
             <table id="report_table" class="table table-hover table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    <th>Date</th>
-                    <th>Project</th>
-                    <th>Likelihood</th>
-                    <th>Impact</th>
-                    <th>Severity</th>
+                    <th>Report</th>
                     <th>Risk</th>
                     <th>Mitigation</th>
                 </tr>
@@ -64,11 +60,29 @@
                 <tbody>
                 {{#each risks}}
                     <tr>
-                        <td class="dateFixedWidth">{{formatDate this.date_added}}</td>
-                        <td><a href="/project/{{this.project_id}}/risk">{{this.project_name}}</a></td>
-                        <td class="rag_status {{this.likelihood}}">{{this.likelihood}}</td>
-                        <td class="rag_status {{this.impact}}">{{this.impact}}</td>
-                        <td class="rag_status {{this.severity}}">{{this.severity}}</td>
+                        <td>
+                            {{formatDate this.date_added}} - <a href="/project/{{this.project_id}}/risk">{{this.project_name}}</a>
+                            <table class="table">
+                                <thead>
+                                <th>Likelihood</th>
+                                <th>Impact</th>
+                                <th>Severity</th>
+                                </thead>
+                                <tr>
+                                    <td class="rag_status {{this.likelihood}}">
+                                        <div class="{{this.likelihood}}">{{this.likelihood}}</div>
+                                    </td>
+                                    <td class="rag_status {{this.impact}}">
+                                        <div class="{{this.impact}}">{{this.impact}}</div>
+                                    </td>
+
+                                    <td class="rag_status {{this.severity}}">
+                                        <div class="{{this.severity}}">{{this.severity}}</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
                         <td>{{breaklines this.risk}}</td>
                         <td>{{breaklines this.mitigating_action}}</td>
                     </tr>

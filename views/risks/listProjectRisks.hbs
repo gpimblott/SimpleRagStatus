@@ -25,7 +25,9 @@
     </div>
 
     <div class="row">
-        <div class="col text-center"><div class="pageTitle">'{{project.name}}' Risks</div></div>
+        <div class="col text-center">
+            <div class="pageTitle">'{{project.name}}' Risks</div>
+        </div>
     </div>
 
 
@@ -37,10 +39,7 @@
                     {{#if user.editor}}
                         <th class="dontPrint"></th>
                     {{/if}}
-                    <th>Date</th>
-                    <th>Likelihood</th>
-                    <th>Impact</th>
-                    <th>Severity</th>
+                    <th>Report</th>
                     <th>Risk</th>
                     <th>Mitigation</th>
                     <th>State</th>
@@ -57,10 +56,28 @@
                                 </a>
                             </td>
                         {{/if}}
-                        <td class="dateFixedWidth">{{formatDate this.date_added}}</td>
-                        <td class="rag_status {{this.likelihood}}">{{this.likelihood}}</td>
-                        <td class="rag_status {{this.impact}}">{{this.impact}}</td>
-                        <td class="rag_status {{this.severity}}">{{this.severity}}</td>
+                        <td>
+                            Date : {{formatDate this.date_added}}</a>
+                            <table class="table">
+                                <thead>
+                                <th>Likelihood</th>
+                                <th>Impact</th>
+                                <th>Severity</th>
+                                </thead>
+                                <tr>
+                                    <td class="rag_status {{this.likelihood}}">
+                                        <div class="{{this.likelihood}}">{{this.likelihood}}</div>
+                                    </td>
+                                    <td class="rag_status {{this.impact}}">
+                                        <div class="{{this.impact}}">{{this.impact}}</div>
+                                    </td>
+
+                                    <td class="rag_status {{this.severity}}">
+                                        <div class="{{this.severity}}">{{this.severity}}</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                         <td>{{breaklines this.risk}}</td>
                         <td>{{breaklines this.mitigating_action}}</td>
 
@@ -71,8 +88,11 @@
                         {{/if}}
                     </tr>
                 {{else}}
-                    <tr><td colspan="8" align="center">There are no risks defined for {{project.name}}
-                        <br><a href="/project/{{project.id}}/risk?action=add">Add the first risk</a></td></tr>
+                    <tr>
+                    <td colspan="8" align="center">There are no risks defined for {{project.name}}
+                    {{#if user.editor}}
+                            <br><a href="/project/{{project.id}}/risk?action=add">Add a risk</a></td></tr>
+                    {{/if}}
                 {{/each}}
                 </tbody>
             </table>
