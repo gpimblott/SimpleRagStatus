@@ -56,7 +56,7 @@ exports.addMilestoneToProject = function (req, res, next) {
 
     milestoneDao.addMilestoneForProject(projectId, req.body)
         .then(result => {
-            res.redirect('/project/' + projectId);
+            res.redirect('/project/' + projectId + '/milestone');
         })
         .catch(error => {
             logger.error("Error adding new project milestone");
