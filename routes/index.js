@@ -103,7 +103,7 @@ router.post('/upload-account-csv', security.isAuthenticatedAdmin, upload.single(
                         }
 
                         console.log(account);
-                        //accountDao.addAccount(account);
+                        accountDao.addAccount(account);
                     })
             }
 
