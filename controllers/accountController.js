@@ -37,6 +37,41 @@ exports.updatePassword = function (req, res, next) {
 }
 
 /**
+ * Update the currently logged in user password
+ * It expects the current password to be provided
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.updateMyPassword = function (req, res, next) {
+    let theUser = req.user;
+
+    if (req.body.password1 !== req.body.password2) {
+        logger.info("New passwords are different");
+        res.render('admin/changeMyPassword', {
+            message: "New passwords are different"
+        });
+        return;
+    }
+
+    accountDao.updatePasswordWithOldPasswordCheck(theUser.id, req.body.currentPassword, req.body.password2)
+        .then(result => {
+            if (result.rowCount !== 1) {
+                throw("Password not updated");
+            }
+
+            logger.info("Password for account %s updated", theUser.id);
+            res.redirect('/');
+        })
+        .catch(error => {
+            logger.error("Error updating password: %s", error);
+            res.render('admin/changeMyPassword', {
+                message: "Please check current password"
+            });
+        });
+}
+
+/**
  * Show all of the accounts
  * @param req
  * @param res
@@ -88,8 +123,8 @@ exports.editAccountPage = function (req, res, next) {
 
     Promise.all(promises)
         .then(results => {
-            let account = results[0][0];
-            let roles = results[1];
+            let account = results[ 0 ][ 0 ];
+            let roles = results[ 1 ];
 
             res.render('admin/editAccount',
                 {
@@ -114,7 +149,7 @@ exports.changePasswordPage = function (req, res, next) {
     accountDao.getAccountById(req.accountId)
         .then(account => {
             res.render('admin/changePassword', {
-                account: account[0]
+                account: account[ 0 ]
             });
         })
         .catch(error => {
@@ -122,6 +157,7 @@ exports.changePasswordPage = function (req, res, next) {
             next(error);
         });
 }
+
 
 /**
  * Add a new account
@@ -152,9 +188,13 @@ exports.updateAccount = function (req, res, next) {
     let accountId = req.accountId;
     logger.info("Updating account %s", req.body.username);
 
-    accountDao.updateAccount(accountId, req.body)
+    console.log(req.body.currentPassword);
+    console.log(req.body.password1);
+    console.log(req.body.password2);
+
+    accountDao.updatePasswordWithOldPasswordCheck(accountId, req.body.currentPassword, req.body.password2)
         .then(result => {
-            res.redirect('/account/');
+            res.redirect('/');
         })
         .catch(error => {
             logger.error("Error updating account: %s", error);

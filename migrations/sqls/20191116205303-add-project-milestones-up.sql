@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS project_milestone
     id            SERIAL PRIMARY KEY,
     title         VARCHAR(250),
     description   TEXT,
-    date          DATE UNIQUE,
+    date          DATE,
     project_id    INTEGER REFERENCES project (id) ON DELETE CASCADE
 );

@@ -97,7 +97,7 @@ AccountDAO.updatePasswordWithOldPasswordCheck = function (accountId, currentPass
         })
         .then(match => {
             if (match) {
-                return this.updatePassword(newPassword);
+                return this.updatePassword(accountId, newPassword);
             } else {
                 throw ("Old password doesn't match ");
             }

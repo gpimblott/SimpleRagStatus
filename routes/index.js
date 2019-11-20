@@ -5,6 +5,8 @@ const security = require('../authentication/security');
 const reportDao = require("../dao/reportDAO");
 const projectStatusDao = require("../dao/projectStatusDAO");
 
+const accountController = require("../controllers/accountController");
+
 const router = express.Router();
 
 /**
@@ -19,12 +21,12 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
         let latestReport;
         let lastFiveReports;
         reportDao.getMostRecent(5)
-            .then( results => {
+            .then(results => {
                 lastFiveReports = results;
-                latestReport = results[0];
-                return projectStatusDao.getStatusReportByReportId( latestReport.id );
+                latestReport = results[ 0 ];
+                return projectStatusDao.getStatusReportByReportId(latestReport.id);
             })
-            .then( reports => {
+            .then(reports => {
 
                 let scopeTotals = { red: 0, amber: 0, green: 0 };
                 let scheduleTotals = { red: 0, amber: 0, green: 0 };
@@ -38,7 +40,7 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
                     countColours(benefitTotals, item.benefits);
                 });
 
-                res.render ( 'home', {
+                res.render('home', {
                     reports: lastFiveReports,
                     latestReport: latestReport,
                     scopeTotals: scopeTotals,
@@ -53,6 +55,17 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
             })
     }
 });
+
+/**
+ * Change the local users password
+ */
+router.get('/changeMyPassword', security.isAuthenticated, (req, res, next) => {
+    res.render('admin/changeMyPassword', {});
+});
+
+router.post('/changeMyPassword', security.isAuthenticated, (req, res, next) => {
+    accountController.updateMyPassword(req, res, next);
+})
 
 function countColours (totals, item) {
     switch (item) {
