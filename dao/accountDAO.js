@@ -33,6 +33,16 @@ AccountDAO.getAllRoles = function () {
 }
 
 /**
+ * Lookup a specific role
+ * @param role
+ * @returns {Promise | Promise<unknown>}
+ */
+AccountDAO.lookupRole = function(value) {
+    return database.query( `select * from role where name=$1`,
+        [value])
+};
+
+/**
  * Get a single account by the id
  * @param accountId ID of the account
  * @returns {Promise | Promise<unknown>}

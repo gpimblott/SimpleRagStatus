@@ -1,11 +1,16 @@
 const logger = require('../winstonLogger')(module);
 const express = require('express');
+const multer = require('multer');
 
 const security = require('../authentication/security');
 const reportDao = require("../dao/reportDAO");
 const projectStatusDao = require("../dao/projectStatusDAO");
 
 const accountController = require("../controllers/accountController");
+const accountDao = require("../dao/accountDAO");
+
+const upload = multer({ dest: 'tmp/csv/' });
+const csv = require('fast-csv');
 
 const router = express.Router();
 
@@ -65,7 +70,45 @@ router.get('/changeMyPassword', security.isAuthenticated, (req, res, next) => {
 
 router.post('/changeMyPassword', security.isAuthenticated, (req, res, next) => {
     accountController.updateMyPassword(req, res, next);
-})
+});
+
+/**
+ * Upload a CSV of user accounts
+ */
+router.get('/upload-account-csv' , security.isAuthenticatedAdmin, (req, res, next) => {
+    res.render('admin/uploadAccountFile', {});
+});
+
+router.post('/upload-account-csv', security.isAuthenticatedAdmin, upload.single('csvfile'), (req, res, next) => {
+    csv
+        .parseFile(req.file.path)
+        .on('error', error => console.error(error))
+        .on('data', row => {
+
+            accountDao.lookupRole( row[2])
+                .then( result => {
+                    let username = (String(row[0]).charAt(0) + row[1]).toLowerCase();
+                    let account = {
+                        username: username,
+                        role: result[0].id,
+                        firstname: row[0],
+                        surname: row[1],
+                        email: row[3],
+                        password: 'letmein2019'
+                    }
+
+                    console.log(account);
+                    accountDao.addAccount( account );
+                })
+
+        })
+        .on('end', rowCount => {
+            console.log(`Parsed ${rowCount} rows`);
+            res.send( `Processed ${rowCount} rows` );
+            res.end();
+        });
+
+});
 
 function countColours (totals, item) {
     switch (item) {
