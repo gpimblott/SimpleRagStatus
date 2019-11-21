@@ -188,11 +188,15 @@ exports.updateAccount = function (req, res, next) {
     let accountId = req.accountId;
     logger.info("Updating account %s", req.body.username);
 
-    console.log(req.body.currentPassword);
-    console.log(req.body.password1);
-    console.log(req.body.password2);
+    let account = {
+        username : req.body.username,
+        firstname : req.body.firstname,
+        surname: req.body.surname,
+        role: req.body.role,
+        email: req.body.email
+    }
 
-    accountDao.updatePasswordWithOldPasswordCheck(accountId, req.body.currentPassword, req.body.password2)
+    accountDao.updateAccount(accountId,account)
         .then(result => {
             res.redirect('/');
         })
