@@ -1,0 +1,43 @@
+version: 2.1
+jobs:
+  build:
+    working_directory: /app
+    docker:
+      - image: circleci/node:10.16.3
+      - image: postgres
+          environment:
+            POSTGRES_DB: rag
+            POSTGRES_USER: docker
+            POSTGRES_PASSWORD: docker
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache: # special step to restore the dependency cache
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: install-npm-rage
+          command: npm install
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: npm-db-migrate
+          command: npm run migrate-up
+          environment:
+            DATABASE_URL: "postgres://docker:docker@localhost:5432/rag"
+      - run:
+          name: npm-test-data
+          command: npm run create-test-data
+          environment:
+            DATABASE_URL: "postgres://docker:docker@localhost:5432/rag"
+      - run:
+          name: run-tests
+          command: npm run test
+          environment:
+            DATABASE_URL: "postgres://docker:docker@localhost:5432/rag"
+      - store_test_results:
+          path: test-results.xml
