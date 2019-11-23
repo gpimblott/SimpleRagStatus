@@ -1,0 +1,38 @@
+<testsuite name="Mocha Tests" tests="36" failures="0" errors="0" skipped="0" timestamp="Sat, 23 Nov 2019 22:38:17 GMT" time="0.353">
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/ should be redirect to login page" time="0.076"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/changeMyPassword should be redirect to login page" time="0.004"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/upload-account-csv should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/project should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/project/1 should be redirect to login page" time="0.006"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/project/1/milestone should be redirect to login page" time="0.005"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/project/1/milestone/1 should be redirect to login page" time="0.005"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/project/1/status/1 should be redirect to login page" time="0.004"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/project/1/risk should be redirect to login page" time="0.005"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/project/1/risk should be redirect to login page" time="0.004"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/report should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/report/1 should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/account should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/account/1 should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/account/1/password should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/programme/dashboard should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test GET access blocked to secure endpoints" name="/programme/risks should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/changeMyPassword should be redirect to login page" time="0.003"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/upload-account-csv should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/project should be redirect to login page" time="0.001"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/project/1 should be redirect to login page" time="0.001"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/project/1/milestone should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/project/1/milestone/1 should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/project/1/status/1 should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/project/1/risk/1 should be redirect to login page" time="0.005"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/report should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/report/1 should be redirect to login page" time="0.001"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/account should be redirect to login page" time="0.001"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test POST access blocked to secure endpoints" name="/account/1/password should be redirect to login page" time="0.003"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test DELETE access blocked to secure endpoints" name="/account/1 should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test DELETE access blocked to secure endpoints" name="/project/1/milestone/1 should be redirect to login page" time="0.002"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test DELETE access blocked to secure endpoints" name="/project/1 should be redirect to login page" time="0.001"/>
+<testcase classname="User needs to be authenticated to be access endpoints Test DELETE access blocked to secure endpoints" name="/report/1 should be redirect to login page" time="0.001"/>
+<testcase classname="login POST /auth/login" name="Should fail to log the user in" time="0.092"/>
+<testcase classname="login POST /auth/login" name="Should log the user in" time="0.078"/>
+<testcase classname="Reports WriteExcelFile" name="should write an excel file to the file system" time="0.01"/>
+</testsuite>
