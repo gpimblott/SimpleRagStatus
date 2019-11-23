@@ -19,12 +19,11 @@ const accounts = [
 accounts.forEach(item => {
 
     findRoleId(item.role).then(
-
         result => {
             console.log(result);
             if (result !== undefined && result.length > 0) {
 
-                bcrypt.hash( defaultPassword , 10 , (err, hash)=> {
+                bcrypt.hash(defaultPassword, 10, (err, hash) => {
                     let user = new User(
                         item.username,
                         item.firstName,

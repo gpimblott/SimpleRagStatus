@@ -4,6 +4,8 @@ require('dotenv').config({ path: 'process.env' });
 const passport = require('passport');
 require('./authentication/passport');
 
+import { RecognisedError } from './errors/RecognisedError';
+
 // Logger setup
 const logger = require('./winstonLogger')(module);
 const morgan = require('morgan');
@@ -61,10 +63,9 @@ const sess = {
 
 // Setup the Google Analytics ID if defined
 app.locals.google_id = process.env.GOOGLE_ID || undefined;
-if( app.locals.google_id) {
+if (app.locals.google_id) {
     logger.info('GA ID: %s', app.locals.google_id);
 }
-
 
 // Define static files before passport
 app.use(express.static(path.join(__dirname, 'public')));
@@ -75,28 +76,26 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet());
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(function(req,res,next){
+app.use(function (req, res, next) {
     res.locals.user = req.user;
 
     let promises = [];
     promises.push(reportDao.getAll());
     promises.push(projectDao.getProjectNames());
 
-    Promise.all(promises).then( results => {
-        res.locals.project_reports = results[0];
-        res.locals.project_names = results[1];
+    Promise.all(promises).then(results => {
+        res.locals.project_reports = results[ 0 ];
+        res.locals.project_names = results[ 1 ];
         next();
     })
-    .catch(error=>{
-        next();
-    });
+        .catch(error => {
+            next();
+        });
 })
-
 
 // Define the routes
 app.use('/', index);
@@ -104,7 +103,7 @@ app.use('/report', report);
 app.use('/project', project);
 app.use('/account', account);
 app.use('/auth', authentication);
-app.use( '/programme', programme);
+app.use('/programme', programme);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -130,12 +129,21 @@ app.use(function (err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
-    res.render('error',
-        {
-            message: err.message,
-            error: err
-        });
+    if (err instanceof RecognisedError) {
+        // render the error page
+        res.render('recognisedError',
+            {
+                message: err.message,
+                title: err.title
+            });
+    } else {
+        // render the error page
+        res.render('error',
+            {
+                message: err.message,
+                error: err
+            });
+    }
 });
 
 module.exports = app;

@@ -1,3 +1,7 @@
+'use strict';
+
+import { RecognisedError } from '../errors/RecognisedError'
+
 const logger = require('../winstonLogger')(module);
 const express = require('express');
 const multer = require('multer');
@@ -29,6 +33,12 @@ router.get('/', security.isAuthenticated, (req, res, next) => {
             .then(results => {
                 lastFiveReports = results;
                 latestReport = results[ 0 ];
+                if (!latestReport) {
+                    throw(new RecognisedError(
+                        "No Reports",
+                        "No Reports have been defined yet.  Please create one"));
+                }
+                ;
                 return projectStatusDao.getStatusReportByReportId(latestReport.id);
             })
             .then(reports => {
@@ -75,19 +85,19 @@ router.post('/changeMyPassword', security.isAuthenticated, (req, res, next) => {
 /**
  * Upload a CSV of user accounts
  */
-router.get('/upload-account-csv' , security.isAuthenticatedAdmin, (req, res, next) => {
+router.get('/upload-account-csv', security.isAuthenticatedAdmin, (req, res, next) => {
     res.render('admin/uploadAccountFile', {});
 });
 
 router.post('/upload-account-csv', security.isAuthenticatedAdmin, upload.single('csvfile'), (req, res, next) => {
-    let password='';
+    let password = '';
     csv
         .parseFile(req.file.path)
         .on('error', error => console.error(error))
         .on('data', row => {
 
-            if( row[0]==="Password") {
-                password=row[1];
+            if (row[ 0 ] === "Password") {
+                password = row[ 1 ];
                 console.log("Found password:" + password);
             } else {
                 accountDao.lookupRole(row[ 2 ])
@@ -110,7 +120,7 @@ router.post('/upload-account-csv', security.isAuthenticatedAdmin, upload.single(
         })
         .on('end', rowCount => {
             console.log(`Parsed ${rowCount} rows`);
-            res.send( `Processed ${rowCount} rows` );
+            res.send(`Processed ${rowCount} rows`);
             res.end();
         });
 

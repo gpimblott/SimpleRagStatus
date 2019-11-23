@@ -1,0 +1,22 @@
+version: "3"
+services:
+  db:
+    image:  postgres
+    container_name: rage-postgres
+    environment:
+      - POSTGRES_DB=rag
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - ALLOW_IP_RANGE=0.0.0.0/0
+    ports:
+      - 5435:5432
+    restart: on-failure
+  rage:
+    build: .
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm run migrate-up; npm run create-test-data; npm start'
+    environment:
+      - DATABASE_URL=postgresql://docker:docker@rage-postgres:5432/rag
+    ports:
+      - "8081:3000"
+    depends_on:
+      - "db"
