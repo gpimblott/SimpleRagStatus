@@ -59,6 +59,13 @@ const sess = {
     saveUninitialized: true
 }
 
+// Setup the Google Analytics ID if defined
+app.locals.google_id = process.env.GOOGLE_ID || undefined;
+if( app.locals.google_id) {
+    logger.info('GA ID: %s', self.app.locals.google_id);
+}
+
+
 // Define static files before passport
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -1,4 +1,4 @@
-const mocha = require('mocha');
+import { describe } from 'mocha'
 
 import ExcelReport from '../lib/generateExcel';
 

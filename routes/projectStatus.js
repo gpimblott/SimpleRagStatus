@@ -6,7 +6,6 @@ const security = require('../authentication/security');
 
 const router = express.Router();
 
-const reportController = require('../controllers/reportController');
 const projectController = require("../controllers/projectController");
 
 /**

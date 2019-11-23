@@ -4,10 +4,22 @@
 
     {{>page_header}}
     <link rel="stylesheet" href="/css/simpleRagStatus.css">
+
+    {{#if google_id}}
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-76850844-10"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '{{google_id}}');
+        </script>
+
+    {{/if}}
 </head>
 <body>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
