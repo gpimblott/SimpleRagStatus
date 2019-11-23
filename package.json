@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "node -r esm ./bin/www.js",
-    "test": "mocha tests/*.js --require esm --reporter xunit --reporter-options output=test-results.xml --exit",
+    "test": "mocha tests/*.js --require esm --reporter xunit --reporter-options output=./tests/test-results.xml --exit",
     "dev": "nodemon -r esm ./bin/www.js",
     "migrate-up": "db-migrate up",
     "migrate-down": "db-migrate down",

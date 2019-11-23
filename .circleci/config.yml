@@ -40,4 +40,4 @@ jobs:
           environment:
             DATABASE_URL: "postgres://docker:docker@localhost:5432/rag"
       - store_test_results:
-          path: ~/rage-app
+          path: ~/rage-app/tests
