@@ -36,8 +36,8 @@ jobs:
             DATABASE_URL: "postgres://docker:docker@localhost:5432/rag"
       - run:
           name: run-tests
-          command: npm run test
+          command: npm run circleci-test
           environment:
             DATABASE_URL: "postgres://docker:docker@localhost:5432/rag"
       - store_test_results:
-          path: ~/rage-app/tests
+          path: ~/rage-app/tests/
