@@ -1,3 +1,5 @@
+'use strict';
+
 // Import the dependencies for testing
 import chai from 'chai';
 
