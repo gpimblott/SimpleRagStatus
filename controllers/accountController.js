@@ -1,5 +1,17 @@
 'use strict';
 
+let owasp = require('owasp-password-strength-test');
+
+// Pass a hash of settings to the `config` method. The settings shown here are
+// the defaults.
+owasp.config({
+    allowPassphrases: true,
+    maxLength: 128,
+    minLength: 8,
+    minPhraseLength: 15,
+    minOptionalTestsToPass: 4,
+});
+
 const logger = require('../winstonLogger')(module);
 
 const accountDao = require("../dao/accountDAO");
@@ -17,6 +29,16 @@ exports.updatePassword = function (req, res, next) {
 
     if (req.body.password1 != req.body.password2) {
         logger.info("New passwords are different");
+        res.redirect('/account');
+        return;
+    }
+
+
+    // invoke test() to test the strength of a password
+    let result = owasp.test(req.body.password1);
+
+    if (result.errors.length !== 0) {
+        logger.info(result.errors);
         res.redirect('/account');
         return;
     }
@@ -51,6 +73,24 @@ exports.updateMyPassword = function (req, res, next) {
         res.render('admin/changeMyPassword', {
             message: "New passwords are different"
         });
+        return;
+    }
+
+    // invoke test() to test the strength of a password
+    let result = owasp.test(req.body.password1);
+
+    if (result.errors.length !== 0) {
+        logger.info(result.errors);
+
+        let errors="";
+        result.errors.forEach((error) => {
+            errors += error + "<br />";
+        });
+
+        res.render('admin/changeMyPassword', {
+            message: errors
+        });
+
         return;
     }
 
@@ -123,8 +163,8 @@ exports.editAccountPage = function (req, res, next) {
 
     Promise.all(promises)
         .then(results => {
-            let account = results[ 0 ][ 0 ];
-            let roles = results[ 1 ];
+            let account = results[0][0];
+            let roles = results[1];
 
             res.render('admin/editAccount',
                 {
@@ -149,14 +189,14 @@ exports.changePasswordPage = function (req, res, next) {
     accountDao.getAccountById(req.accountId)
         .then(account => {
             res.render('admin/changePassword', {
-                account: account[ 0 ]
+                account: account[0]
             });
         })
         .catch(error => {
             logger.error("Failed to change password %s", error);
             next(error);
         });
-}
+};
 
 
 /**
@@ -176,7 +216,7 @@ exports.addAccount = function (req, res, next) {
             logger.error("Error creating account: %s", error);
             next(error);
         })
-}
+};
 
 /**
  * Update the details for an account
@@ -189,14 +229,14 @@ exports.updateAccount = function (req, res, next) {
     logger.info("Updating account %s", req.body.username);
 
     let account = {
-        username : req.body.username,
-        firstname : req.body.firstname,
+        username: req.body.username,
+        firstname: req.body.firstname,
         surname: req.body.surname,
         role: req.body.role,
         email: req.body.email
-    }
+    };
 
-    accountDao.updateAccount(accountId,account)
+    accountDao.updateAccount(accountId, account)
         .then(result => {
             res.redirect('/');
         })
@@ -204,7 +244,7 @@ exports.updateAccount = function (req, res, next) {
             logger.error("Error updating account: %s", error);
             next(error);
         })
-}
+};
 
 /**
  * Delete an existing account
@@ -224,4 +264,4 @@ exports.deleteAccount = function (req, res, next) {
             logger.error("Error deleting account: %s", error);
             next(error);
         });
-}
+};
