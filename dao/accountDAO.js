@@ -141,6 +141,6 @@ AccountDAO.updatePassword = function (accountId, newPassword) {
  */
 AccountDAO.deleteAccountById = function (accountId) {
     return database.deleteByIds('account', [accountId]);
-}
+};
 
 module.exports = AccountDAO;

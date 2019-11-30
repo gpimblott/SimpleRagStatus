@@ -54,7 +54,7 @@ UsersDAO.addUser = function (user, password, done) {
                 logger.error("Error inserting account: %s", error);
                 done(error);
             });
-}
+};
 
 /**
  * Given a username find it in the DB

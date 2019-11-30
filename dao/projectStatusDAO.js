@@ -57,7 +57,7 @@ ProjectStatusDAO.getClosestReportForApplication = function (applicationId , repo
  */
 ProjectStatusDAO.getStatusReportByReportId = function (reportId) {
     return database.query(`SELECT * FROM project_status where report_id=$1`, [reportId]);
-}
+};
 
 /**
  *

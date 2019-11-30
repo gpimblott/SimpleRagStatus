@@ -6,13 +6,17 @@ import ExcelReport from '../lib/generateExcel'
 
 const reportDao = require("../dao/reportDAO");
 const projectStatusDao = require("../dao/projectStatusDAO");
+const audit = require("../dao/auditDAO");
+
+const ReportController = function () {
+};
 
 /**
  * Standard display of latest report
  * @param req
  * @param res
  */
-exports.displayReport = function (req, res , next) {
+ReportController.displayReport = function (req, res , next) {
     let reportId = req.reportId;
 
     projectStatusDao.getFullStatusReportByReportId(reportId)
@@ -50,14 +54,14 @@ exports.displayReport = function (req, res , next) {
             let err = new Error(`Filed to display main report page`); // Sets error message, includes the requester's ip address!
             next(err);
         });
-}
+};
 
 /**
  * Display the edit page for a report
  * @param req
  * @param res
  */
-exports.updateReportPage = function (req, res, next) {
+ReportController.updateReportPage = function (req, res, next) {
     let reportId = req.reportId;
 
     logger.info("Editing report : %s", reportId);
@@ -81,7 +85,7 @@ exports.updateReportPage = function (req, res, next) {
  * @param req
  * @param res
  */
-exports.updateReport = function (req, res, next ) {
+ReportController.updateReport = function (req, res, next ) {
     let reportId = req.reportId;
 
     logger.info('Updating report : %d', reportId);
@@ -89,6 +93,9 @@ exports.updateReport = function (req, res, next ) {
     reportDao.updateReport(reportId, req.body.reportDescription)
         .then(result => {
             res.redirect('/report');
+        })
+        .then(() => {
+            audit.write(req.user.username, `Report ${reportId} updated`);
         })
         .catch(error => {
             let err = new Error(`Failed to update report`);
@@ -103,7 +110,7 @@ exports.updateReport = function (req, res, next ) {
  * @param res
  * @param next
  */
-exports.addReport = function (req, res, next ) {
+ReportController.addReport = function (req, res, next ) {
 
     logger.info("Adding new report");
 
@@ -111,12 +118,15 @@ exports.addReport = function (req, res, next ) {
         .then(result => {
             res.redirect('/report');
         })
+        .then(() => {
+            audit.write(req.user.username, `New report added`);
+        })
         .catch(error => {
             let err = new Error(`Failed to add report`);
             err.statusCode = 500;
             next(err);
         });
-}
+};
 
 /**
  * Delete an existing report
@@ -124,7 +134,7 @@ exports.addReport = function (req, res, next ) {
  * @param res
  * @param next
  */
-exports.deleteReport = function (req, res, next) {
+ReportController.deleteReport = function (req, res, next) {
     let reportId = req.reportId;
 
     logger.info("Deleting report : %s", reportId);
@@ -132,6 +142,9 @@ exports.deleteReport = function (req, res, next) {
     reportDao.deleteReportById(reportId)
         .then(result => {
             res.sendStatus(200);
+        })
+        .then(() => {
+            audit.write(req.user.username, `Report ${reportId} deleted`);
         })
         .catch(error => {
             let err = new Error(`Failed to add report`);
@@ -147,7 +160,7 @@ exports.deleteReport = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.downloadSpreadsheet = function (req, res, next) {
+ReportController.downloadSpreadsheet = function (req, res, next) {
     let reportId = req.reportId;
 
     logger.info("Downloading spreadsheet");
@@ -182,4 +195,6 @@ function countColours (totals, item) {
             totals.green += 1;
     }
 }
+
+module.exports = ReportController;
 

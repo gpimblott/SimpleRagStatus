@@ -7,8 +7,12 @@ const projectStatusDao = require("../dao/projectStatusDAO");
 const projectGroupDao = require("../dao/projectGroupDAO");
 const projectDao = require("../dao/projectDAO");
 const milestoneDao = require("../dao/milestoneDAO");
+const audit = require("../dao/auditDAO");
 
 const ragValues = ['Red', 'Amber', 'Green'];
+
+const ProjectController = function () {
+};
 
 /**
  * Display all project page - admins can edit
@@ -16,7 +20,7 @@ const ragValues = ['Red', 'Amber', 'Green'];
  * @param res
  * @param next
  */
-exports.displayAllProjects = function (req, res, next) {
+ProjectController.displayAllProjects = function (req, res, next) {
 
     projectDao.getAllProjects()
         .then(projects => {
@@ -31,15 +35,13 @@ exports.displayAllProjects = function (req, res, next) {
         })
 };
 
-
-
 /**
  * Display the edit project page
  * @param req
  * @param res
  * @param next
  */
-exports.displayEditProjectPage = function (req, res, next) {
+ProjectController.displayEditProjectPage = function (req, res, next) {
     let project = req.project;
 
     let promises = [];
@@ -48,8 +50,8 @@ exports.displayEditProjectPage = function (req, res, next) {
 
     Promise.all(promises)
         .then(results => {
-            let phases = results[ 1 ];
-            let groups = results[ 0 ];
+            let phases = results[1];
+            let groups = results[0];
             res.render('projects/editProject',
                 {
                     project: project,
@@ -61,7 +63,6 @@ exports.displayEditProjectPage = function (req, res, next) {
             logger.error("Failed to display edit project page: %s", error);
             next(error);
         })
-
 };
 
 /**
@@ -69,15 +70,15 @@ exports.displayEditProjectPage = function (req, res, next) {
  * @param req
  * @param res
  */
-exports.displayAddProjectPage = function (req, res, next) {
+ProjectController.displayAddProjectPage = function (req, res, next) {
     let promises = [];
     promises.push(projectGroupDao.getAll());
     promises.push(projectDao.getProjectPhases())
 
     Promise.all(promises)
         .then(results => {
-            let phases = results[ 1 ];
-            let groups = results[ 0 ];
+            let phases = results[1];
+            let groups = results[0];
 
             res.render('projects/addProject', {
                 groups: groups,
@@ -88,7 +89,6 @@ exports.displayAddProjectPage = function (req, res, next) {
             logger.error("Failed to display add project page: %s", error);
             next(error);
         })
-
 };
 
 /**
@@ -97,7 +97,7 @@ exports.displayAddProjectPage = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.displayProjectPage = function (req, res, next) {
+ProjectController.displayProjectPage = function (req, res, next) {
     let projectId = req.projectId;
 
     let promises = [];
@@ -127,7 +127,7 @@ exports.displayProjectPage = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.displayUpdateProjectReportPage = function (req, res, next) {
+ProjectController.displayUpdateProjectReportPage = function (req, res, next) {
     let projectId = req.projectId;
     let reportId = req.reportId;
 
@@ -139,8 +139,8 @@ exports.displayUpdateProjectReportPage = function (req, res, next) {
         .then(result => {
 
             let currentProject = req.project;
-            let currentReport = result[ 0 ][ 0 ];
-            let latestReport = result[ 1 ][ 0 ];
+            let currentReport = result[0][0];
+            let latestReport = result[1][0];
 
             if (currentProject === undefined || currentReport === undefined) {
                 throw("Unable to find record");
@@ -166,7 +166,7 @@ exports.displayUpdateProjectReportPage = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.updateProjectReport = function (req, res, next) {
+ProjectController.updateProjectReport = function (req, res, next) {
     let projectId = req.projectId;
     let reportId = req.reportId;
 
@@ -175,6 +175,9 @@ exports.updateProjectReport = function (req, res, next) {
     projectStatusDao.updateProjectStatusForReportById(projectId, reportId, req.body)
         .then(result => {
             res.redirect("/project/" + projectId);
+        })
+        .then ( ()=> {
+            audit.write( req.user.username, `Status for report ${reportId} updated for project ${projectId}`)
         })
         .catch(error => {
             logger.error("Failed to update project report : %s", error);
@@ -188,12 +191,15 @@ exports.updateProjectReport = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.updateProject = function (req, res, next) {
+ProjectController.updateProject = function (req, res, next) {
     let projectId = req.projectId;
 
     projectDao.updateProject(projectId, req.body)
         .then(result => {
             res.redirect('/project');
+        })
+        .then ( ()=> {
+            audit.write( req.user.username, `Project ${projectId} updated`)
         })
         .catch(error => {
             logger.error("Error updating project %s", projectId);
@@ -207,11 +213,14 @@ exports.updateProject = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.addProject = function (req, res, next) {
+ProjectController.addProject = function (req, res, next) {
 
     projectDao.addProject(req.body)
         .then(result => {
             res.redirect('/project');
+        })
+        .then ( ()=> {
+            audit.write( req.user.username, `New project ${req.body.name} added`)
         })
         .catch(error => {
             logger.error("Error adding new project %s", req.body.name);
@@ -220,14 +229,13 @@ exports.addProject = function (req, res, next) {
 };
 
 
-
 /**
  * Delete a project
  * @param req
  * @param res
  * @param next
  */
-exports.deleteProject = function (req, res, next) {
+ProjectController.deleteProject = function (req, res, next) {
     let projectId = req.projectId;
 
     projectDao.deleteProject(projectId)
@@ -235,8 +243,13 @@ exports.deleteProject = function (req, res, next) {
             logger.info("Project %s deleted", projectId);
             res.sendStatus(200);
         })
+        .then( ()=> {
+            audit.write( req.user.username, `Project ${projectId} deleted`)
+        })
         .catch(error => {
             logger.error("Failed to delete project : %s", projectId)
             next(error);
         })
 };
+
+module.exports = ProjectController;

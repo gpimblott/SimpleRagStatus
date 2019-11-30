@@ -4,8 +4,12 @@ const logger = require('../winstonLogger')(module);
 
 const riskDao = require("../dao/riskDAO");
 const projectDao = require("../dao/projectDAO");
+const audit = require("../dao/auditDAO");
 
 const ragValues = ['Red', 'Amber', 'Green'];
+
+const RiskController = function () {
+};
 
 /**
  * Display the add risk page
@@ -13,7 +17,7 @@ const ragValues = ['Red', 'Amber', 'Green'];
  * @param res
  * @param next
  */
-exports.displayAddRiskPage = function (req, res, next) {
+RiskController.displayAddRiskPage = function (req, res, next) {
     let projectId = req.projectId;
 
     riskDao.getRiskByProjectId(projectId)
@@ -41,7 +45,7 @@ exports.displayAddRiskPage = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.displayRisksForProjectPage = function (req, res, next) {
+RiskController.displayRisksForProjectPage = function (req, res, next) {
     let projectId = req.projectId;
 
     riskDao.getRiskByProjectId(projectId)
@@ -66,12 +70,15 @@ exports.displayRisksForProjectPage = function (req, res, next) {
  * @param req
  * @param res
  */
-exports.addProjectRisk = function (req, res, next) {
+RiskController.addProjectRisk = function (req, res, next) {
     let projectId = req.projectId;
 
     riskDao.addRisk(projectId, req.body)
         .then(result => {
             res.redirect('/project/' + projectId + '/risk');
+        })
+        .then( ()=>{
+            audit.write( req.user.username, `New risk added for project ${projectId}`)
         })
         .catch(error => {
             logger.error("Error adding project risk: %s", error);
@@ -85,7 +92,7 @@ exports.addProjectRisk = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.editRiskPage = function (req, res, next) {
+RiskController.editRiskPage = function (req, res, next) {
     let risk = req.risk;
 
     projectDao.getProjectById(risk.project_id)
@@ -109,7 +116,7 @@ exports.editRiskPage = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.updateRisk = function (req, res, next) {
+RiskController.updateRisk = function (req, res, next) {
     let riskId = req.riskId;
     let risk = req.risk;
 
@@ -117,8 +124,13 @@ exports.updateRisk = function (req, res, next) {
         .then(result => {
             res.redirect('/project/' + risk.project_id + '/risk');
         })
+        .then( ()=>{
+            audit.write( req.user.username, `Risk ${riskId} updated`)
+        })
         .catch(error => {
             logger.error("Error updating risk %s", riskId);
             next(error);
         });
-}
+};
+
+module.exports = RiskController;

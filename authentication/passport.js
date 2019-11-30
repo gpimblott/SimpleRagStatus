@@ -6,8 +6,9 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const bcrypt = require('bcrypt');
 
-const User = require('../models/User.js');
-const users = require('../dao/usersDAO.js');
+const User = require('../models/User');
+const users = require('../dao/usersDAO');
+const audit = require("../dao/auditDAO");
 
 passport.serializeUser(function (user, cb) {
     cb(null, user.id);
@@ -28,9 +29,11 @@ passport.use(new LocalStrategy(
     function (username, password, cb) {
         users.findByUsername(username, function (err, user) {
             if (err) {
+                audit.write(username, "Login successful");
                 return cb(err);
             }
             if (!user) {
+                audit.write(username, "Login unsuccessful - user not recognised");
                 return cb(null, false, {message: 'Incorrect login'});
             }
 
@@ -43,12 +46,13 @@ passport.use(new LocalStrategy(
 
             bcrypt.compare(password, user.password, (err, res) => {
                 if (res) {
+                    audit.write(username, "Login successful");
                     return cb(null, user);
                 } else {
                     logger.warn("Login failure due to password");
+                    audit.write(username, "Login failure due to password");
                     return cb(null, false, {message: 'Incorrect login'});
                 }
             });
-
         });
     }));

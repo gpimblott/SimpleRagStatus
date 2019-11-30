@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS audit
+(
+    id          SERIAL PRIMARY KEY,
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    username    VARCHAR(100) NOT NULL,
+    message     TEXT NOT NULL
+);

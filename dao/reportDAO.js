@@ -54,7 +54,7 @@ ReportDAO.getMostRecent = function (numberOfEntries) {
 ReportDAO.getCurrentStatusReports = function () {
     return database.query(`select * from project_status 
             where report_id=(select id from report order by report_date desc limit 1)`);
-}
+};
 
 /**
  * Get all the reports for the specified project
@@ -83,7 +83,7 @@ ReportDAO.getReportsForProjectById = function (projectId) {
  */
 ReportDAO.getReportById = function (id) {
     return database.query("select * from report where id=$1", [id]);
-}
+};
 
 
 /**
@@ -95,7 +95,7 @@ ReportDAO.getReportById = function (id) {
 ReportDAO.updateReport = function(id, title) {
     cache.flush();
     return database.insertOrUpdate(" UPDATE report set title=$1 where id=$2",[title,id]);
-}
+};
 
 /**
  * Delete report by it's ID
@@ -106,6 +106,6 @@ ReportDAO.updateReport = function(id, title) {
 ReportDAO.deleteReportById = function (id ){
     cache.flush();
     return database.deleteByIds( "report", [id]);
-}
+};
 
 module.exports = ReportDAO;

@@ -116,6 +116,6 @@ ProjectDAO.getProjectNames = function () {
     return cache.get("project_names", () => {
         return database.query('SELECT id,name from project order by name');
     });
-}
+};
 
 module.exports = ProjectDAO;

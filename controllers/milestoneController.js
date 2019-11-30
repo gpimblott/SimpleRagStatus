@@ -3,22 +3,25 @@
 const logger = require('../winstonLogger')(module);
 const milestoneDao = require("../dao/milestoneDAO");
 
+const UsersController = function () {
+};
+
 /**
  * Display the add milestone page
  * @param req
  * @param res
  * @param next
  */
-exports.displayAddMilestonePage = function (req, res, next) {
+UsersController.displayAddMilestonePage = function (req, res, next) {
     let project = req.project;
 
     res.render('milestones/addMilestone',
         {
             project: project
         });
-}
+};
 
-exports.displayEditMilestonePage = function (req, res, next) {
+UsersController.displayEditMilestonePage = function (req, res, next) {
     let project = req.project;
     let milestone = req.milestone;
 
@@ -27,9 +30,9 @@ exports.displayEditMilestonePage = function (req, res, next) {
             project: project,
             milestone: milestone
         });
-}
+};
 
-exports.displayMilestonesForProject = function (req, res, next) {
+UsersController.displayMilestonesForProject = function (req, res, next) {
     let project = req.project;
 
     milestoneDao.getMilestonesForProject(project.id)
@@ -43,7 +46,7 @@ exports.displayMilestonesForProject = function (req, res, next) {
         .catch(error => {
             next(error);
         });
-}
+};
 
 /**
  * Add a new milestone to the specified project
@@ -51,7 +54,7 @@ exports.displayMilestonesForProject = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.addMilestoneToProject = function (req, res, next) {
+UsersController.addMilestoneToProject = function (req, res, next) {
     let projectId = req.projectId;
 
     milestoneDao.addMilestoneForProject(projectId, req.body)
@@ -70,7 +73,7 @@ exports.addMilestoneToProject = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.updateMilestone = function (req, res, next) {
+UsersController.updateMilestone = function (req, res, next) {
     let projectId = req.projectId;
     let milestoneId = req.milestoneId;
     milestoneDao.updateMilestone(milestoneId, req.body)
@@ -80,7 +83,7 @@ exports.updateMilestone = function (req, res, next) {
         .catch(error => {
             next(error);
         })
-}
+};
 
 /**
  * Delete an existing milestone
@@ -88,7 +91,7 @@ exports.updateMilestone = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.deleteMilestone = function (req, res, next) {
+UsersController.deleteMilestone = function (req, res, next) {
     let projectId = req.projectId;
     let milestoneId = req.milestoneId;
     milestoneDao.deleteMilestone(milestoneId)
@@ -98,5 +101,6 @@ exports.deleteMilestone = function (req, res, next) {
         .catch(error => {
             next(error);
         })
-}
+};
 
+module.exports = UsersController;

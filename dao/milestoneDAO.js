@@ -17,7 +17,7 @@ MilestoneDAO.getMilestonesForProject = function (project_id) {
                            where project_id = $1
                            order by date asc`,
         [project_id])
-}
+};
 
 /**
  * GET an individual milestone
@@ -30,7 +30,7 @@ MilestoneDAO.getMilestoneById = function (milestone_id) {
                            where id = $1
                            limit 1`,
         [milestone_id]);
-}
+};
 
 /**
  * Add a new project milestone
@@ -66,6 +66,6 @@ MilestoneDAO.updateMilestone = function (milestoneId, milestone) {
  */
 MilestoneDAO.deleteMilestone = function (milestoneId) {
     return database.deleteByIds('project_milestone', [milestoneId]);
-}
+};
 
 module.exports = MilestoneDAO;

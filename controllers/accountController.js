@@ -2,6 +2,8 @@
 
 let owasp = require('owasp-password-strength-test');
 
+const audit = require('../dao/auditDAO');
+
 // Pass a hash of settings to the `config` method. The settings shown here are
 // the defaults.
 owasp.config({
@@ -16,31 +18,40 @@ const logger = require('../winstonLogger')(module);
 
 const accountDao = require("../dao/accountDAO");
 
+const AccountController = function () {
+};
+
 /**
  * Update an account password (after doing some checks)
  * @param req
  * @param res
  * @param next
  */
-exports.updatePassword = function (req, res, next) {
+AccountController.updatePassword = function (req, res, next) {
     let accountId = req.accountId;
 
     logger.info("Updating password %s", accountId);
 
     if (req.body.password1 != req.body.password2) {
         logger.info("New passwords are different");
-        res.redirect('/account');
-        return;
+        return res.render('admin/changePassword', {
+            message: "Passwords are different"
+        });
     }
-
 
     // invoke test() to test the strength of a password
     let result = owasp.test(req.body.password1);
 
     if (result.errors.length !== 0) {
         logger.info(result.errors);
-        res.redirect('/account');
-        return;
+        let errors = "";
+        result.errors.forEach((error) => {
+            errors += error + "<br />";
+        });
+
+        return res.render('admin/changePassword', {
+            message: errors
+        });
     }
 
     accountDao.updatePassword(accountId, req.body.password2)
@@ -52,11 +63,14 @@ exports.updatePassword = function (req, res, next) {
             logger.info("Password for account %s updated", accountId);
             res.redirect('/account');
         })
+        .then(() => {
+            audit.write(req.user.username, "Updated password for accountId " + accountId);
+        })
         .catch(error => {
             logger.error("Error updating password: %s", error);
             next(error);
         });
-}
+};
 
 /**
  * Update the currently logged in user password
@@ -65,15 +79,14 @@ exports.updatePassword = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.updateMyPassword = function (req, res, next) {
+AccountController.updateMyPassword = function (req, res, next) {
     let theUser = req.user;
 
     if (req.body.password1 !== req.body.password2) {
         logger.info("New passwords are different");
-        res.render('admin/changeMyPassword', {
+        return res.render('admin/changeMyPassword', {
             message: "New passwords are different"
         });
-        return;
     }
 
     // invoke test() to test the strength of a password
@@ -82,16 +95,14 @@ exports.updateMyPassword = function (req, res, next) {
     if (result.errors.length !== 0) {
         logger.info(result.errors);
 
-        let errors="";
+        let errors = "";
         result.errors.forEach((error) => {
             errors += error + "<br />";
         });
 
-        res.render('admin/changeMyPassword', {
+        return res.render('admin/changeMyPassword', {
             message: errors
         });
-
-        return;
     }
 
     accountDao.updatePasswordWithOldPasswordCheck(theUser.id, req.body.currentPassword, req.body.password2)
@@ -103,13 +114,16 @@ exports.updateMyPassword = function (req, res, next) {
             logger.info("Password for account %s updated", theUser.id);
             res.redirect('/');
         })
+        .then(() => {
+            audit.write(req.user.username, "Updated their own password");
+        })
         .catch(error => {
             logger.error("Error updating password: %s", error);
             res.render('admin/changeMyPassword', {
                 message: "Please check current password"
             });
         });
-}
+};
 
 /**
  * Show all of the accounts
@@ -117,7 +131,7 @@ exports.updateMyPassword = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.listAllAccounts = function (req, res, next) {
+AccountController.listAllAccounts = function (req, res, next) {
     accountDao.getAllAccounts()
         .then(accounts => {
             res.render('admin/account',
@@ -138,7 +152,7 @@ exports.listAllAccounts = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.addAccountPage = function (req, res, next) {
+AccountController.addAccountPage = function (req, res, next) {
     accountDao.getAllRoles().then(roles => {
         res.render('admin/addAccount',
             {
@@ -154,7 +168,7 @@ exports.addAccountPage = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.editAccountPage = function (req, res, next) {
+AccountController.editAccountPage = function (req, res, next) {
     let accountId = req.accountId;
 
     let promises = [];
@@ -184,7 +198,7 @@ exports.editAccountPage = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.changePasswordPage = function (req, res, next) {
+AccountController.changePasswordPage = function (req, res, next) {
 
     accountDao.getAccountById(req.accountId)
         .then(account => {
@@ -205,12 +219,16 @@ exports.changePasswordPage = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.addAccount = function (req, res, next) {
-    logger.info("Adding new account %s", req.body.username);
+AccountController.addAccount = function (req, res, next) {
+    let username = req.body.username;
+    logger.info("Adding new account %s", username);
 
     accountDao.addAccount(req.body)
         .then(result => {
             res.redirect('/account/');
+        })
+        .then(() => {
+            audit.write(req.user.username, `Added new account ${username}`);
         })
         .catch(error => {
             logger.error("Error creating account: %s", error);
@@ -224,9 +242,10 @@ exports.addAccount = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.updateAccount = function (req, res, next) {
+AccountController.updateAccount = function (req, res, next) {
     let accountId = req.accountId;
-    logger.info("Updating account %s", req.body.username);
+    let username = req.body.username;
+    logger.info(`Updating account ${username}`);
 
     let account = {
         username: req.body.username,
@@ -240,6 +259,9 @@ exports.updateAccount = function (req, res, next) {
         .then(result => {
             res.redirect('/');
         })
+        .then(() => {
+            audit.write(req.user.username, `Updated account ${username}`);
+        })
         .catch(error => {
             logger.error("Error updating account: %s", error);
             next(error);
@@ -251,17 +273,22 @@ exports.updateAccount = function (req, res, next) {
  * @param req
  * @param res
  */
-exports.deleteAccount = function (req, res, next) {
+AccountController.deleteAccount = function (req, res, next) {
     let accountId = req.accountId;
 
-    logger.info("DELETE user %s", accountId);
+    logger.info(`DELETE user ${accountId}`);
 
     accountDao.deleteAccountById(accountId)
         .then(result => {
             res.sendStatus(200);
+        })
+        .then(() => {
+            audit.write(req.user.username, `Deleted account ${accountId}`);
         })
         .catch(error => {
             logger.error("Error deleting account: %s", error);
             next(error);
         });
 };
+
+module.exports = AccountController;

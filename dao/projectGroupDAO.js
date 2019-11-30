@@ -27,7 +27,7 @@ ProjectGroupDAO.addProjectGroup = function (name) {
  */
 ProjectGroupDAO.getAll = function() {
     return database.query( `SELECT * from project_group`);
-}
+};
 
 
 module.exports = ProjectGroupDAO;

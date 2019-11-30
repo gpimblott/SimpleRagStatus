@@ -42,7 +42,7 @@ RiskDAO.getRiskById = function (riskId) {
     return database.query(`SELECT *
                            FROM project_risk
                            WHERE id = $1`, [riskId]);
-}
+};
 
 /**
  * Add a new risk for the project
@@ -59,7 +59,7 @@ RiskDAO.addRisk = function (projectId, risk) {
         [risk.riskDate, projectId, risk.likelihood, risk.impact, risk.severity,
             risk.description, risk.mitigation, false]
     )
-}
+};
 
 /**
  * update a risk
@@ -84,6 +84,6 @@ RiskDAO.updateRisk = function (riskId, risk) {
         [riskId, risk.likelihood, risk.impact, risk.severity,
             risk.description, risk.mitigation, is_closed]
     )
-}
+};
 
 module.exports = RiskDAO;
