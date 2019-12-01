@@ -182,9 +182,8 @@ describe("Check admin only endpoints as user guest", () => {
     // Logout user guest
     after(() => {
         agent.get('/auth/logout')
-            .send()
             .end((err, res) => {
-                res.should.have.status(200);
+                res.should.have.status(302);
             });
         agent.close();
     });
