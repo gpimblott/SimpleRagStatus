@@ -52,7 +52,7 @@ app.set('view engine', '.hbs');
 
 // Setup cookies
 const cookie_key = process.env.COOKIE_KEY || 'aninsecurecookiekey';
-const cookie_name = process.env.COOKIE_NAME || 'my_cookie';
+const cookie_name = process.env.COOKIE_NAME || 'rage_cookie';
 const sess = {
     secret: cookie_key,
     name: cookie_name,

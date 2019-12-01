@@ -5,7 +5,7 @@ const User = require('../models/User');
 
 const bcrypt = require('bcrypt');
 
-const defaultPassword = process.env.DEFAULT_PASSWORD || 'password';
+const defaultPassword = process.env.DEFAULT_PASSWORD || 'Password123!';
 
 /**
  * First setup the required roles

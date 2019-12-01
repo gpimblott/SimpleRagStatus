@@ -33,7 +33,7 @@ Security.isAuthenticatedAdmin = function (req, res, next) {
         if( req.user.admin) {
             return next();
         } else {
-            throw(new Error("Not authorised for this operation"));
+            return res.sendStatus(401);
         }
     } else {
         req.session.redirect_to = req.originalUrl;
@@ -54,7 +54,7 @@ Security.isAuthenticatedEditor = function (req, res, next) {
             return next();
         }
         else {
-            throw(new Error("Not authorised for this operation"));
+            return res.sendStatus(401);
         }
     } else {
         req.session.redirect_to = req.originalUrl;
